@@ -28,7 +28,7 @@
 int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned int *EpsBEG, unsigned int *EpsEND, unsigned int *EpsBLK, unsigned int MASK[], unsigned int SELFLOOP[]) {
     
     *INIT = 1;
-    *ACCEPT = (1<<31);
+    *ACCEPT = (1<<(W-1));
     *EpsBEG = *EpsEND = *EpsBLK = 0;
     for(int i = 0;i < 256;i++) {
         MASK[i] = 0;
@@ -47,19 +47,30 @@ int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned 
     // char_set : sets the characters provided in the character class HIGH
     int char_set[256] = {0};
 
-    for(int i = 0;PATTERN[i] != '\0';i++) {
+    for(int i = 0;!char_class || PATTERN[i] != '\0';i++) {
         if(!char_class) {
-
+            
+            state_no++;
             int tmpMask = (1<<state_no);
+
             if(PATTERN[i] == '+') {
+                for(int c = 0;c < 256;c++) {
+                    if(negate ^ char_set[c]) MASK[c] |= tmpMask;
+                }
                 for(int c = 0;c < 256;c++) {
                     if(negate ^ char_set[c]) SELFLOOP[c] |= tmpMask;
                 }
             }
             else if(PATTERN[i] == '?') {
+                for(int c = 0;c < 256;c++) {
+                    if(negate ^ char_set[c]) MASK[c] |= tmpMask;
+                }
                 (*EpsBLK) |= tmpMask;
             }
             else if(PATTERN[i] == '*') {
+                for(int c = 0;c < 256;c++) {
+                    if(negate ^ char_set[c]) MASK[c] |= tmpMask;
+                }
                 for(int c = 0;c < 256;c++) {
                     if(negate ^ char_set[c]) SELFLOOP[c] |= tmpMask;
                 }
@@ -96,17 +107,20 @@ int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned 
                 }
             }
             else {
-                char_class = 1;
-                i--;
+                for(int c = 0;c < 256;c++) {
+                    if(negate ^ char_set[c]) MASK[c] |= tmpMask;
+                }
+                if(PATTERN[i] != '\0') i--;
             }
 
             if(state_no >= W) return 0;
+
+            char_class = 1;
+
+            // printf("LENGTH : %d and POS : %d and CHARACTER : %c \n",state_no,i,PATTERN[i]);
         }
 
         else {
-
-            state_no++;
-            int tmpMask = (1<<state_no);
 
             // Resetting all info to process next character class separately
             for(int c = 0;c < 256;c++) char_set[c] = 0;
@@ -218,17 +232,21 @@ int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned 
             }
             else char_set[PATTERN[i]] = 1;
 
-            for(int c = 0;c < 256;c++) {
-                if(negate ^ char_set[c]) MASK[c] |= tmpMask;
-            }
-
             char_class = 0;
-            printf("LENGTH : %d and POS : %d and CHARACTER : %c \n",state_no,i,PATTERN[i]);
+
         }
 
     }
 
     *ACCEPT = (1<<state_no);
+
+    for(int i = 0;i < W-1;i++) {
+        int tmpMask = (1<<i);
+        int pres_bit = ( ((*EpsBLK) & tmpMask) != 0 ), nxt_bit = ( ((*EpsBLK) & (tmpMask<<1)) != 0);
+        if(!pres_bit && nxt_bit) (*EpsBEG) |= tmpMask;
+        else if(pres_bit && !nxt_bit) (*EpsEND) |= tmpMask;
+    }
+    if((*EpsBLK) & (1<<(W-1))) (*EpsEND) |= (1<<(W-1));
 
     return 1;
 }
