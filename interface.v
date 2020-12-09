@@ -67,6 +67,8 @@ module interface(
                     end
                 end
             endcase
+        end
+    end
 
 
 
