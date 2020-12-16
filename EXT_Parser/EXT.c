@@ -5,7 +5,7 @@
     The data needed to simulate NFA in the peripheral include :
         INIT - bitmask (of length atmost W bits) which indicates one left shift of starting state of the NFA
         ACCEPT - bitmask (of length atmost W bits) which indicates accepting state of the NFA
-        MASK[0 ... 255] - (each length atmost W bits) MASK[c][i] = 1 indicates transition from (i-1) to i th state of NFA using character c
+        MOVE[0 ... 255] - (each length atmost W bits) MOVE[c][i] = 1 indicates transition from (i-1) to i th state of NFA using character c
         SELFLOOP[0 ... 255] - (each length atmost W bits) SELFLOOP[c][i] = 1 indicates self loop at i th state of NFA using character c
         EpsBEG - bitmask (of length atmost W bits) which sets high the starting position of an epsilon transition block
         EpsEND - bitmask (of length atmost W bits) which sets high the ending position of an epsilon transition block
@@ -18,20 +18,20 @@
         pointer to EpsBEG (int / long long) - 32 / 64 bit number
         pointer to EpsEND (int / long long) - 32 / 64 bit number
         pointer to EpsBLK (int / long long) - 32 / 64 bit number
-        MASK[] (int[256] / long long[256]) - array of 32 / 64 bit numbers
+        MOVE[] (int[256] / long long[256]) - array of 32 / 64 bit numbers
         SELFLOOP[] (int[256] / long long[256]) - array of 32 / 64 bit numbers
     
     The function returns :
         0 if given pattern not a valid EXT type regex or if the pattern results in a NFA with greater than W length, 1 otherwise
 */
 
-int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned int *EpsBEG, unsigned int *EpsEND, unsigned int *EpsBLK, unsigned int MASK[], unsigned int SELFLOOP[]) {
+int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned int *EpsBEG, unsigned int *EpsEND, unsigned int *EpsBLK, unsigned int MOVE[], unsigned int SELFLOOP[]) {
     
     *INIT = 1;
     *ACCEPT = (1<<(W-1));
     *EpsBEG = *EpsEND = *EpsBLK = 0;
     for(int i = 0;i < 256;i++) {
-        MASK[i] = 0;
+        MOVE[i] = 0;
         SELFLOOP[i] = 0;
     }
 
@@ -55,7 +55,7 @@ int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned 
 
             if(PATTERN[i] == '+') {
                 for(int c = 0;c < 256;c++) {
-                    if(negate ^ char_set[c]) MASK[c] |= tmpMask;
+                    if(negate ^ char_set[c]) MOVE[c] |= tmpMask;
                 }
                 for(int c = 0;c < 256;c++) {
                     if(negate ^ char_set[c]) SELFLOOP[c] |= tmpMask;
@@ -63,13 +63,13 @@ int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned 
             }
             else if(PATTERN[i] == '?') {
                 for(int c = 0;c < 256;c++) {
-                    if(negate ^ char_set[c]) MASK[c] |= tmpMask;
+                    if(negate ^ char_set[c]) MOVE[c] |= tmpMask;
                 }
                 (*EpsBLK) |= tmpMask;
             }
             else if(PATTERN[i] == '*') {
                 for(int c = 0;c < 256;c++) {
-                    if(negate ^ char_set[c]) MASK[c] |= tmpMask;
+                    if(negate ^ char_set[c]) MOVE[c] |= tmpMask;
                 }
                 for(int c = 0;c < 256;c++) {
                     if(negate ^ char_set[c]) SELFLOOP[c] |= tmpMask;
@@ -95,20 +95,20 @@ int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned 
                 for(;j < x;j++) {
                     (*EpsBLK) |= tmpMask;
                     for(int c = 0;c < 256;c++) {
-                        if(negate ^ char_set[c]) MASK[c] |= tmpMask;
+                        if(negate ^ char_set[c]) MOVE[c] |= tmpMask;
                     }
                     tmpMask <<= 1;
                 }
                 for(;j < ub;j++) {
                     for(int c = 0;c < 256;c++) {
-                        if(negate ^ char_set[c]) MASK[c] |= tmpMask;
+                        if(negate ^ char_set[c]) MOVE[c] |= tmpMask;
                     }
                     tmpMask <<= 1;
                 }
             }
             else {
                 for(int c = 0;c < 256;c++) {
-                    if(negate ^ char_set[c]) MASK[c] |= tmpMask;
+                    if(negate ^ char_set[c]) MOVE[c] |= tmpMask;
                 }
                 if(PATTERN[i] != '\0') i--;
             }
