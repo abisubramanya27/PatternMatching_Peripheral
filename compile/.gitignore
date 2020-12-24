@@ -1,0 +1,14 @@
+a.out
+.DS_Store
+*/.DS_Store
+**/.DS_Store
+
+*.bin
+*.out
+*.elf
+*/*.bin
+*/*.out
+*/*.elf
+**/*.bin
+**/*.out
+**/*.elf

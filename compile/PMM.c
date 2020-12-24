@@ -9,13 +9,13 @@
 
 // Function to write data to Data Buffer (64 bits) in Peripheral Interface. LSB = 1 denotes lower 32 bits, LSB = 0 denotes higher 32 bits
 void Input1_2(unsigned int data, int LSB) {
-    unsigned int *p = (LSB) ? (unsigned int*)PMM_WRITE_LS32B_OFFSET : (unsigned int*)PMM_WRITE_MS32B_OFFSET;
+    int *p = (LSB) ? (int*)PMM_WRITE_LS32B_OFFSET : (int*)PMM_WRITE_MS32B_OFFSET;
     *p  = data;
 }
 
 // The above function overloaded to write long long data to Data Buffer as intended
 void Input1_2LL(long long data) {
-    unsigned int *p1 = (unsigned int*)PMM_WRITE_LS32B_OFFSET, *p2 = (unsigned int*)PMM_WRITE_MS32B_OFFSET;
+    int *p1 = (int*)PMM_WRITE_LS32B_OFFSET, *p2 = (int*)PMM_WRITE_MS32B_OFFSET;
     unsigned int LS32B = data & 0xFFFFFFFF, MS32B = data>>32;
     *p1 = LS32B;
     *p2 = MS32B;
@@ -23,18 +23,22 @@ void Input1_2LL(long long data) {
 
 // Function to pass control data to Periperal Interface
 void Input3(int opcode, int address, int module_ID) {
-    unsigned int *p = (unsigned int *)PMM_WRITE_CONTROL_OFFSET;
+    int *p = (int *)PMM_WRITE_CONTROL_OFFSET;
     *p = (opcode<<30) | (address<<16) | module_ID;
 }
 
 // Function to complete the handshaking with peripheral by waiting till DATA ACCEPTED signal is high, 
-// and then sending a No Operation instrucion to make DATA VALID signal low and complete one operation
-void Complete_Handshaking(unsigned int REQD_DATA_ACCEPTED) {
-    unsigned int *p1 = (unsigned int *)PMM_READ_DATA_ACCEPTED_OFFSET;
+// and then sending a No Operation instrucion to make DATA VALID signal low and complete one operation.
+// Returns - the PATTERN_ACCEPTED status
+unsigned int Complete_Handshaking(unsigned int REQD_DATA_ACCEPTED) {
+    int *p1 = (int *)PMM_READ_DATA_ACCEPTED_OFFSET;
     // Waiting till the operations are completed in the modules (under operation)
     while( ((*p1) & REQD_DATA_ACCEPTED) != REQD_DATA_ACCEPTED );
 
-    unsigned int *p2 = (unsigned int *)PMM_WRITE_CONTROL_OFFSET;
+    int *p = (int *)PMM_READ_PATTERN_ACCEPTED_OFFSET;
+    unsigned int PATTERN_ACCEPTED_STATUS = (*p);
+
+    int *p2 = (int *)PMM_WRITE_CONTROL_OFFSET;
     // Sending a No operation to the necessary modules to conclude the handshaking 
     for(int i = 0; i < 4; i++) {
         if(REQD_DATA_ACCEPTED & (1<<i)) {
@@ -44,6 +48,8 @@ void Complete_Handshaking(unsigned int REQD_DATA_ACCEPTED) {
 
     // Waiting for the No operation to be reflected in the modules (under operation)
     while( ((*p1) & REQD_DATA_ACCEPTED) != 0 );
+
+    return PATTERN_ACCEPTED_STATUS;
 }
 
 
@@ -248,25 +254,25 @@ int PreProcess(char *pattern, int module) {
     Arguments :
         text_char - char array where Ith character is the text character to be sent to the Ith module. "\0" represents empty pattern (i.e) Ith module need not be used
     Returns :
-        An integer which is a bitmask, where Ith place being 1 implies that module was used, 
-                                                             0 implies either the module wasn't required or the provided pattern couldn't be processed
+        An integer which is a bitmask, where Ith place being 1 implies the text (entered till now) has matched the pattern in that module, 
+                                                             0 implies either the module didn't process anything, or the text hasn't matched the pattern yet
 */
-int SimulateNFA_All(char text_char[NO_MODULES]) {
+int SimulateNFA_All(char text_chars[NO_MODULES]) {
 
     unsigned int TARGET_MODULES = 0;
 
     for(int i = 0; i < NO_MODULES; i++) {
-        if(text_char[i] != '\0') {
+        if(text_chars[i] != '\0') {
             TARGET_MODULES |= (1<<i);
-            Input1_2((int)text_char[i], 1);
+            Input1_2((int)text_chars[i], 1);
             // opcode = 2 : Input for simulating NFA; address : dont care
             Input3(2, 0, i);
         }
     }
 
-    Complete_Handshaking(TARGET_MODULES);
+    unsigned int PATTERN_ACCEPTED_STATUS = Complete_Handshaking(TARGET_MODULES);
 
-    return TARGET_MODULES;
+    return PATTERN_ACCEPTED_STATUS;
 
 }
 
@@ -277,8 +283,8 @@ int SimulateNFA_All(char text_char[NO_MODULES]) {
         text_char - text character to be sent to the target module. "\0" represents empty pattern (i.e) module need not be used
         module - integer representing the module number to be targetted
     Returns :
-        An integer - 1 implies that module was used, 
-                     0 implies either the module wasn't required or the provided pattern couldn't be processed
+        An integer - 1 implies the text (entered till now) has matched the pattern in the target module, 
+                     0 implies either the module didn't process anything, or the text hasn't matched the pattern yet
 */
 int SimulateNFA(char text_char, int module) {
 
@@ -288,9 +294,9 @@ int SimulateNFA(char text_char, int module) {
     // opcode = 2 : Input for simulating NFA; address : dont care
     Input3(2, 0, module);
 
-    Complete_Handshaking((1<<module));
+    unsigned int PATTERN_ACCEPTED_STATUS = Complete_Handshaking((1<<module));
 
-    return 1;
+    return (PATTERN_ACCEPTED_STATUS & (1<<module)) != 0;
 
 }
 
