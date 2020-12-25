@@ -19,6 +19,7 @@ module cpu_tb ();
     wire [31:0] iaddr, idata, daddr, drdata, dwdata;
     wire [31:0] daddr1, drdata1, dwdata1;
     wire [31:0] daddr2, drdata2, dwdata2;
+    wire [31:0] drdata3;
     wire [3:0] dwe, dwe1, dwe2;
     integer i, s, fail, log_file, exp_file;
     reg [31:0] dtmp, exp_reg;
@@ -78,6 +79,15 @@ module cpu_tb ();
         .dwe2(dwe2),
         // Interface to Pattern matching peripheral interface
         .drdata3(drdata3)
+    );
+
+    PMP_interface u6(
+        .clk(clk),
+        .daddr(daddr),
+        .dwdata(dwdata),
+        .dwe(dwe),
+        .reset(reset),
+        .drdata(drdata3)
     );
 
     // Set up clock
