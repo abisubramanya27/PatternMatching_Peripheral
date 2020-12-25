@@ -40,7 +40,7 @@ unsigned int Complete_Handshaking(unsigned int REQD_DATA_ACCEPTED) {
 
     int *p2 = (int *)PMM_WRITE_CONTROL_OFFSET;
     // Sending a No operation to the necessary modules to conclude the handshaking 
-    for(int i = 0; i < 4; i++) {
+    for(int i = 0; i < NO_MODULES; i++) {
         if(REQD_DATA_ACCEPTED & (1<<i)) {
             *p2 = i;    // opcode = 00 -> No Operation ; Only MODULE_ID therefore has to be sent
         }
@@ -136,7 +136,7 @@ int PreProcessAll(char *patterns[NO_MODULES]) {
     for(int j = 0; j < 256; j++) {
 
         address = (j<<2);
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < NO_MODULES; i++) {
             if(REQD_DATA_ACCEPTED & (1<<i)) {
                 Input1_2(SELFLOOP[i][j], 1);
                 Input3(opcode, address, i);
@@ -152,7 +152,7 @@ int PreProcessAll(char *patterns[NO_MODULES]) {
     for(int j = 0; j < 256; j++) {
 
         address = (1<<11) + (j<<2);
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < NO_MODULES; i++) {
             if(REQD_DATA_ACCEPTED & (1<<i)) {
                 Input1_2(MOVE[i][j], 1);
                 Input3(opcode, address, i);
@@ -300,3 +300,36 @@ int SimulateNFA(char text_char, int module) {
 
 }
 
+
+/*
+    Function to reset the state of NFA in required modules parallely
+    Arguments :
+        bitmask - Ith position 1 represents Ith module has to be reset, 0 represents no change
+*/
+void resetNFA_All(unsigned int bitmask) {
+
+    for(int i = 0; i < NO_MODULES; i++) {
+        if(bitmask & (1<<i)) {
+            // opcode = 3 : Reset state instruction; address : dont care
+            Input3(3, 0, i);
+        }
+    }
+
+    Complete_Handshaking(bitmask);
+
+}
+
+
+/*
+    Function to reset the state of NFA in target module
+    Arguments :
+        module - MODULE_ID of target module where state has to be reset
+*/
+void resetNFA(unsigned int bitmask) {
+
+    // opcode = 3 : Reset state instruction; address : dont care
+    Input3(3, 0, module);
+
+    Complete_Handshaking((1<<module));
+
+}

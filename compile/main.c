@@ -40,7 +40,7 @@ int main() {
     PreProcessAll(patterns);
     PreProcess(pattern2, 2);
 
-    char* text[4] = {"abbadfcabcc","dafabdef","computtercomputers","cc00G9hello0hell"};
+    char* text[4] = {"abbadfcabcc","dafabdef","computterscomputer","cc00G9hello0hell"};
     int index[4] = {0,0,0,0};
     while(1) {
         int OK = (1<<4)-1;
@@ -78,7 +78,7 @@ int main() {
                         myputs("th");
                     break;
                 }
-                myputs(" character");
+                myputs(" character\n");
             }
         }
     }
@@ -89,6 +89,7 @@ int main() {
         myputs(text[3]);
         myputs(" - Matched Pattern : ");
         muputs(patterns[3]);
+        myputs("o");
         myputs(" @ ");
         myputs(index[3]);
         switch(index[3]) {
@@ -105,7 +106,36 @@ int main() {
                 myputs("th");
             break;
         }
-        myputs(" character");
+        myputs(" character\n");
+        index[3]++;
+    }
+
+    resetNFA(2);
+    pattern_status = SimulateNFA('s', 2);
+    if(pattern_status)  {
+        myputs("Text : ");
+        myputs(text[2]);
+        myputs(" - Matched Pattern : ");
+        muputs(pattern2);
+        myputs("s");
+        myputs(" @ ");
+        myputs(index[2]);
+        switch(index[2]) {
+            case 1 : 
+                myputs("st");
+            break;
+            case 2 :
+                myputs("nd");
+            break;
+            case 3 :
+                myputs("rd");
+            break;
+            default ;
+                myputs("th");
+            break;
+        }
+        myputs(" character\n");
+        index[2]++;
     }
 
 

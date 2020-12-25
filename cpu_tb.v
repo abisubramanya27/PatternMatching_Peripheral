@@ -75,7 +75,9 @@ module cpu_tb ();
         .daddr2(daddr2),
         .drdata2(drdata2),
         .dwdata2(dwdata2),
-        .dwe2(dwe2)
+        .dwe2(dwe2),
+        // Interface to Pattern matching peripheral interface
+        .drdata3(drdata3)
     );
 
     // Set up clock

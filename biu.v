@@ -24,16 +24,20 @@ module biu (
     output [31:0] daddr2,
     output [31:0] dwdata2,
     output [3:0]  dwe2,
-    input  [31:0] drdata2
+    input  [31:0] drdata2,
+
+    // Signals going to/from Pattern matching peripheral interface
+    input [31:0] drdata3
 );
 
-    // DMEM memory map is from 0-16383 (i.e) 0x0 to 0x3FFF - in that range drdata to cpu will come from dmem
-    // Output peripheral memory map is from 0x34560 to 0x34567
+    // DMEM memory map is from 0-4194304 (i.e) 0x0 to 0x3FFFFF - in that range drdata to cpu will come from dmem
+    // Memory map for Pattern matching peripheral is from 0x400000 to 0x400013
+    // Output peripheral memory map is from 0x800000 to 0x800007
 
-    // For address ranges other than those intennded for dmem and read memory map of output peripheral, data read is set as 0,
-    // since no other peripheral needs to be memory mapped by BIU in this version
-    assign drdata = (daddr[31:14] == {16'h0000,2'b00}) ? drdata1 : 
-                    (daddr[31:2] == {28'h0003456,2'b01}) ? drdata2 : 0;
+    // For address ranges other than those intended for dmem, output peripheral, pattern matching peripheral - data read is set as 0,
+    assign drdata = (daddr[31:22] == {8'h00, 2'b00}) ? drdata1 : 
+                    (daddr[31:3] == {28'h0080000,1'b0}) ? drdata2 : 
+                    (daddr[31:5] == {24'h004000, 3'b000}) ? drdata3 : 0;
 
     // Data to dmem
     assign daddr1 = daddr;          // address is handled inside the dmem by removing 2 LSB, so doing nothing here

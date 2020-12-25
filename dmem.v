@@ -2,7 +2,7 @@
 `define DMEM_N_FILE(x,y) {x,y,".mem"}
 `define MEMTOP 1048575          // 1MB locations
 
-// 0x0 - 0xFFFFFF -> the memory map for DMEM
+// 0x0 - 0x3FFFFF -> the memory map for DMEM
 
 module dmem (
     input clk,                  // Clock signal - all memory write operations happen at clock posedge
@@ -17,18 +17,18 @@ module dmem (
     reg [7:0] mem1[0:`MEMTOP];  
     reg [7:0] mem2[0:`MEMTOP];  
     reg [7:0] mem3[0:`MEMTOP];  
-    reg [31:0] memt[0:`MEMTOP]; // temp to read
+    // reg [31:0] memt[0:`MEMTOP]; // temp to read
 
     wire [29:0] a;
     integer i;
 
     initial begin 
-        $readmemh({`TESTDIR,"/idata.mem"}, memt); 
-        for (i=0; i<2372; i=i+1) begin
-            mem0[i] = memt[i][ 7: 0];
-            mem1[i] = memt[i][15: 8];
-            mem2[i] = memt[i][23:16];
-            mem3[i] = memt[i][31:24];
+        // $readmemh({`TESTDIR,"/idata.mem"}, memt); 
+        for (i=0; i<`MEMTOP; i=i+1) begin
+            mem0[i] = 0;
+            mem1[i] = 0;
+            mem2[i] = 0;
+            mem3[i] = 0;
         end
     end
 
