@@ -45,7 +45,7 @@ int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned 
     int state_no = -1;
 
     // char_set : sets the characters provided in the character class HIGH
-    int char_set[256] = {0};
+    int char_set[256];
 
     for(int i = 0; !char_class || PATTERN[i] != '\0'; i++) {
         if(!char_class) {

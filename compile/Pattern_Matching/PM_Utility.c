@@ -1,21 +1,22 @@
-#include "./EXT_Parser/EXT.c"
+#include "./EXT_Parser.c"
 
-#define PMM_WRITE_LS32B_OFFSET 0x10000
-#define PMM_WRITE_MS32B_OFFSET 0x10004
-#define PMM_WRITE_CONTROL_OFFSET 0x10008
-#define PMM_READ_DATA_ACCEPTED_OFFSET 0x1000C
-#define PMM_READ_PATTERN_ACCEPTED_OFFSET 0x1000C
+#define PMP_INTERFACE_BASE 0x400000
+#define PMP_WRITE_LS32B_OFFSET 0x00
+#define PMP_WRITE_MS32B_OFFSET 0x04
+#define PMP_WRITE_CONTROL_OFFSET 0x08
+#define PMP_READ_DATA_ACCEPTED_OFFSET 0x0C
+#define PMP_READ_PATTERN_ACCEPTED_OFFSET 0x10
 #define NO_MODULES 4
 
 // Function to write data to Data Buffer (64 bits) in Peripheral Interface. LSB = 1 denotes lower 32 bits, LSB = 0 denotes higher 32 bits
 void Input1_2(unsigned int data, int LSB) {
-    int *p = (LSB) ? (int*)PMM_WRITE_LS32B_OFFSET : (int*)PMM_WRITE_MS32B_OFFSET;
+    int *p = (LSB) ? (int*)(PMP_INTERFACE_BASE + PMP_WRITE_LS32B_OFFSET) : (int*)(PMP_INTERFACE_BASE + PMP_WRITE_MS32B_OFFSET);
     *p  = data;
 }
 
 // The above function overloaded to write long long data to Data Buffer as intended
 void Input1_2LL(long long data) {
-    int *p1 = (int*)PMM_WRITE_LS32B_OFFSET, *p2 = (int*)PMM_WRITE_MS32B_OFFSET;
+    int *p1 = (int*)(PMP_INTERFACE_BASE + PMP_WRITE_LS32B_OFFSET), *p2 = (int*)(PMP_INTERFACE_BASE + PMP_WRITE_MS32B_OFFSET);
     unsigned int LS32B = data & 0xFFFFFFFF, MS32B = data>>32;
     *p1 = LS32B;
     *p2 = MS32B;
@@ -23,7 +24,7 @@ void Input1_2LL(long long data) {
 
 // Function to pass control data to Periperal Interface
 void Input3(int opcode, int address, int module_ID) {
-    int *p = (int *)PMM_WRITE_CONTROL_OFFSET;
+    int *p = (int *)(PMP_INTERFACE_BASE + PMP_WRITE_CONTROL_OFFSET);
     *p = (opcode<<30) | (address<<16) | module_ID;
 }
 
@@ -31,14 +32,14 @@ void Input3(int opcode, int address, int module_ID) {
 // and then sending a No Operation instrucion to make DATA VALID signal low and complete one operation.
 // Returns - the PATTERN_ACCEPTED status
 unsigned int Complete_Handshaking(unsigned int REQD_DATA_ACCEPTED) {
-    int *p1 = (int *)PMM_READ_DATA_ACCEPTED_OFFSET;
+    int *p1 = (int *)(PMP_INTERFACE_BASE + PMP_READ_DATA_ACCEPTED_OFFSET);
     // Waiting till the operations are completed in the modules (under operation)
     while( ((*p1) & REQD_DATA_ACCEPTED) != REQD_DATA_ACCEPTED );
 
-    int *p = (int *)PMM_READ_PATTERN_ACCEPTED_OFFSET;
+    int *p = (int *)(PMP_INTERFACE_BASE + PMP_READ_PATTERN_ACCEPTED_OFFSET);
     unsigned int PATTERN_ACCEPTED_STATUS = (*p);
 
-    int *p2 = (int *)PMM_WRITE_CONTROL_OFFSET;
+    int *p2 = (int *)(PMP_INTERFACE_BASE + PMP_WRITE_CONTROL_OFFSET);
     // Sending a No operation to the necessary modules to conclude the handshaking 
     for(int i = 0; i < NO_MODULES; i++) {
         if(REQD_DATA_ACCEPTED & (1<<i)) {
@@ -306,7 +307,7 @@ int SimulateNFA(char text_char, int module) {
     Arguments :
         bitmask - Ith position 1 represents Ith module has to be reset, 0 represents no change
 */
-void resetNFA_All(unsigned int bitmask) {
+void ResetNFA_All(unsigned int bitmask) {
 
     for(int i = 0; i < NO_MODULES; i++) {
         if(bitmask & (1<<i)) {
@@ -325,7 +326,7 @@ void resetNFA_All(unsigned int bitmask) {
     Arguments :
         module - MODULE_ID of target module where state has to be reset
 */
-void resetNFA(unsigned int bitmask) {
+void ResetNFA(int module) {
 
     // opcode = 3 : Reset state instruction; address : dont care
     Input3(3, 0, module);

@@ -9,7 +9,7 @@ OUTPUT_ARCH(riscv)
 MEMORY
 {
    /* for bare metal verilog */
-   RAM (rwx)  : ORIGIN = 0x00000000, LENGTH = 4MB
+   RAM (rwx)  : ORIGIN = 0x00000000, LENGTH = 4M
 }
 ENTRY(_start)
 SEARCH_DIR("/opt/tools/riscv/riscv32-unknown-elf/lib");

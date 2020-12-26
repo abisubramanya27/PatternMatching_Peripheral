@@ -1,4 +1,4 @@
-#include "./EXT_Parser/EXT.c"
+#include "./Pattern_Matching/PM_Utility.c"
 #include "./STDOUT/outbyte.c"
 
 /*
@@ -34,7 +34,7 @@ int main() {
 
 int main() {
 
-    char* patterns[4] = ["abc+","[abc]{0,2}d[e,f]?","\0","[a-zA-Z][0-9]hello"];
+    char* patterns[4] = {"abc+","[abc]{0,2}d[e,f]?","\0","[a-zA-Z][0-9]hello"};
     char* pattern2 = "computers?";
 
     PreProcessAll(patterns);
@@ -61,9 +61,9 @@ int main() {
                 myputs(text[i]);
                 myputs(" - Matched Pattern : ");
                 if(i == 2) myputs(pattern2);
-                else muputs(patterns[i]);
+                else myputs(patterns[i]);
                 myputs(" @ ");
-                myputs(index[i]);
+                myputs(convert(index[i], 10));
                 switch(index[i]) {
                     case 1 : 
                         myputs("st");
@@ -74,7 +74,7 @@ int main() {
                     case 3 :
                         myputs("rd");
                     break;
-                    default ;
+                    default :
                         myputs("th");
                     break;
                 }
@@ -83,15 +83,15 @@ int main() {
         }
     }
 
-    pattern_status = SimulateNFA('o', 3);
+    int pattern_status = SimulateNFA('o', 3);
     if(pattern_status)  {
         myputs("Text : ");
         myputs(text[3]);
         myputs(" - Matched Pattern : ");
-        muputs(patterns[3]);
+        myputs(patterns[3]);
         myputs("o");
         myputs(" @ ");
-        myputs(index[3]);
+        myputs(convert(index[3], 10));
         switch(index[3]) {
             case 1 : 
                 myputs("st");
@@ -102,7 +102,7 @@ int main() {
             case 3 :
                 myputs("rd");
             break;
-            default ;
+            default :
                 myputs("th");
             break;
         }
@@ -110,16 +110,16 @@ int main() {
         index[3]++;
     }
 
-    resetNFA(2);
+    ResetNFA(2);
     pattern_status = SimulateNFA('s', 2);
     if(pattern_status)  {
         myputs("Text : ");
         myputs(text[2]);
         myputs(" - Matched Pattern : ");
-        muputs(pattern2);
+        myputs(pattern2);
         myputs("s");
         myputs(" @ ");
-        myputs(index[2]);
+        myputs(convert(index[2], 10));
         switch(index[2]) {
             case 1 : 
                 myputs("st");
@@ -130,7 +130,7 @@ int main() {
             case 3 :
                 myputs("rd");
             break;
-            default ;
+            default :
                 myputs("th");
             break;
         }

@@ -3,7 +3,7 @@
 
 // 0x400000 - 0x400013 -> the memory map for Pattern matching peripheral
 
-module PMP_interface(
+module PMP_interface (
     input clk,
     input [31:0] daddr,
     input [31:0] dwdata,

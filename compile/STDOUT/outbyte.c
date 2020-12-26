@@ -2,7 +2,7 @@
 // You could hardcode the address of your peripheral here, but 
 // it is advisable to make it a #define so it is easier to
 // change later if needed
-#define OUTPERIPH_BASE 0x34560
+#define OUTPERIPH_BASE 0x800000
 #define OUTPERIPH_WRITE_OFFSET 0x00
 #define OUTPERIPH_READSTATUS_OFFSET 0x04
 void _outbyte(int c)
@@ -11,7 +11,7 @@ void _outbyte(int c)
         // What you need is to write to the address of the peripheral (as defined in th BIU)
         // Example code here:
         int *p;  // Pointer to integer
-        p = (OUTPERIPH_BASE + OUTPERIPH_WRITE_OFFSET); // Set pointer value directly
+        p = (int *)(OUTPERIPH_BASE + OUTPERIPH_WRITE_OFFSET); // Set pointer value directly
         (*p) = c; // Write the value to the address
 }
 
@@ -34,7 +34,7 @@ int readstatus()
         // Fill in code here
         // Note how the _outbyte function was written, and adapt it to read back the status register
 		int *p;  // Pointer to integer
-        p = (OUTPERIPH_BASE + OUTPERIPH_READSTATUS_OFFSET); // Read value in location pointed by pointer to get no of bytes written
+        p = (int *)(OUTPERIPH_BASE + OUTPERIPH_READSTATUS_OFFSET); // Read value in location pointed by pointer to get no of bytes written
         return (*p);
 }
 
