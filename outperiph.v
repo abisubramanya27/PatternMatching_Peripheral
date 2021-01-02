@@ -1,9 +1,9 @@
 `timescale 1ns/1ps
 `define OUTFILE "output.txt"
 
-// 0x34560 - 0x34567 -> the memory map for Output Peripheral
-// 0x34560 -> base address for writing (offset of 0x00)
-// 0x34564 -> base address for read status (offset of 0x04)
+// 0x800000 to 0x800007 -> the memory map for Output Peripheral
+// 0x800000 -> base address for writing (offset of 0x00)
+// 0x800004 -> base address for read status (offset of 0x04)
 
 module outperiph (
     input clk,
