@@ -17,6 +17,7 @@ module PMP(
 
     always #50 clk = ~clk;          // 10 MHz clock
 
+    integer i;
     initial begin
         clk = 1;
         data_accepted = 0;

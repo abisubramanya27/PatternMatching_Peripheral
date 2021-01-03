@@ -22,16 +22,17 @@ module PMP_interface (
     wire [31:0] pmp_pattern_acc;
     
     PMP u7(
-        .data(pmp_data),         // Output
-        .control(pmp_control),   // Output
-        .data_ready(data_ready), // Output
-        .data_accepted(pmp_data_acc),    // Input
+        .data(pmp_data),                     // Output
+        .control(pmp_control),               // Output
+        .data_ready(data_ready),             // Output
+        .data_accepted(pmp_data_acc),        // Input
         .pattern_accepted(pmp_pattern_acc)   // Input
-    )
+    );
 
     wire [29:0] a;
     assign a = daddr[31:2];
-
+    
+    integer i;
     initial begin  
         for (i=0; i<8; i=i+1) begin
             data_buffer[i] = 0;
@@ -46,26 +47,26 @@ module PMP_interface (
     end
 
     // Reading data only when dwe is low and the correct target address is specified
-    assign drdata = (a == {28'004000, 2'b11} && dwe == 0) ? data_accepted :
-                    (a == {28'004001, 2'b00} && dwe == 0) ? pattern_accepted : 0;
+    assign drdata = (a == {28'h004000, 2'b11} && dwe == 0) ? data_accepted :
+                    (a == {28'h004001, 2'b00} && dwe == 0) ? pattern_accepted : 0;
     
     always @(posedge clk) begin
         // Writing to DATA_BUFFER's LSB and MSB 32 bits
-        if (a == {28'0040000, 2'b00} || a == {28'0040000, 2'b01}) begin
+        if (a == {28'h0040000, 2'b00} || a == {28'h0040000, 2'b01}) begin
             if (!reset && dwe[3]) data_buffer[{a[0], 2'd3}] <= dwdata[31:24];
             if (!reset && dwe[2]) data_buffer[{a[0], 2'd2}] <= dwdata[23:16];
             if (!reset && dwe[1]) data_buffer[{a[0], 2'd1}] <= dwdata[15: 8];
             if (!reset && dwe[0]) data_buffer[{a[0], 2'd0}] <= dwdata[ 7: 0];
         end
         // Sending data and control values to target modules 
-        else if (a == {28'004000, 2'b10} && dwe[3:0] == 4'b1111 && dwdata[31] == 1'b0) begin 
+        else if (a == {28'h004000, 2'b10} && dwe[3:0] == 4'b1111 && dwdata[31] == 1'b0) begin 
             pmp_control[dwdata[`NO_BITS:0]] <= dwdata[30:15];
             pmp_data[dwdata[`NO_BITS:0]] <= {data_buffer[7], data_buffer[6], data_buffer[5], data_buffer[4], data_buffer[3], data_buffer[2], data_buffer[1], data_buffer[0]};
             // Writing DATA_READY from PMM_CONTROL; 0 will be written in case of No Operation instruction, and 1 otherwise
             data_ready[dwdata[`NO_BITS:0]] <= (dwdata[30:29] == 2'b00) ? 0 : 1;
         end
         // Sending data and control values to all modules 
-        else if (a == {28'004000, 2'b10} && dwe[3:0] == 4'b1111 && dwdata[31] == 1'b1) begin
+        else if (a == {28'h004000, 2'b10} && dwe[3:0] == 4'b1111 && dwdata[31] == 1'b1) begin
             pmp_control[0] <= dwdata[30:15];
             pmp_control[1] <= dwdata[30:15];
             pmp_control[2] <= dwdata[30:15];
