@@ -34,6 +34,8 @@ int main() {
 
 int main() {
 
+    myputs("Hello world");
+
     char* patterns[4] = {"abc+","[abc]{0,3}d[e,f]?","\0","[a-zA-Z][0-9]hello"};
     char* pattern2 = "computers?";
 

@@ -17,7 +17,7 @@ cd compile  && echo "Compiling in $PWD"
 # Go back to parent directory with verilog code
 cd ../
 # You may need to change NCYCLES below
-iverilog -DNCYCLES=$NCYCLES -DOUTFILE=$OUTFILE -DTESTDIR=\"./test\" -o cpu_tb -c program_file.txt
+iverilog -DNCYCLES=$NCYCLES -DOUTFILE=$OUTFILE -DTESTDIR=\"./test\" -g2012 -o cpu_tb -c program_file.txt
 ./cpu_tb 
 
 # Check the output in OUTFILE

@@ -14,13 +14,13 @@ module PMM(
 	reg[63:0] Memory[0:516];
 
 	// Registers and wires for Simulation NFA
-	wire[63:0] REP_POS[0:255]; 		// REP_POS is an alias for SELFLOOP
-	wire[63:0] MOVE[0:255];
-	wire[63:0] Eps_BEG;
-	wire[63:0] Eps_BLK;
-	wire[63:0] Eps_END;
-	wire[63:0] INIT;
-	wire[63:0] ACCEPT;
+	reg[63:0] REP_POS[0:255]; 		// REP_POS is an alias for SELFLOOP
+	reg[63:0] MOVE[0:255];
+	reg[63:0] Eps_BEG;
+	reg[63:0] Eps_BLK;
+	reg[63:0] Eps_END;
+	reg[63:0] INIT;
+	reg[63:0] ACCEPT;
 	reg[63:0] STATE;
 	reg[63:0] HIGH;
 	reg[63:0] LOW;
@@ -57,16 +57,22 @@ module PMM(
 		LOW       = 0;
 		TMP_STATE = 0;
 		NEW_STATE = 0;
+		READY_STATUS = 0;
+		ACCEPTED_STATUS = 0;
 	end
 
 	// Decoding the Parameters
-	assign REP_POS = Memory[0:255][63:0];
-	assign MOVE    = Memory[256:511][63:0];
-	assign Eps_BEG = Memory[512][63:0];
-	assign Eps_BLK = Memory[513][63:0];
-	assign Eps_END = Memory[514][63:0];
-	assign INIT    = Memory[515][63:0];
-	assign ACCEPT  = Memory[516][63:0];
+	always @(*) begin
+		for(i = 0;i < 256;i=i+1) begin
+			REP_POS[i] = Memory[i];
+			MOVE[i]    = Memory[256+i];
+		end
+		Eps_BEG = Memory[512];
+		Eps_BLK = Memory[513];
+		Eps_END = Memory[514];
+		INIT    = Memory[515];
+		ACCEPT  = Memory[516];
+	end
 
 	// Breaking down the control signal into opcode and address
 	assign Opcode = INP_CONTROL[15:14];

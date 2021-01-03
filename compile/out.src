@@ -12,7 +12,7 @@ _start:
     .option norelax
     la gp, __global_pointer$
    0:	00003197          	auipc	x3,0x3
-   4:	2b018193          	addi	x3,x3,688 # 32b0 <__global_pointer$>
+   4:	2c818193          	addi	x3,x3,712 # 32c8 <__global_pointer$>
     .option pop
     la sp, __stack_top
    8:	00400117          	auipc	x2,0x400
@@ -649,7 +649,7 @@ int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned 
      7dc:	08f76a63          	bltu	x14,x15,870 <parseEXT+0x858>
      7e0:	00279713          	slli	x14,x15,0x2
      7e4:	000027b7          	lui	x15,0x2
-     7e8:	78c78793          	addi	x15,x15,1932 # 278c <main+0x724>
+     7e8:	79878793          	addi	x15,x15,1944 # 2798 <main+0x730>
      7ec:	00f707b3          	add	x15,x14,x15
      7f0:	0007a783          	lw	x15,0(x15)
      7f4:	00078067          	jalr	x0,0(x15)
@@ -902,7 +902,7 @@ int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned 
      ad8:	08f76a63          	bltu	x14,x15,b6c <parseEXT+0xb54>
      adc:	00279713          	slli	x14,x15,0x2
      ae0:	000037b7          	lui	x15,0x3
-     ae4:	8a878793          	addi	x15,x15,-1880 # 28a8 <main+0x840>
+     ae4:	8b478793          	addi	x15,x15,-1868 # 28b4 <main+0x84c>
      ae8:	00f707b3          	add	x15,x14,x15
      aec:	0007a783          	lw	x15,0(x15)
      af0:	00078067          	jalr	x0,0(x15)
@@ -1187,7 +1187,7 @@ void Input3(int mode, int opcode, int address, int module_ID) {
      df0:	00f76733          	or	x14,x14,x15
      df4:	fd042683          	lw	x13,-48(x8)
      df8:	000087b7          	lui	x15,0x8
-     dfc:	fff78793          	addi	x15,x15,-1 # 7fff <__SDATA_BEGIN__+0x454f>
+     dfc:	fff78793          	addi	x15,x15,-1 # 7fff <__SDATA_BEGIN__+0x4537>
      e00:	00f6f7b3          	and	x15,x13,x15
      e04:	00f76733          	or	x14,x14,x15
      e08:	fec42783          	lw	x15,-20(x8)
@@ -2700,7 +2700,7 @@ void outbyte(int c)
     1e5c:	fec42703          	lw	x14,-20(x8)
     1e60:	00a00793          	addi	x15,x0,10
     1e64:	00f71c63          	bne	x14,x15,1e7c <outbyte+0x70>
-    1e68:	8141c703          	lbu	x14,-2028(x3) # 2ac4 <prev.2>
+    1e68:	8141c703          	lbu	x14,-2028(x3) # 2adc <prev.2>
     1e6c:	00d00793          	addi	x15,x0,13
     1e70:	00f70663          	beq	x14,x15,1e7c <outbyte+0x70>
     1e74:	00d00513          	addi	x10,x0,13
@@ -2711,7 +2711,7 @@ void outbyte(int c)
         prev = c;
     1e84:	fec42783          	lw	x15,-20(x8)
     1e88:	0ff7f713          	andi	x14,x15,255
-    1e8c:	80e18a23          	sb	x14,-2028(x3) # 2ac4 <prev.2>
+    1e8c:	80e18a23          	sb	x14,-2028(x3) # 2adc <prev.2>
     1e90:	0080006f          	jal	x0,1e98 <outbyte+0x8c>
                 return;
     1e94:	00000013          	addi	x0,x0,0
@@ -2828,7 +2828,7 @@ char *convert(unsigned int num, int base)
 	char *ptr; 
 	
 	ptr = &buffer[49]; 
-    1f90:	84918793          	addi	x15,x3,-1975 # 2af9 <buffer.1+0x31>
+    1f90:	84918793          	addi	x15,x3,-1975 # 2b11 <buffer.1+0x31>
     1f94:	fef42623          	sw	x15,-20(x8)
 	*ptr = '\0'; 
     1f98:	fec42783          	lw	x15,-20(x8)
@@ -2847,7 +2847,7 @@ char *convert(unsigned int num, int base)
     1fb8:	fff78793          	addi	x15,x15,-1
     1fbc:	fef42623          	sw	x15,-20(x8)
     1fc0:	000037b7          	lui	x15,0x3
-    1fc4:	ab078713          	addi	x14,x15,-1360 # 2ab0 <Representation.0>
+    1fc4:	ac878713          	addi	x14,x15,-1336 # 2ac8 <Representation.0>
     1fc8:	fe842783          	lw	x15,-24(x8)
     1fcc:	00f707b3          	add	x15,x14,x15
     1fd0:	0007c703          	lbu	x14,0(x15)
@@ -2918,574 +2918,579 @@ int main() {
     2070:	06812423          	sw	x8,104(x2)
     2074:	07010413          	addi	x8,x2,112
 
-    char* patterns[4] = {"abc+","[abc]{0,3}d[e,f]?","\0","[a-zA-Z][0-9]hello"};
+    myputs("Hello world");
     2078:	000037b7          	lui	x15,0x3
-    207c:	a6478793          	addi	x15,x15,-1436 # 2a64 <main+0x9fc>
-    2080:	0007a603          	lw	x12,0(x15)
-    2084:	0047a683          	lw	x13,4(x15)
-    2088:	0087a703          	lw	x14,8(x15)
-    208c:	00c7a783          	lw	x15,12(x15)
-    2090:	fac42e23          	sw	x12,-68(x8)
-    2094:	fcd42023          	sw	x13,-64(x8)
-    2098:	fce42223          	sw	x14,-60(x8)
-    209c:	fcf42423          	sw	x15,-56(x8)
+    207c:	9d078513          	addi	x10,x15,-1584 # 29d0 <main+0x968>
+    2080:	f95ff0ef          	jal	x1,2014 <myputs>
+
+    char* patterns[4] = {"abc+","[abc]{0,3}d[e,f]?","\0","[a-zA-Z][0-9]hello"};
+    2084:	000037b7          	lui	x15,0x3
+    2088:	a7c78793          	addi	x15,x15,-1412 # 2a7c <main+0xa14>
+    208c:	0007a603          	lw	x12,0(x15)
+    2090:	0047a683          	lw	x13,4(x15)
+    2094:	0087a703          	lw	x14,8(x15)
+    2098:	00c7a783          	lw	x15,12(x15)
+    209c:	fac42e23          	sw	x12,-68(x8)
+    20a0:	fcd42023          	sw	x13,-64(x8)
+    20a4:	fce42223          	sw	x14,-60(x8)
+    20a8:	fcf42423          	sw	x15,-56(x8)
     char* pattern2 = "computers?";
-    20a0:	000037b7          	lui	x15,0x3
-    20a4:	9c478793          	addi	x15,x15,-1596 # 29c4 <main+0x95c>
-    20a8:	fcf42c23          	sw	x15,-40(x8)
+    20ac:	000037b7          	lui	x15,0x3
+    20b0:	9dc78793          	addi	x15,x15,-1572 # 29dc <main+0x974>
+    20b4:	fcf42c23          	sw	x15,-40(x8)
 
     PreProcessAll_M0(patterns);
-    20ac:	fbc40793          	addi	x15,x8,-68
-    20b0:	00078513          	addi	x10,x15,0
-    20b4:	e45fe0ef          	jal	x1,ef8 <PreProcessAll_M0>
+    20b8:	fbc40793          	addi	x15,x8,-68
+    20bc:	00078513          	addi	x10,x15,0
+    20c0:	e39fe0ef          	jal	x1,ef8 <PreProcessAll_M0>
     PreProcess(pattern2, 2);
-    20b8:	00200593          	addi	x11,x0,2
-    20bc:	fd842503          	lw	x10,-40(x8)
-    20c0:	edcff0ef          	jal	x1,179c <PreProcess>
+    20c4:	00200593          	addi	x11,x0,2
+    20c8:	fd842503          	lw	x10,-40(x8)
+    20cc:	ed0ff0ef          	jal	x1,179c <PreProcess>
 
     // Parallel independent text matching
     char* text[4] = {"abbadfcabcc","dafabdef","computterscomputer","cc00G9hello0hell"};
-    20c4:	000037b7          	lui	x15,0x3
-    20c8:	a7478793          	addi	x15,x15,-1420 # 2a74 <main+0xa0c>
-    20cc:	0007a603          	lw	x12,0(x15)
-    20d0:	0047a683          	lw	x13,4(x15)
-    20d4:	0087a703          	lw	x14,8(x15)
-    20d8:	00c7a783          	lw	x15,12(x15)
-    20dc:	fac42623          	sw	x12,-84(x8)
-    20e0:	fad42823          	sw	x13,-80(x8)
-    20e4:	fae42a23          	sw	x14,-76(x8)
-    20e8:	faf42c23          	sw	x15,-72(x8)
+    20d0:	000037b7          	lui	x15,0x3
+    20d4:	a8c78793          	addi	x15,x15,-1396 # 2a8c <main+0xa24>
+    20d8:	0007a603          	lw	x12,0(x15)
+    20dc:	0047a683          	lw	x13,4(x15)
+    20e0:	0087a703          	lw	x14,8(x15)
+    20e4:	00c7a783          	lw	x15,12(x15)
+    20e8:	fac42623          	sw	x12,-84(x8)
+    20ec:	fad42823          	sw	x13,-80(x8)
+    20f0:	fae42a23          	sw	x14,-76(x8)
+    20f4:	faf42c23          	sw	x15,-72(x8)
     int index[4] = {0,0,0,0};
-    20ec:	f8042e23          	sw	x0,-100(x8)
-    20f0:	fa042023          	sw	x0,-96(x8)
-    20f4:	fa042223          	sw	x0,-92(x8)
-    20f8:	fa042423          	sw	x0,-88(x8)
+    20f8:	f8042e23          	sw	x0,-100(x8)
+    20fc:	fa042023          	sw	x0,-96(x8)
+    2100:	fa042223          	sw	x0,-92(x8)
+    2104:	fa042423          	sw	x0,-88(x8)
     while(1) {
         int OK = (1<<4)-1;
-    20fc:	00f00793          	addi	x15,x0,15
-    2100:	fef42623          	sw	x15,-20(x8)
+    2108:	00f00793          	addi	x15,x0,15
+    210c:	fef42623          	sw	x15,-20(x8)
         char text_chars[4];
         for(int i = 0; i < 4; i++) {
-    2104:	fe042423          	sw	x0,-24(x8)
-    2108:	0cc0006f          	jal	x0,21d4 <main+0x16c>
+    2110:	fe042423          	sw	x0,-24(x8)
+    2114:	0cc0006f          	jal	x0,21e0 <main+0x178>
             if(text[i][index[i]] == '\0') OK ^= (1<<i);
-    210c:	fe842783          	lw	x15,-24(x8)
-    2110:	00279793          	slli	x15,x15,0x2
-    2114:	ff040713          	addi	x14,x8,-16
-    2118:	00f707b3          	add	x15,x14,x15
-    211c:	fbc7a703          	lw	x14,-68(x15)
-    2120:	fe842783          	lw	x15,-24(x8)
-    2124:	00279793          	slli	x15,x15,0x2
-    2128:	ff040693          	addi	x13,x8,-16
-    212c:	00f687b3          	add	x15,x13,x15
-    2130:	fac7a783          	lw	x15,-84(x15)
-    2134:	00f707b3          	add	x15,x14,x15
-    2138:	0007c783          	lbu	x15,0(x15)
-    213c:	02079063          	bne	x15,x0,215c <main+0xf4>
-    2140:	fe842783          	lw	x15,-24(x8)
-    2144:	00100713          	addi	x14,x0,1
-    2148:	00f717b3          	sll	x15,x14,x15
-    214c:	fec42703          	lw	x14,-20(x8)
-    2150:	00f747b3          	xor	x15,x14,x15
-    2154:	fef42623          	sw	x15,-20(x8)
-    2158:	0700006f          	jal	x0,21c8 <main+0x160>
+    2118:	fe842783          	lw	x15,-24(x8)
+    211c:	00279793          	slli	x15,x15,0x2
+    2120:	ff040713          	addi	x14,x8,-16
+    2124:	00f707b3          	add	x15,x14,x15
+    2128:	fbc7a703          	lw	x14,-68(x15)
+    212c:	fe842783          	lw	x15,-24(x8)
+    2130:	00279793          	slli	x15,x15,0x2
+    2134:	ff040693          	addi	x13,x8,-16
+    2138:	00f687b3          	add	x15,x13,x15
+    213c:	fac7a783          	lw	x15,-84(x15)
+    2140:	00f707b3          	add	x15,x14,x15
+    2144:	0007c783          	lbu	x15,0(x15)
+    2148:	02079063          	bne	x15,x0,2168 <main+0x100>
+    214c:	fe842783          	lw	x15,-24(x8)
+    2150:	00100713          	addi	x14,x0,1
+    2154:	00f717b3          	sll	x15,x14,x15
+    2158:	fec42703          	lw	x14,-20(x8)
+    215c:	00f747b3          	xor	x15,x14,x15
+    2160:	fef42623          	sw	x15,-20(x8)
+    2164:	0700006f          	jal	x0,21d4 <main+0x16c>
             else {
                text_chars[i] = text[i][index[i]];
-    215c:	fe842783          	lw	x15,-24(x8)
-    2160:	00279793          	slli	x15,x15,0x2
-    2164:	ff040713          	addi	x14,x8,-16
-    2168:	00f707b3          	add	x15,x14,x15
-    216c:	fbc7a703          	lw	x14,-68(x15)
-    2170:	fe842783          	lw	x15,-24(x8)
-    2174:	00279793          	slli	x15,x15,0x2
-    2178:	ff040693          	addi	x13,x8,-16
-    217c:	00f687b3          	add	x15,x13,x15
-    2180:	fac7a783          	lw	x15,-84(x15)
-    2184:	00f707b3          	add	x15,x14,x15
-    2188:	0007c703          	lbu	x14,0(x15)
-    218c:	fe842783          	lw	x15,-24(x8)
-    2190:	ff040693          	addi	x13,x8,-16
-    2194:	00f687b3          	add	x15,x13,x15
-    2198:	fae78423          	sb	x14,-88(x15)
+    2168:	fe842783          	lw	x15,-24(x8)
+    216c:	00279793          	slli	x15,x15,0x2
+    2170:	ff040713          	addi	x14,x8,-16
+    2174:	00f707b3          	add	x15,x14,x15
+    2178:	fbc7a703          	lw	x14,-68(x15)
+    217c:	fe842783          	lw	x15,-24(x8)
+    2180:	00279793          	slli	x15,x15,0x2
+    2184:	ff040693          	addi	x13,x8,-16
+    2188:	00f687b3          	add	x15,x13,x15
+    218c:	fac7a783          	lw	x15,-84(x15)
+    2190:	00f707b3          	add	x15,x14,x15
+    2194:	0007c703          	lbu	x14,0(x15)
+    2198:	fe842783          	lw	x15,-24(x8)
+    219c:	ff040693          	addi	x13,x8,-16
+    21a0:	00f687b3          	add	x15,x13,x15
+    21a4:	fae78423          	sb	x14,-88(x15)
                index[i]++; 
-    219c:	fe842783          	lw	x15,-24(x8)
-    21a0:	00279793          	slli	x15,x15,0x2
-    21a4:	ff040713          	addi	x14,x8,-16
-    21a8:	00f707b3          	add	x15,x14,x15
-    21ac:	fac7a783          	lw	x15,-84(x15)
-    21b0:	00178713          	addi	x14,x15,1
-    21b4:	fe842783          	lw	x15,-24(x8)
-    21b8:	00279793          	slli	x15,x15,0x2
-    21bc:	ff040693          	addi	x13,x8,-16
-    21c0:	00f687b3          	add	x15,x13,x15
-    21c4:	fae7a623          	sw	x14,-84(x15)
+    21a8:	fe842783          	lw	x15,-24(x8)
+    21ac:	00279793          	slli	x15,x15,0x2
+    21b0:	ff040713          	addi	x14,x8,-16
+    21b4:	00f707b3          	add	x15,x14,x15
+    21b8:	fac7a783          	lw	x15,-84(x15)
+    21bc:	00178713          	addi	x14,x15,1
+    21c0:	fe842783          	lw	x15,-24(x8)
+    21c4:	00279793          	slli	x15,x15,0x2
+    21c8:	ff040693          	addi	x13,x8,-16
+    21cc:	00f687b3          	add	x15,x13,x15
+    21d0:	fae7a623          	sw	x14,-84(x15)
         for(int i = 0; i < 4; i++) {
-    21c8:	fe842783          	lw	x15,-24(x8)
-    21cc:	00178793          	addi	x15,x15,1
-    21d0:	fef42423          	sw	x15,-24(x8)
-    21d4:	fe842703          	lw	x14,-24(x8)
-    21d8:	00300793          	addi	x15,x0,3
-    21dc:	f2e7d8e3          	bge	x15,x14,210c <main+0xa4>
+    21d4:	fe842783          	lw	x15,-24(x8)
+    21d8:	00178793          	addi	x15,x15,1
+    21dc:	fef42423          	sw	x15,-24(x8)
+    21e0:	fe842703          	lw	x14,-24(x8)
+    21e4:	00300793          	addi	x15,x0,3
+    21e8:	f2e7d8e3          	bge	x15,x14,2118 <main+0xb0>
             }
         }
         if(!OK) break;
-    21e0:	fec42783          	lw	x15,-20(x8)
-    21e4:	02079263          	bne	x15,x0,2208 <main+0x1a0>
+    21ec:	fec42783          	lw	x15,-20(x8)
+    21f0:	02079263          	bne	x15,x0,2214 <main+0x1ac>
             }
         }
     }
 
     // Checking SimulateNFA
     unsigned int pattern_status = SimulateNFA('o', 3);
-    21e8:	00300593          	addi	x11,x0,3
-    21ec:	06f00513          	addi	x10,x0,111
-    21f0:	a45ff0ef          	jal	x1,1c34 <SimulateNFA>
-    21f4:	00050793          	addi	x15,x10,0
-    21f8:	fcf42823          	sw	x15,-48(x8)
+    21f4:	00300593          	addi	x11,x0,3
+    21f8:	06f00513          	addi	x10,x0,111
+    21fc:	a39ff0ef          	jal	x1,1c34 <SimulateNFA>
+    2200:	00050793          	addi	x15,x10,0
+    2204:	fcf42823          	sw	x15,-48(x8)
     if(pattern_status)  {
-    21fc:	fd042783          	lw	x15,-48(x8)
-    2200:	18079063          	bne	x15,x0,2380 <main+0x318>
-    2204:	2600006f          	jal	x0,2464 <main+0x3fc>
+    2208:	fd042783          	lw	x15,-48(x8)
+    220c:	18079063          	bne	x15,x0,238c <main+0x324>
+    2210:	2600006f          	jal	x0,2470 <main+0x408>
         unsigned int pattern_status = SimulateNFA_All_M0(text_chars);
-    2208:	f9840793          	addi	x15,x8,-104
-    220c:	00078513          	addi	x10,x15,0
-    2210:	8f1ff0ef          	jal	x1,1b00 <SimulateNFA_All_M0>
-    2214:	00050793          	addi	x15,x10,0
-    2218:	fcf42a23          	sw	x15,-44(x8)
+    2214:	f9840793          	addi	x15,x8,-104
+    2218:	00078513          	addi	x10,x15,0
+    221c:	8e5ff0ef          	jal	x1,1b00 <SimulateNFA_All_M0>
+    2220:	00050793          	addi	x15,x10,0
+    2224:	fcf42a23          	sw	x15,-44(x8)
         for(int i = 0; i < 4; i++) {
-    221c:	fe042223          	sw	x0,-28(x8)
-    2220:	1500006f          	jal	x0,2370 <main+0x308>
+    2228:	fe042223          	sw	x0,-28(x8)
+    222c:	1500006f          	jal	x0,237c <main+0x314>
             if(pattern_status & (1<<i))  {
-    2224:	fe442783          	lw	x15,-28(x8)
-    2228:	00100713          	addi	x14,x0,1
-    222c:	00f717b3          	sll	x15,x14,x15
-    2230:	00078713          	addi	x14,x15,0
-    2234:	fd442783          	lw	x15,-44(x8)
-    2238:	00f777b3          	and	x15,x14,x15
-    223c:	12078463          	beq	x15,x0,2364 <main+0x2fc>
+    2230:	fe442783          	lw	x15,-28(x8)
+    2234:	00100713          	addi	x14,x0,1
+    2238:	00f717b3          	sll	x15,x14,x15
+    223c:	00078713          	addi	x14,x15,0
+    2240:	fd442783          	lw	x15,-44(x8)
+    2244:	00f777b3          	and	x15,x14,x15
+    2248:	12078463          	beq	x15,x0,2370 <main+0x308>
                 myputs("Text : \n");
-    2240:	000037b7          	lui	x15,0x3
-    2244:	9d078513          	addi	x10,x15,-1584 # 29d0 <main+0x968>
-    2248:	dcdff0ef          	jal	x1,2014 <myputs>
+    224c:	000037b7          	lui	x15,0x3
+    2250:	9e878513          	addi	x10,x15,-1560 # 29e8 <main+0x980>
+    2254:	dc1ff0ef          	jal	x1,2014 <myputs>
                 myputs(text[i]);
-    224c:	fe442783          	lw	x15,-28(x8)
-    2250:	00279793          	slli	x15,x15,0x2
-    2254:	ff040713          	addi	x14,x8,-16
-    2258:	00f707b3          	add	x15,x14,x15
-    225c:	fbc7a783          	lw	x15,-68(x15)
-    2260:	00078513          	addi	x10,x15,0
-    2264:	db1ff0ef          	jal	x1,2014 <myputs>
-                myputs("\n--- Matched Pattern : \n");
-    2268:	000037b7          	lui	x15,0x3
-    226c:	9dc78513          	addi	x10,x15,-1572 # 29dc <main+0x974>
+    2258:	fe442783          	lw	x15,-28(x8)
+    225c:	00279793          	slli	x15,x15,0x2
+    2260:	ff040713          	addi	x14,x8,-16
+    2264:	00f707b3          	add	x15,x14,x15
+    2268:	fbc7a783          	lw	x15,-68(x15)
+    226c:	00078513          	addi	x10,x15,0
     2270:	da5ff0ef          	jal	x1,2014 <myputs>
+                myputs("\n--- Matched Pattern : \n");
+    2274:	000037b7          	lui	x15,0x3
+    2278:	9f478513          	addi	x10,x15,-1548 # 29f4 <main+0x98c>
+    227c:	d99ff0ef          	jal	x1,2014 <myputs>
                 if(i == 2) myputs(pattern2);
-    2274:	fe442703          	lw	x14,-28(x8)
-    2278:	00200793          	addi	x15,x0,2
-    227c:	00f71863          	bne	x14,x15,228c <main+0x224>
-    2280:	fd842503          	lw	x10,-40(x8)
-    2284:	d91ff0ef          	jal	x1,2014 <myputs>
-    2288:	0200006f          	jal	x0,22a8 <main+0x240>
+    2280:	fe442703          	lw	x14,-28(x8)
+    2284:	00200793          	addi	x15,x0,2
+    2288:	00f71863          	bne	x14,x15,2298 <main+0x230>
+    228c:	fd842503          	lw	x10,-40(x8)
+    2290:	d85ff0ef          	jal	x1,2014 <myputs>
+    2294:	0200006f          	jal	x0,22b4 <main+0x24c>
                 else myputs(patterns[i]);
-    228c:	fe442783          	lw	x15,-28(x8)
-    2290:	00279793          	slli	x15,x15,0x2
-    2294:	ff040713          	addi	x14,x8,-16
-    2298:	00f707b3          	add	x15,x14,x15
-    229c:	fcc7a783          	lw	x15,-52(x15)
-    22a0:	00078513          	addi	x10,x15,0
-    22a4:	d71ff0ef          	jal	x1,2014 <myputs>
-                myputs("\n@ ");
-    22a8:	000037b7          	lui	x15,0x3
-    22ac:	9f878513          	addi	x10,x15,-1544 # 29f8 <main+0x990>
+    2298:	fe442783          	lw	x15,-28(x8)
+    229c:	00279793          	slli	x15,x15,0x2
+    22a0:	ff040713          	addi	x14,x8,-16
+    22a4:	00f707b3          	add	x15,x14,x15
+    22a8:	fcc7a783          	lw	x15,-52(x15)
+    22ac:	00078513          	addi	x10,x15,0
     22b0:	d65ff0ef          	jal	x1,2014 <myputs>
+                myputs("\n@ ");
+    22b4:	000037b7          	lui	x15,0x3
+    22b8:	a1078513          	addi	x10,x15,-1520 # 2a10 <main+0x9a8>
+    22bc:	d59ff0ef          	jal	x1,2014 <myputs>
                 myputs(convert(index[i], 10));
-    22b4:	fe442783          	lw	x15,-28(x8)
-    22b8:	00279793          	slli	x15,x15,0x2
-    22bc:	ff040713          	addi	x14,x8,-16
-    22c0:	00f707b3          	add	x15,x14,x15
-    22c4:	fac7a783          	lw	x15,-84(x15)
-    22c8:	00a00593          	addi	x11,x0,10
-    22cc:	00078513          	addi	x10,x15,0
-    22d0:	ca9ff0ef          	jal	x1,1f78 <convert>
-    22d4:	00050793          	addi	x15,x10,0
+    22c0:	fe442783          	lw	x15,-28(x8)
+    22c4:	00279793          	slli	x15,x15,0x2
+    22c8:	ff040713          	addi	x14,x8,-16
+    22cc:	00f707b3          	add	x15,x14,x15
+    22d0:	fac7a783          	lw	x15,-84(x15)
+    22d4:	00a00593          	addi	x11,x0,10
     22d8:	00078513          	addi	x10,x15,0
-    22dc:	d39ff0ef          	jal	x1,2014 <myputs>
+    22dc:	c9dff0ef          	jal	x1,1f78 <convert>
+    22e0:	00050793          	addi	x15,x10,0
+    22e4:	00078513          	addi	x10,x15,0
+    22e8:	d2dff0ef          	jal	x1,2014 <myputs>
                 switch(index[i]) {
-    22e0:	fe442783          	lw	x15,-28(x8)
-    22e4:	00279793          	slli	x15,x15,0x2
-    22e8:	ff040713          	addi	x14,x8,-16
-    22ec:	00f707b3          	add	x15,x14,x15
-    22f0:	fac7a783          	lw	x15,-84(x15)
-    22f4:	00300713          	addi	x14,x0,3
-    22f8:	04e78063          	beq	x15,x14,2338 <main+0x2d0>
-    22fc:	00300713          	addi	x14,x0,3
-    2300:	04f74463          	blt	x14,x15,2348 <main+0x2e0>
-    2304:	00100713          	addi	x14,x0,1
-    2308:	00e78863          	beq	x15,x14,2318 <main+0x2b0>
-    230c:	00200713          	addi	x14,x0,2
-    2310:	00e78c63          	beq	x15,x14,2328 <main+0x2c0>
-    2314:	0340006f          	jal	x0,2348 <main+0x2e0>
+    22ec:	fe442783          	lw	x15,-28(x8)
+    22f0:	00279793          	slli	x15,x15,0x2
+    22f4:	ff040713          	addi	x14,x8,-16
+    22f8:	00f707b3          	add	x15,x14,x15
+    22fc:	fac7a783          	lw	x15,-84(x15)
+    2300:	00300713          	addi	x14,x0,3
+    2304:	04e78063          	beq	x15,x14,2344 <main+0x2dc>
+    2308:	00300713          	addi	x14,x0,3
+    230c:	04f74463          	blt	x14,x15,2354 <main+0x2ec>
+    2310:	00100713          	addi	x14,x0,1
+    2314:	00e78863          	beq	x15,x14,2324 <main+0x2bc>
+    2318:	00200713          	addi	x14,x0,2
+    231c:	00e78c63          	beq	x15,x14,2334 <main+0x2cc>
+    2320:	0340006f          	jal	x0,2354 <main+0x2ec>
                         myputs("st");
-    2318:	000037b7          	lui	x15,0x3
-    231c:	9fc78513          	addi	x10,x15,-1540 # 29fc <main+0x994>
-    2320:	cf5ff0ef          	jal	x1,2014 <myputs>
+    2324:	000037b7          	lui	x15,0x3
+    2328:	a1478513          	addi	x10,x15,-1516 # 2a14 <main+0x9ac>
+    232c:	ce9ff0ef          	jal	x1,2014 <myputs>
                     break;
-    2324:	0340006f          	jal	x0,2358 <main+0x2f0>
+    2330:	0340006f          	jal	x0,2364 <main+0x2fc>
                         myputs("nd");
-    2328:	000037b7          	lui	x15,0x3
-    232c:	a0078513          	addi	x10,x15,-1536 # 2a00 <main+0x998>
-    2330:	ce5ff0ef          	jal	x1,2014 <myputs>
+    2334:	000037b7          	lui	x15,0x3
+    2338:	a1878513          	addi	x10,x15,-1512 # 2a18 <main+0x9b0>
+    233c:	cd9ff0ef          	jal	x1,2014 <myputs>
                     break;
-    2334:	0240006f          	jal	x0,2358 <main+0x2f0>
+    2340:	0240006f          	jal	x0,2364 <main+0x2fc>
                         myputs("rd");
-    2338:	000037b7          	lui	x15,0x3
-    233c:	a0478513          	addi	x10,x15,-1532 # 2a04 <main+0x99c>
-    2340:	cd5ff0ef          	jal	x1,2014 <myputs>
+    2344:	000037b7          	lui	x15,0x3
+    2348:	a1c78513          	addi	x10,x15,-1508 # 2a1c <main+0x9b4>
+    234c:	cc9ff0ef          	jal	x1,2014 <myputs>
                     break;
-    2344:	0140006f          	jal	x0,2358 <main+0x2f0>
+    2350:	0140006f          	jal	x0,2364 <main+0x2fc>
                         myputs("th");
-    2348:	000037b7          	lui	x15,0x3
-    234c:	a0878513          	addi	x10,x15,-1528 # 2a08 <main+0x9a0>
-    2350:	cc5ff0ef          	jal	x1,2014 <myputs>
+    2354:	000037b7          	lui	x15,0x3
+    2358:	a2078513          	addi	x10,x15,-1504 # 2a20 <main+0x9b8>
+    235c:	cb9ff0ef          	jal	x1,2014 <myputs>
                     break;
-    2354:	00000013          	addi	x0,x0,0
+    2360:	00000013          	addi	x0,x0,0
                 myputs(" character\n\n");
-    2358:	000037b7          	lui	x15,0x3
-    235c:	a0c78513          	addi	x10,x15,-1524 # 2a0c <main+0x9a4>
-    2360:	cb5ff0ef          	jal	x1,2014 <myputs>
+    2364:	000037b7          	lui	x15,0x3
+    2368:	a2478513          	addi	x10,x15,-1500 # 2a24 <main+0x9bc>
+    236c:	ca9ff0ef          	jal	x1,2014 <myputs>
         for(int i = 0; i < 4; i++) {
-    2364:	fe442783          	lw	x15,-28(x8)
-    2368:	00178793          	addi	x15,x15,1
-    236c:	fef42223          	sw	x15,-28(x8)
-    2370:	fe442703          	lw	x14,-28(x8)
-    2374:	00300793          	addi	x15,x0,3
-    2378:	eae7d6e3          	bge	x15,x14,2224 <main+0x1bc>
+    2370:	fe442783          	lw	x15,-28(x8)
+    2374:	00178793          	addi	x15,x15,1
+    2378:	fef42223          	sw	x15,-28(x8)
+    237c:	fe442703          	lw	x14,-28(x8)
+    2380:	00300793          	addi	x15,x0,3
+    2384:	eae7d6e3          	bge	x15,x14,2230 <main+0x1c8>
     while(1) {
-    237c:	d81ff06f          	jal	x0,20fc <main+0x94>
+    2388:	d81ff06f          	jal	x0,2108 <main+0xa0>
         myputs("Text : \n");
-    2380:	000037b7          	lui	x15,0x3
-    2384:	9d078513          	addi	x10,x15,-1584 # 29d0 <main+0x968>
-    2388:	c8dff0ef          	jal	x1,2014 <myputs>
-        myputs(text[3]);
-    238c:	fb842783          	lw	x15,-72(x8)
-    2390:	00078513          	addi	x10,x15,0
+    238c:	000037b7          	lui	x15,0x3
+    2390:	9e878513          	addi	x10,x15,-1560 # 29e8 <main+0x980>
     2394:	c81ff0ef          	jal	x1,2014 <myputs>
-        myputs("\n--- Matched Pattern : \n");
-    2398:	000037b7          	lui	x15,0x3
-    239c:	9dc78513          	addi	x10,x15,-1572 # 29dc <main+0x974>
+        myputs(text[3]);
+    2398:	fb842783          	lw	x15,-72(x8)
+    239c:	00078513          	addi	x10,x15,0
     23a0:	c75ff0ef          	jal	x1,2014 <myputs>
-        myputs(patterns[3]);
-    23a4:	fc842783          	lw	x15,-56(x8)
-    23a8:	00078513          	addi	x10,x15,0
+        myputs("\n--- Matched Pattern : \n");
+    23a4:	000037b7          	lui	x15,0x3
+    23a8:	9f478513          	addi	x10,x15,-1548 # 29f4 <main+0x98c>
     23ac:	c69ff0ef          	jal	x1,2014 <myputs>
-        myputs("o");
-    23b0:	000037b7          	lui	x15,0x3
-    23b4:	a1c78513          	addi	x10,x15,-1508 # 2a1c <main+0x9b4>
+        myputs(patterns[3]);
+    23b0:	fc842783          	lw	x15,-56(x8)
+    23b4:	00078513          	addi	x10,x15,0
     23b8:	c5dff0ef          	jal	x1,2014 <myputs>
-        myputs("\n@ ");
+        myputs("o");
     23bc:	000037b7          	lui	x15,0x3
-    23c0:	9f878513          	addi	x10,x15,-1544 # 29f8 <main+0x990>
+    23c0:	a3478513          	addi	x10,x15,-1484 # 2a34 <main+0x9cc>
     23c4:	c51ff0ef          	jal	x1,2014 <myputs>
+        myputs("\n@ ");
+    23c8:	000037b7          	lui	x15,0x3
+    23cc:	a1078513          	addi	x10,x15,-1520 # 2a10 <main+0x9a8>
+    23d0:	c45ff0ef          	jal	x1,2014 <myputs>
         myputs(convert(index[3], 10));
-    23c8:	fa842783          	lw	x15,-88(x8)
-    23cc:	00a00593          	addi	x11,x0,10
-    23d0:	00078513          	addi	x10,x15,0
-    23d4:	ba5ff0ef          	jal	x1,1f78 <convert>
-    23d8:	00050793          	addi	x15,x10,0
+    23d4:	fa842783          	lw	x15,-88(x8)
+    23d8:	00a00593          	addi	x11,x0,10
     23dc:	00078513          	addi	x10,x15,0
-    23e0:	c35ff0ef          	jal	x1,2014 <myputs>
+    23e0:	b99ff0ef          	jal	x1,1f78 <convert>
+    23e4:	00050793          	addi	x15,x10,0
+    23e8:	00078513          	addi	x10,x15,0
+    23ec:	c29ff0ef          	jal	x1,2014 <myputs>
         switch(index[3]) {
-    23e4:	fa842783          	lw	x15,-88(x8)
-    23e8:	00300713          	addi	x14,x0,3
-    23ec:	04e78063          	beq	x15,x14,242c <main+0x3c4>
-    23f0:	00300713          	addi	x14,x0,3
-    23f4:	04f74463          	blt	x14,x15,243c <main+0x3d4>
-    23f8:	00100713          	addi	x14,x0,1
-    23fc:	00e78863          	beq	x15,x14,240c <main+0x3a4>
-    2400:	00200713          	addi	x14,x0,2
-    2404:	00e78c63          	beq	x15,x14,241c <main+0x3b4>
-    2408:	0340006f          	jal	x0,243c <main+0x3d4>
+    23f0:	fa842783          	lw	x15,-88(x8)
+    23f4:	00300713          	addi	x14,x0,3
+    23f8:	04e78063          	beq	x15,x14,2438 <main+0x3d0>
+    23fc:	00300713          	addi	x14,x0,3
+    2400:	04f74463          	blt	x14,x15,2448 <main+0x3e0>
+    2404:	00100713          	addi	x14,x0,1
+    2408:	00e78863          	beq	x15,x14,2418 <main+0x3b0>
+    240c:	00200713          	addi	x14,x0,2
+    2410:	00e78c63          	beq	x15,x14,2428 <main+0x3c0>
+    2414:	0340006f          	jal	x0,2448 <main+0x3e0>
             case 1 : 
                 myputs("st");
-    240c:	000037b7          	lui	x15,0x3
-    2410:	9fc78513          	addi	x10,x15,-1540 # 29fc <main+0x994>
-    2414:	c01ff0ef          	jal	x1,2014 <myputs>
+    2418:	000037b7          	lui	x15,0x3
+    241c:	a1478513          	addi	x10,x15,-1516 # 2a14 <main+0x9ac>
+    2420:	bf5ff0ef          	jal	x1,2014 <myputs>
             break;
-    2418:	0340006f          	jal	x0,244c <main+0x3e4>
+    2424:	0340006f          	jal	x0,2458 <main+0x3f0>
             case 2 :
                 myputs("nd");
-    241c:	000037b7          	lui	x15,0x3
-    2420:	a0078513          	addi	x10,x15,-1536 # 2a00 <main+0x998>
-    2424:	bf1ff0ef          	jal	x1,2014 <myputs>
+    2428:	000037b7          	lui	x15,0x3
+    242c:	a1878513          	addi	x10,x15,-1512 # 2a18 <main+0x9b0>
+    2430:	be5ff0ef          	jal	x1,2014 <myputs>
             break;
-    2428:	0240006f          	jal	x0,244c <main+0x3e4>
+    2434:	0240006f          	jal	x0,2458 <main+0x3f0>
             case 3 :
                 myputs("rd");
-    242c:	000037b7          	lui	x15,0x3
-    2430:	a0478513          	addi	x10,x15,-1532 # 2a04 <main+0x99c>
-    2434:	be1ff0ef          	jal	x1,2014 <myputs>
+    2438:	000037b7          	lui	x15,0x3
+    243c:	a1c78513          	addi	x10,x15,-1508 # 2a1c <main+0x9b4>
+    2440:	bd5ff0ef          	jal	x1,2014 <myputs>
             break;
-    2438:	0140006f          	jal	x0,244c <main+0x3e4>
+    2444:	0140006f          	jal	x0,2458 <main+0x3f0>
             default :
                 myputs("th");
-    243c:	000037b7          	lui	x15,0x3
-    2440:	a0878513          	addi	x10,x15,-1528 # 2a08 <main+0x9a0>
-    2444:	bd1ff0ef          	jal	x1,2014 <myputs>
+    2448:	000037b7          	lui	x15,0x3
+    244c:	a2078513          	addi	x10,x15,-1504 # 2a20 <main+0x9b8>
+    2450:	bc5ff0ef          	jal	x1,2014 <myputs>
             break;
-    2448:	00000013          	addi	x0,x0,0
+    2454:	00000013          	addi	x0,x0,0
         }
         myputs(" character\n\n");
-    244c:	000037b7          	lui	x15,0x3
-    2450:	a0c78513          	addi	x10,x15,-1524 # 2a0c <main+0x9a4>
-    2454:	bc1ff0ef          	jal	x1,2014 <myputs>
+    2458:	000037b7          	lui	x15,0x3
+    245c:	a2478513          	addi	x10,x15,-1500 # 2a24 <main+0x9bc>
+    2460:	bb5ff0ef          	jal	x1,2014 <myputs>
         index[3]++;
-    2458:	fa842783          	lw	x15,-88(x8)
-    245c:	00178793          	addi	x15,x15,1
-    2460:	faf42423          	sw	x15,-88(x8)
+    2464:	fa842783          	lw	x15,-88(x8)
+    2468:	00178793          	addi	x15,x15,1
+    246c:	faf42423          	sw	x15,-88(x8)
     }
 
     // Checking ResetNFA
     ResetNFA(2);
-    2464:	00200513          	addi	x10,x0,2
-    2468:	921ff0ef          	jal	x1,1d88 <ResetNFA>
+    2470:	00200513          	addi	x10,x0,2
+    2474:	915ff0ef          	jal	x1,1d88 <ResetNFA>
     pattern_status = SimulateNFA('s', 2);
-    246c:	00200593          	addi	x11,x0,2
-    2470:	07300513          	addi	x10,x0,115
-    2474:	fc0ff0ef          	jal	x1,1c34 <SimulateNFA>
-    2478:	00050793          	addi	x15,x10,0
-    247c:	fcf42823          	sw	x15,-48(x8)
+    2478:	00200593          	addi	x11,x0,2
+    247c:	07300513          	addi	x10,x0,115
+    2480:	fb4ff0ef          	jal	x1,1c34 <SimulateNFA>
+    2484:	00050793          	addi	x15,x10,0
+    2488:	fcf42823          	sw	x15,-48(x8)
     if(pattern_status)  {
-    2480:	fd042783          	lw	x15,-48(x8)
-    2484:	0e078263          	beq	x15,x0,2568 <main+0x500>
+    248c:	fd042783          	lw	x15,-48(x8)
+    2490:	0e078263          	beq	x15,x0,2574 <main+0x50c>
         myputs("Text : \n");
-    2488:	000037b7          	lui	x15,0x3
-    248c:	9d078513          	addi	x10,x15,-1584 # 29d0 <main+0x968>
-    2490:	b85ff0ef          	jal	x1,2014 <myputs>
-        myputs(text[2]);
-    2494:	fb442783          	lw	x15,-76(x8)
-    2498:	00078513          	addi	x10,x15,0
+    2494:	000037b7          	lui	x15,0x3
+    2498:	9e878513          	addi	x10,x15,-1560 # 29e8 <main+0x980>
     249c:	b79ff0ef          	jal	x1,2014 <myputs>
-        myputs("\n--- Matched Pattern : \n");
-    24a0:	000037b7          	lui	x15,0x3
-    24a4:	9dc78513          	addi	x10,x15,-1572 # 29dc <main+0x974>
+        myputs(text[2]);
+    24a0:	fb442783          	lw	x15,-76(x8)
+    24a4:	00078513          	addi	x10,x15,0
     24a8:	b6dff0ef          	jal	x1,2014 <myputs>
+        myputs("\n--- Matched Pattern : \n");
+    24ac:	000037b7          	lui	x15,0x3
+    24b0:	9f478513          	addi	x10,x15,-1548 # 29f4 <main+0x98c>
+    24b4:	b61ff0ef          	jal	x1,2014 <myputs>
         myputs(pattern2);
-    24ac:	fd842503          	lw	x10,-40(x8)
-    24b0:	b65ff0ef          	jal	x1,2014 <myputs>
-        myputs("s");
-    24b4:	000037b7          	lui	x15,0x3
-    24b8:	a2078513          	addi	x10,x15,-1504 # 2a20 <main+0x9b8>
+    24b8:	fd842503          	lw	x10,-40(x8)
     24bc:	b59ff0ef          	jal	x1,2014 <myputs>
-        myputs("\n@ ");
+        myputs("s");
     24c0:	000037b7          	lui	x15,0x3
-    24c4:	9f878513          	addi	x10,x15,-1544 # 29f8 <main+0x990>
+    24c4:	a3878513          	addi	x10,x15,-1480 # 2a38 <main+0x9d0>
     24c8:	b4dff0ef          	jal	x1,2014 <myputs>
+        myputs("\n@ ");
+    24cc:	000037b7          	lui	x15,0x3
+    24d0:	a1078513          	addi	x10,x15,-1520 # 2a10 <main+0x9a8>
+    24d4:	b41ff0ef          	jal	x1,2014 <myputs>
         myputs(convert(index[2], 10));
-    24cc:	fa442783          	lw	x15,-92(x8)
-    24d0:	00a00593          	addi	x11,x0,10
-    24d4:	00078513          	addi	x10,x15,0
-    24d8:	aa1ff0ef          	jal	x1,1f78 <convert>
-    24dc:	00050793          	addi	x15,x10,0
+    24d8:	fa442783          	lw	x15,-92(x8)
+    24dc:	00a00593          	addi	x11,x0,10
     24e0:	00078513          	addi	x10,x15,0
-    24e4:	b31ff0ef          	jal	x1,2014 <myputs>
+    24e4:	a95ff0ef          	jal	x1,1f78 <convert>
+    24e8:	00050793          	addi	x15,x10,0
+    24ec:	00078513          	addi	x10,x15,0
+    24f0:	b25ff0ef          	jal	x1,2014 <myputs>
         switch(index[2]) {
-    24e8:	fa442783          	lw	x15,-92(x8)
-    24ec:	00300713          	addi	x14,x0,3
-    24f0:	04e78063          	beq	x15,x14,2530 <main+0x4c8>
-    24f4:	00300713          	addi	x14,x0,3
-    24f8:	04f74463          	blt	x14,x15,2540 <main+0x4d8>
-    24fc:	00100713          	addi	x14,x0,1
-    2500:	00e78863          	beq	x15,x14,2510 <main+0x4a8>
-    2504:	00200713          	addi	x14,x0,2
-    2508:	00e78c63          	beq	x15,x14,2520 <main+0x4b8>
-    250c:	0340006f          	jal	x0,2540 <main+0x4d8>
+    24f4:	fa442783          	lw	x15,-92(x8)
+    24f8:	00300713          	addi	x14,x0,3
+    24fc:	04e78063          	beq	x15,x14,253c <main+0x4d4>
+    2500:	00300713          	addi	x14,x0,3
+    2504:	04f74463          	blt	x14,x15,254c <main+0x4e4>
+    2508:	00100713          	addi	x14,x0,1
+    250c:	00e78863          	beq	x15,x14,251c <main+0x4b4>
+    2510:	00200713          	addi	x14,x0,2
+    2514:	00e78c63          	beq	x15,x14,252c <main+0x4c4>
+    2518:	0340006f          	jal	x0,254c <main+0x4e4>
             case 1 : 
                 myputs("st");
-    2510:	000037b7          	lui	x15,0x3
-    2514:	9fc78513          	addi	x10,x15,-1540 # 29fc <main+0x994>
-    2518:	afdff0ef          	jal	x1,2014 <myputs>
+    251c:	000037b7          	lui	x15,0x3
+    2520:	a1478513          	addi	x10,x15,-1516 # 2a14 <main+0x9ac>
+    2524:	af1ff0ef          	jal	x1,2014 <myputs>
             break;
-    251c:	0340006f          	jal	x0,2550 <main+0x4e8>
+    2528:	0340006f          	jal	x0,255c <main+0x4f4>
             case 2 :
                 myputs("nd");
-    2520:	000037b7          	lui	x15,0x3
-    2524:	a0078513          	addi	x10,x15,-1536 # 2a00 <main+0x998>
-    2528:	aedff0ef          	jal	x1,2014 <myputs>
+    252c:	000037b7          	lui	x15,0x3
+    2530:	a1878513          	addi	x10,x15,-1512 # 2a18 <main+0x9b0>
+    2534:	ae1ff0ef          	jal	x1,2014 <myputs>
             break;
-    252c:	0240006f          	jal	x0,2550 <main+0x4e8>
+    2538:	0240006f          	jal	x0,255c <main+0x4f4>
             case 3 :
                 myputs("rd");
-    2530:	000037b7          	lui	x15,0x3
-    2534:	a0478513          	addi	x10,x15,-1532 # 2a04 <main+0x99c>
-    2538:	addff0ef          	jal	x1,2014 <myputs>
+    253c:	000037b7          	lui	x15,0x3
+    2540:	a1c78513          	addi	x10,x15,-1508 # 2a1c <main+0x9b4>
+    2544:	ad1ff0ef          	jal	x1,2014 <myputs>
             break;
-    253c:	0140006f          	jal	x0,2550 <main+0x4e8>
+    2548:	0140006f          	jal	x0,255c <main+0x4f4>
             default :
                 myputs("th");
-    2540:	000037b7          	lui	x15,0x3
-    2544:	a0878513          	addi	x10,x15,-1528 # 2a08 <main+0x9a0>
-    2548:	acdff0ef          	jal	x1,2014 <myputs>
+    254c:	000037b7          	lui	x15,0x3
+    2550:	a2078513          	addi	x10,x15,-1504 # 2a20 <main+0x9b8>
+    2554:	ac1ff0ef          	jal	x1,2014 <myputs>
             break;
-    254c:	00000013          	addi	x0,x0,0
+    2558:	00000013          	addi	x0,x0,0
         }
         myputs(" character\n\n");
-    2550:	000037b7          	lui	x15,0x3
-    2554:	a0c78513          	addi	x10,x15,-1524 # 2a0c <main+0x9a4>
-    2558:	abdff0ef          	jal	x1,2014 <myputs>
+    255c:	000037b7          	lui	x15,0x3
+    2560:	a2478513          	addi	x10,x15,-1500 # 2a24 <main+0x9bc>
+    2564:	ab1ff0ef          	jal	x1,2014 <myputs>
         index[2]++;
-    255c:	fa442783          	lw	x15,-92(x8)
-    2560:	00178793          	addi	x15,x15,1
-    2564:	faf42223          	sw	x15,-92(x8)
+    2568:	fa442783          	lw	x15,-92(x8)
+    256c:	00178793          	addi	x15,x15,1
+    2570:	faf42223          	sw	x15,-92(x8)
     }
 
     // Single text - parallel pattern matching
 
     // Checking ResetNFA_All_M1
     ResetNFA_All_M1();
-    2568:	fe0ff0ef          	jal	x1,1d48 <ResetNFA_All_M1>
+    2574:	fd4ff0ef          	jal	x1,1d48 <ResetNFA_All_M1>
     // We use the same patterns in the 4 modules as setup earlier, but now try to simulate all NFAs with single text
     char *new_text = "abcdefghijklmnopqrtuvwxyz";
-    256c:	000037b7          	lui	x15,0x3
-    2570:	a2478793          	addi	x15,x15,-1500 # 2a24 <main+0x9bc>
-    2574:	fcf42623          	sw	x15,-52(x8)
+    2578:	000037b7          	lui	x15,0x3
+    257c:	a3c78793          	addi	x15,x15,-1476 # 2a3c <main+0x9d4>
+    2580:	fcf42623          	sw	x15,-52(x8)
     for(int i = 0; new_text[i]; i++) {
-    2578:	fe042023          	sw	x0,-32(x8)
-    257c:	1840006f          	jal	x0,2700 <main+0x698>
+    2584:	fe042023          	sw	x0,-32(x8)
+    2588:	1840006f          	jal	x0,270c <main+0x6a4>
         pattern_status = SimulateNFA_All_M1(new_text[i]);
-    2580:	fe042783          	lw	x15,-32(x8)
-    2584:	fcc42703          	lw	x14,-52(x8)
-    2588:	00f707b3          	add	x15,x14,x15
-    258c:	0007c783          	lbu	x15,0(x15)
-    2590:	00078513          	addi	x10,x15,0
-    2594:	e28ff0ef          	jal	x1,1bbc <SimulateNFA_All_M1>
-    2598:	00050793          	addi	x15,x10,0
-    259c:	fcf42823          	sw	x15,-48(x8)
+    258c:	fe042783          	lw	x15,-32(x8)
+    2590:	fcc42703          	lw	x14,-52(x8)
+    2594:	00f707b3          	add	x15,x14,x15
+    2598:	0007c783          	lbu	x15,0(x15)
+    259c:	00078513          	addi	x10,x15,0
+    25a0:	e1cff0ef          	jal	x1,1bbc <SimulateNFA_All_M1>
+    25a4:	00050793          	addi	x15,x10,0
+    25a8:	fcf42823          	sw	x15,-48(x8)
         if(pattern_status)  {
-    25a0:	fd042783          	lw	x15,-48(x8)
-    25a4:	14078863          	beq	x15,x0,26f4 <main+0x68c>
+    25ac:	fd042783          	lw	x15,-48(x8)
+    25b0:	14078863          	beq	x15,x0,2700 <main+0x698>
             myputs("Text : \n");
-    25a8:	000037b7          	lui	x15,0x3
-    25ac:	9d078513          	addi	x10,x15,-1584 # 29d0 <main+0x968>
-    25b0:	a65ff0ef          	jal	x1,2014 <myputs>
+    25b4:	000037b7          	lui	x15,0x3
+    25b8:	9e878513          	addi	x10,x15,-1560 # 29e8 <main+0x980>
+    25bc:	a59ff0ef          	jal	x1,2014 <myputs>
             myputs(new_text);
-    25b4:	fcc42503          	lw	x10,-52(x8)
-    25b8:	a5dff0ef          	jal	x1,2014 <myputs>
-            myputs("\n--- Matched Pattern(s) : \n");
-    25bc:	000037b7          	lui	x15,0x3
-    25c0:	a4078513          	addi	x10,x15,-1472 # 2a40 <main+0x9d8>
+    25c0:	fcc42503          	lw	x10,-52(x8)
     25c4:	a51ff0ef          	jal	x1,2014 <myputs>
+            myputs("\n--- Matched Pattern(s) : \n");
+    25c8:	000037b7          	lui	x15,0x3
+    25cc:	a5878513          	addi	x10,x15,-1448 # 2a58 <main+0x9f0>
+    25d0:	a45ff0ef          	jal	x1,2014 <myputs>
             for(int j = 0; j < 4; j++) {
-    25c8:	fc042e23          	sw	x0,-36(x8)
-    25cc:	0780006f          	jal	x0,2644 <main+0x5dc>
+    25d4:	fc042e23          	sw	x0,-36(x8)
+    25d8:	0780006f          	jal	x0,2650 <main+0x5e8>
                 if(pattern_status & (1<<j)) {
-    25d0:	fdc42783          	lw	x15,-36(x8)
-    25d4:	00100713          	addi	x14,x0,1
-    25d8:	00f717b3          	sll	x15,x14,x15
-    25dc:	00078713          	addi	x14,x15,0
-    25e0:	fd042783          	lw	x15,-48(x8)
-    25e4:	00f777b3          	and	x15,x14,x15
-    25e8:	04078863          	beq	x15,x0,2638 <main+0x5d0>
+    25dc:	fdc42783          	lw	x15,-36(x8)
+    25e0:	00100713          	addi	x14,x0,1
+    25e4:	00f717b3          	sll	x15,x14,x15
+    25e8:	00078713          	addi	x14,x15,0
+    25ec:	fd042783          	lw	x15,-48(x8)
+    25f0:	00f777b3          	and	x15,x14,x15
+    25f4:	04078863          	beq	x15,x0,2644 <main+0x5dc>
                     if(j == 2) {myputs(pattern2); myputs("\n");}
-    25ec:	fdc42703          	lw	x14,-36(x8)
-    25f0:	00200793          	addi	x15,x0,2
-    25f4:	00f71e63          	bne	x14,x15,2610 <main+0x5a8>
-    25f8:	fd842503          	lw	x10,-40(x8)
-    25fc:	a19ff0ef          	jal	x1,2014 <myputs>
-    2600:	000037b7          	lui	x15,0x3
-    2604:	a5c78513          	addi	x10,x15,-1444 # 2a5c <main+0x9f4>
+    25f8:	fdc42703          	lw	x14,-36(x8)
+    25fc:	00200793          	addi	x15,x0,2
+    2600:	00f71e63          	bne	x14,x15,261c <main+0x5b4>
+    2604:	fd842503          	lw	x10,-40(x8)
     2608:	a0dff0ef          	jal	x1,2014 <myputs>
-    260c:	02c0006f          	jal	x0,2638 <main+0x5d0>
+    260c:	000037b7          	lui	x15,0x3
+    2610:	a7478513          	addi	x10,x15,-1420 # 2a74 <main+0xa0c>
+    2614:	a01ff0ef          	jal	x1,2014 <myputs>
+    2618:	02c0006f          	jal	x0,2644 <main+0x5dc>
                     else {myputs(patterns[j]); myputs("\n");}
-    2610:	fdc42783          	lw	x15,-36(x8)
-    2614:	00279793          	slli	x15,x15,0x2
-    2618:	ff040713          	addi	x14,x8,-16
-    261c:	00f707b3          	add	x15,x14,x15
-    2620:	fcc7a783          	lw	x15,-52(x15)
-    2624:	00078513          	addi	x10,x15,0
-    2628:	9edff0ef          	jal	x1,2014 <myputs>
-    262c:	000037b7          	lui	x15,0x3
-    2630:	a5c78513          	addi	x10,x15,-1444 # 2a5c <main+0x9f4>
+    261c:	fdc42783          	lw	x15,-36(x8)
+    2620:	00279793          	slli	x15,x15,0x2
+    2624:	ff040713          	addi	x14,x8,-16
+    2628:	00f707b3          	add	x15,x14,x15
+    262c:	fcc7a783          	lw	x15,-52(x15)
+    2630:	00078513          	addi	x10,x15,0
     2634:	9e1ff0ef          	jal	x1,2014 <myputs>
+    2638:	000037b7          	lui	x15,0x3
+    263c:	a7478513          	addi	x10,x15,-1420 # 2a74 <main+0xa0c>
+    2640:	9d5ff0ef          	jal	x1,2014 <myputs>
             for(int j = 0; j < 4; j++) {
-    2638:	fdc42783          	lw	x15,-36(x8)
-    263c:	00178793          	addi	x15,x15,1
-    2640:	fcf42e23          	sw	x15,-36(x8)
-    2644:	fdc42703          	lw	x14,-36(x8)
-    2648:	00300793          	addi	x15,x0,3
-    264c:	f8e7d2e3          	bge	x15,x14,25d0 <main+0x568>
+    2644:	fdc42783          	lw	x15,-36(x8)
+    2648:	00178793          	addi	x15,x15,1
+    264c:	fcf42e23          	sw	x15,-36(x8)
+    2650:	fdc42703          	lw	x14,-36(x8)
+    2654:	00300793          	addi	x15,x0,3
+    2658:	f8e7d2e3          	bge	x15,x14,25dc <main+0x574>
                 }
             }
             myputs("@ ");
-    2650:	000037b7          	lui	x15,0x3
-    2654:	a6078513          	addi	x10,x15,-1440 # 2a60 <main+0x9f8>
-    2658:	9bdff0ef          	jal	x1,2014 <myputs>
+    265c:	000037b7          	lui	x15,0x3
+    2660:	a7878513          	addi	x10,x15,-1416 # 2a78 <main+0xa10>
+    2664:	9b1ff0ef          	jal	x1,2014 <myputs>
             myputs(convert(i+1, 10));
-    265c:	fe042783          	lw	x15,-32(x8)
-    2660:	00178793          	addi	x15,x15,1
-    2664:	00a00593          	addi	x11,x0,10
-    2668:	00078513          	addi	x10,x15,0
-    266c:	90dff0ef          	jal	x1,1f78 <convert>
-    2670:	00050793          	addi	x15,x10,0
+    2668:	fe042783          	lw	x15,-32(x8)
+    266c:	00178793          	addi	x15,x15,1
+    2670:	00a00593          	addi	x11,x0,10
     2674:	00078513          	addi	x10,x15,0
-    2678:	99dff0ef          	jal	x1,2014 <myputs>
+    2678:	901ff0ef          	jal	x1,1f78 <convert>
+    267c:	00050793          	addi	x15,x10,0
+    2680:	00078513          	addi	x10,x15,0
+    2684:	991ff0ef          	jal	x1,2014 <myputs>
             switch(i+1) {
-    267c:	fe042783          	lw	x15,-32(x8)
-    2680:	00178793          	addi	x15,x15,1
-    2684:	00300713          	addi	x14,x0,3
-    2688:	04e78063          	beq	x15,x14,26c8 <main+0x660>
-    268c:	00300713          	addi	x14,x0,3
-    2690:	04f74463          	blt	x14,x15,26d8 <main+0x670>
-    2694:	00100713          	addi	x14,x0,1
-    2698:	00e78863          	beq	x15,x14,26a8 <main+0x640>
-    269c:	00200713          	addi	x14,x0,2
-    26a0:	00e78c63          	beq	x15,x14,26b8 <main+0x650>
-    26a4:	0340006f          	jal	x0,26d8 <main+0x670>
+    2688:	fe042783          	lw	x15,-32(x8)
+    268c:	00178793          	addi	x15,x15,1
+    2690:	00300713          	addi	x14,x0,3
+    2694:	04e78063          	beq	x15,x14,26d4 <main+0x66c>
+    2698:	00300713          	addi	x14,x0,3
+    269c:	04f74463          	blt	x14,x15,26e4 <main+0x67c>
+    26a0:	00100713          	addi	x14,x0,1
+    26a4:	00e78863          	beq	x15,x14,26b4 <main+0x64c>
+    26a8:	00200713          	addi	x14,x0,2
+    26ac:	00e78c63          	beq	x15,x14,26c4 <main+0x65c>
+    26b0:	0340006f          	jal	x0,26e4 <main+0x67c>
                 case 1 : 
                     myputs("st");
-    26a8:	000037b7          	lui	x15,0x3
-    26ac:	9fc78513          	addi	x10,x15,-1540 # 29fc <main+0x994>
-    26b0:	965ff0ef          	jal	x1,2014 <myputs>
+    26b4:	000037b7          	lui	x15,0x3
+    26b8:	a1478513          	addi	x10,x15,-1516 # 2a14 <main+0x9ac>
+    26bc:	959ff0ef          	jal	x1,2014 <myputs>
                 break;
-    26b4:	0340006f          	jal	x0,26e8 <main+0x680>
+    26c0:	0340006f          	jal	x0,26f4 <main+0x68c>
                 case 2 :
                     myputs("nd");
-    26b8:	000037b7          	lui	x15,0x3
-    26bc:	a0078513          	addi	x10,x15,-1536 # 2a00 <main+0x998>
-    26c0:	955ff0ef          	jal	x1,2014 <myputs>
+    26c4:	000037b7          	lui	x15,0x3
+    26c8:	a1878513          	addi	x10,x15,-1512 # 2a18 <main+0x9b0>
+    26cc:	949ff0ef          	jal	x1,2014 <myputs>
                 break;
-    26c4:	0240006f          	jal	x0,26e8 <main+0x680>
+    26d0:	0240006f          	jal	x0,26f4 <main+0x68c>
                 case 3 :
                     myputs("rd");
-    26c8:	000037b7          	lui	x15,0x3
-    26cc:	a0478513          	addi	x10,x15,-1532 # 2a04 <main+0x99c>
-    26d0:	945ff0ef          	jal	x1,2014 <myputs>
+    26d4:	000037b7          	lui	x15,0x3
+    26d8:	a1c78513          	addi	x10,x15,-1508 # 2a1c <main+0x9b4>
+    26dc:	939ff0ef          	jal	x1,2014 <myputs>
                 break;
-    26d4:	0140006f          	jal	x0,26e8 <main+0x680>
+    26e0:	0140006f          	jal	x0,26f4 <main+0x68c>
                 default :
                     myputs("th");
-    26d8:	000037b7          	lui	x15,0x3
-    26dc:	a0878513          	addi	x10,x15,-1528 # 2a08 <main+0x9a0>
-    26e0:	935ff0ef          	jal	x1,2014 <myputs>
+    26e4:	000037b7          	lui	x15,0x3
+    26e8:	a2078513          	addi	x10,x15,-1504 # 2a20 <main+0x9b8>
+    26ec:	929ff0ef          	jal	x1,2014 <myputs>
                 break;
-    26e4:	00000013          	addi	x0,x0,0
+    26f0:	00000013          	addi	x0,x0,0
             }
             myputs(" character\n\n");
-    26e8:	000037b7          	lui	x15,0x3
-    26ec:	a0c78513          	addi	x10,x15,-1524 # 2a0c <main+0x9a4>
-    26f0:	925ff0ef          	jal	x1,2014 <myputs>
+    26f4:	000037b7          	lui	x15,0x3
+    26f8:	a2478513          	addi	x10,x15,-1500 # 2a24 <main+0x9bc>
+    26fc:	919ff0ef          	jal	x1,2014 <myputs>
     for(int i = 0; new_text[i]; i++) {
-    26f4:	fe042783          	lw	x15,-32(x8)
-    26f8:	00178793          	addi	x15,x15,1
-    26fc:	fef42023          	sw	x15,-32(x8)
     2700:	fe042783          	lw	x15,-32(x8)
-    2704:	fcc42703          	lw	x14,-52(x8)
-    2708:	00f707b3          	add	x15,x14,x15
-    270c:	0007c783          	lbu	x15,0(x15)
-    2710:	e60798e3          	bne	x15,x0,2580 <main+0x518>
+    2704:	00178793          	addi	x15,x15,1
+    2708:	fef42023          	sw	x15,-32(x8)
+    270c:	fe042783          	lw	x15,-32(x8)
+    2710:	fcc42703          	lw	x14,-52(x8)
+    2714:	00f707b3          	add	x15,x14,x15
+    2718:	0007c783          	lbu	x15,0(x15)
+    271c:	e60798e3          	bne	x15,x0,258c <main+0x524>
         }
     }
 
 
     // Infinite loop to avoid repitition of program
     for(;;);
-    2714:	0000006f          	jal	x0,2714 <main+0x6ac>
+    2720:	0000006f          	jal	x0,2720 <main+0x6b8>
