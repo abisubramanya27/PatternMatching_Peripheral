@@ -70,7 +70,6 @@ module PMP(
     always @(pmp_data_ready[0]) begin
         if(pmp_data_ready[0] == 0) begin
             data_accepted[0] = 0;
-            PMM_data_acc[0] = 0;
         end
     end
     always @(pmp_data_ready[1]) begin
