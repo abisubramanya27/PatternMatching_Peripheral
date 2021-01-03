@@ -1,0 +1,12 @@
+cpu_tb.v
+cpu.v
+dmem.v
+imem.v
+alu32.v
+decoder.v
+regfile.v
+biu.v
+outperiph.v
+PMP_interface.v
+PMP.v
+PMM.v

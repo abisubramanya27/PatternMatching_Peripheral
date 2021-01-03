@@ -21,17 +21,17 @@ iverilog -DNCYCLES=$NCYCLES -DOUTFILE=$OUTFILE -DTESTDIR=\"./test\" -o cpu_tb -c
 ./cpu_tb 
 
 # Check the output in OUTFILE
-retval=$(grep -c "HelloWorld" $OUTFILE)
-if [ ! $retval -eq 0 ];
-then
-    echo "Passed"
-else
-    echo "Failed"
-fi
+# retval=$(grep -c "HelloWorld" $OUTFILE)
+# if [ ! $retval -eq 0 ];
+# then
+#     echo "Passed"
+# else
+#     echo "Failed"
+# fi
 
-cat << EOF
+# cat << EOF
 
-The print output required by your program should have been printed correctly in output.txt
-EOF
+# The print output required by your program should have been printed correctly in output.txt
+# EOF
 
-exit 0
+# exit 0
