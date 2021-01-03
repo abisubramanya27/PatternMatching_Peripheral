@@ -29,6 +29,7 @@ module PMP(
     end
     
     PMM m1(   
+        .clk(clk),
         .INP_DATA(pmp_data[0]),
         .INP_CONTROL(pmp_control[0]),
         .DATA_VALID(pmp_data_ready[0]),
@@ -36,7 +37,8 @@ module PMP(
         .ACCEPTED_STATUS(pattern_accepted[0])
     );
      
-    PMM m2(   
+    PMM m2(  
+        .clk(clk), 
         .INP_DATA(pmp_data[1]),
         .INP_CONTROL(pmp_control[1]),
         .DATA_VALID(pmp_data_ready[1]),
@@ -45,6 +47,7 @@ module PMP(
     );
     
     PMM m3(   
+        .clk(clk),
         .INP_DATA(pmp_data[2]),
         .INP_CONTROL(pmp_control[2]),
         .DATA_VALID(pmp_data_ready[2]),
@@ -53,6 +56,7 @@ module PMP(
     );
     
     PMM m4(   
+        .clk(clk),
         .INP_DATA(pmp_data[3]),
         .INP_CONTROL(pmp_control[3]),
         .DATA_VALID(pmp_data_ready[3]),
