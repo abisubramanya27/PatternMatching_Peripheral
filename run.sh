@@ -13,7 +13,6 @@ rm -f cpu_tb.log
 # Go into the `compile` folder and compile the code
 cd compile  && echo "Compiling in $PWD"
 ./compile.sh main.c > ../test/idata.mem
-sed -i '' '/*/d' ../test/idata.mem
 
 # Go back to parent directory with verilog code
 cd ../
