@@ -210,7 +210,7 @@ module cpu (
                 case (idata[14:12])                                                 // func3 - 001 : BNE, 100 : BLT, 110 : BLTU , 000 : BEQ, 101 : BGE, 111 : BGEU
                     3'b001, 3'b100, 3'b110 : Br_Ok <= rvout != 0;                   // BNE does rv1 - rv2 ; BLT does $signed(rv1) < $signed(rv2) ;  BLTU does $unsigned(rv1) < $unsigned(rv2) --- In all cases result != 0 implies branching needs to happen
                     3'b000, 3'b101, 3'b111 : Br_Ok <= rvout == 0;                   // BEQ does rv1 - rv2 ; BGE does $signed(rv1) < $signed(rv2) ;  BGEU does $unsigned(rv1) < $unsigned(rv2) --- In all cases result == 0 implies branching needs to happen
-                    // default : Br_Ok <= 0;
+                    default : Br_Ok <= 1;
                 endcase
             end
 

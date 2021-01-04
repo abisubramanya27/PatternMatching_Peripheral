@@ -2,7 +2,7 @@
 #
 # Compile and run the test bench
 
-NCYCLES=10000
+NCYCLES=100000
 OUTFILE=output.txt 
 
 [ -x "$(command -v iverilog)" ] || { echo "Install iverilog"; exit 1; }
@@ -18,7 +18,7 @@ sed -i '' '/*/d' ../test/idata.mem
 # Go back to parent directory with verilog code
 cd ../
 # You may need to change NCYCLES below
-iverilog -DNCYCLES=$NCYCLES -DOUTFILE=$OUTFILE -DTESTDIR=\"./test\" -g2012 -o cpu_tb -c program_file.txt
+iverilog -DNCYCLES=$NCYCLES -DOUTFILE=$OUTFILE -DTESTDIR=\"./test\" -o cpu_tb -c program_file.txt
 ./cpu_tb 
 
 # Check the output in OUTFILE
@@ -30,9 +30,9 @@ iverilog -DNCYCLES=$NCYCLES -DOUTFILE=$OUTFILE -DTESTDIR=\"./test\" -g2012 -o cp
 #     echo "Failed"
 # fi
 
-# cat << EOF
+cat << EOF
 
-# The print output required by your program should have been printed correctly in output.txt
-# EOF
+The print output required by your program should have been printed correctly in output.txt
+EOF
 
-# exit 0
+exit 0

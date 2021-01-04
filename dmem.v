@@ -17,18 +17,18 @@ module dmem (
     reg [7:0] mem1[0:`MEMTOP];  
     reg [7:0] mem2[0:`MEMTOP];  
     reg [7:0] mem3[0:`MEMTOP];  
-    // reg [31:0] memt[0:`MEMTOP]; // temp to read
+    reg [31:0] memt[0:`MEMTOP]; // temp to read
 
     wire [29:0] a;
     integer i;
 
     initial begin 
-        // $readmemh({`TESTDIR,"/idata.mem"}, memt); 
+        $readmemh({`TESTDIR,"/idata.mem"}, memt); 
         for (i=0; i<`MEMTOP; i=i+1) begin
-            mem0[i] = 0;
-            mem1[i] = 0;
-            mem2[i] = 0;
-            mem3[i] = 0;
+            mem0[i] = memt[i][ 7: 0];
+            mem1[i] = memt[i][15: 8];
+            mem2[i] = memt[i][23:16];
+            mem3[i] = memt[i][31:24];
         end
     end
 
