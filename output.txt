@@ -1,3 +1,18 @@
-Hello world
-abb
-011
+Text : 
+abcdefghijklmnopqrtuvwxyz
+--- Matched Pattern(s) : 
+abc+
+@ 3rd character
+
+Text : 
+abcdefghijklmnopqrtuvwxyz
+--- Matched Pattern(s) : 
+[abc]{0,3}d[e,f]?
+@ 4th character
+
+Text : 
+abcdefghijklmnopqrtuvwxyz
+--- Matched Pattern(s) : 
+[abc]{0,3}d[e,f]?
+@ 5th character
+

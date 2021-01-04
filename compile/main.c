@@ -34,21 +34,19 @@ int main() {
 
 int main() {
 
-    myputs("Hello world\n");
+    // char *pattern = "ab+";
+    // char *text = "abb";
+    // PreProcess(pattern, 0);
+    // myputs(text);
+    // myputs("\n");
+    // myputs(convert(SimulateNFA('a',0),10));
+    // myputs(convert(SimulateNFA('b',0),10));
+    // myputs(convert(SimulateNFA('b',0),10));
+    char* patterns[4] = {"abc+","[abc]{0,3}d[e,f]?","\0","[a-zA-Z][0-9]hello"};
+    char* pattern2 = "computers?";
 
-    char *pattern = "ab+";
-    char *text = "abb";
-    PreProcess(pattern, 0);
-    myputs(text);
-    myputs("\n");
-    myputs(convert(SimulateNFA('a',0),10));
-    myputs(convert(SimulateNFA('b',0),10));
-    myputs(convert(SimulateNFA('b',0),10));
-    // char* patterns[4] = {"abc+","[abc]{0,3}d[e,f]?","\0","[a-zA-Z][0-9]hello"};
-    // char* pattern2 = "computers?";
-
-    // PreProcessAll_M0(patterns);
-    // PreProcess(pattern2, 2);
+    PreProcessAll_M0(patterns);
+    PreProcess(pattern2, 2);
 
     // myputs("Hello world");
 
@@ -159,39 +157,39 @@ int main() {
 
     // // Checking ResetNFA_All_M1
     // ResetNFA_All_M1();
-    // // We use the same patterns in the 4 modules as setup earlier, but now try to simulate all NFAs with single text
-    // char *new_text = "abcdefghijklmnopqrtuvwxyz";
-    // for(int i = 0; new_text[i]; i++) {
-    //     pattern_status = SimulateNFA_All_M1(new_text[i]);
-    //     if(pattern_status)  {
-    //         myputs("Text : \n");
-    //         myputs(new_text);
-    //         myputs("\n--- Matched Pattern(s) : \n");
-    //         for(int j = 0; j < 4; j++) {
-    //             if(pattern_status & (1<<j)) {
-    //                 if(j == 2) {myputs(pattern2); myputs("\n");}
-    //                 else {myputs(patterns[j]); myputs("\n");}
-    //             }
-    //         }
-    //         myputs("@ ");
-    //         myputs(convert(i+1, 10));
-    //         switch(i+1) {
-    //             case 1 : 
-    //                 myputs("st");
-    //             break;
-    //             case 2 :
-    //                 myputs("nd");
-    //             break;
-    //             case 3 :
-    //                 myputs("rd");
-    //             break;
-    //             default :
-    //                 myputs("th");
-    //             break;
-    //         }
-    //         myputs(" character\n\n");
-    //     }
-    // }
+    // We use the same patterns in the 4 modules as setup earlier, but now try to simulate all NFAs with single text
+    char *new_text = "abcdefghijklmnopqrtuvwxyz";
+    for(int i = 0; new_text[i]; i++) {
+        int pattern_status = SimulateNFA_All_M1(new_text[i]);
+        if(pattern_status)  {
+            myputs("Text : \n");
+            myputs(new_text);
+            myputs("\n--- Matched Pattern(s) : \n");
+            for(int j = 0; j < 4; j++) {
+                if(pattern_status & (1<<j)) {
+                    if(j == 2) {myputs(pattern2); myputs("\n");}
+                    else {myputs(patterns[j]); myputs("\n");}
+                }
+            }
+            myputs("@ ");
+            myputs(convert(i+1, 10));
+            switch(i+1) {
+                case 1 : 
+                    myputs("st");
+                break;
+                case 2 :
+                    myputs("nd");
+                break;
+                case 3 :
+                    myputs("rd");
+                break;
+                default :
+                    myputs("th");
+                break;
+            }
+            myputs(" character\n\n");
+        }
+    }
 
 
     // Infinite loop to avoid repitition of program
