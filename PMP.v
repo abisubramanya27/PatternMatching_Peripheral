@@ -28,7 +28,7 @@ module PMP(
     
     generate
         genvar j;
-        for (j=1; j<`NO_MODULES; j=j+1) begin : pmm
+        for (j=0; j<`NO_MODULES; j=j+1) begin : pmm
             PMM m (
                 .clk(clk),
                 .INP_DATA(pmp_data[j]),
@@ -38,7 +38,7 @@ module PMP(
                 .ACCEPTED_STATUS(pattern_accepted[j])
             ); 
         end
-        for (j=4; j<32; j=j+1) begin : status_bits
+        for (j=`NO_MODULES; j<32; j=j+1) begin : status_bits
             assign data_accepted[j] = 0;
             assign pattern_accepted[j] = 0;
         end
