@@ -14,7 +14,7 @@ module PMP(
     reg [15:0] pmp_control[0:`NO_MODULES-1];
     reg [31:0] pmp_data_ready;
 
-    always #50 clk = ~clk;          // 10 MHz clock
+    always #10 clk = ~clk;          // 50 MHz clock
 
     integer i;
     initial begin

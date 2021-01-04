@@ -2,7 +2,7 @@
 
 // You may need to change the NCYCLES value till the program prints properly
 // since we don't know how long the print functions will take
-`define NCYCLES 10000
+`define NCYCLES 1000000
 
 // This test bench will run for a fixed 1000 clock cycles and then dump out the memory
 // Test cases are such that they should finish within this time
@@ -96,8 +96,8 @@ module cpu_tb ();
     initial begin
 	// Uncomment below to dump out VCD file for gtkwave
 	// NOTE: This will NOT work on the jupyter terminal
-	// $dumpfile("cpu_tb.vcd");
-	// $dumpvars(0, "cpu_tb");
+        $dumpfile("cpu_tb.vcd");
+        $dumpvars(0, cpu_tb);
         $display("RUNNING TEST FROM ", `TESTDIR);
         clk = 1;
         reset = 1;   // This is active high reset

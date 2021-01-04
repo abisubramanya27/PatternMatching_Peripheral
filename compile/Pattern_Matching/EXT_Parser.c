@@ -28,7 +28,6 @@
 int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned int *EpsBEG, unsigned int *EpsEND, unsigned int *EpsBLK, unsigned int MOVE[], unsigned int SELFLOOP[]) {
     
     *INIT = 1;
-    *ACCEPT = (1<<(W-1));
     *EpsBEG = *EpsEND = *EpsBLK = 0;
     for(int i = 0;i < 256;i++) {
         MOVE[i] = 0;

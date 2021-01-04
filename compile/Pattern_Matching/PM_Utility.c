@@ -7,13 +7,13 @@
 #define PMP_READ_DATA_ACCEPTED_OFFSET 0x0C
 #define PMP_READ_PATTERN_ACCEPTED_OFFSET 0x10
 #define NO_MODULES 4
-#define SELFLOOP_ADDR_BASE 2048     // (1<<11)
-#define MOVE_ADDR_BASE 0
+#define SELFLOOP_ADDR_BASE 0
+#define MOVE_ADDR_BASE 2048         // (1<<11)
 #define EpsBEG_ADDR 4096            // (1<<12)
-#define EpsBLK_ADDR 5004            // (1<<12) + 8
-#define EpsEND_ADDR 5012            // (1<<12) + 16
-#define INIT_ADDR 5020              // (1<<12) + 24
-#define ACCEPT_ADDR 5028            // (1<<12) + 32
+#define EpsBLK_ADDR 4104            // (1<<12) + 8
+#define EpsEND_ADDR 4112            // (1<<12) + 16
+#define INIT_ADDR 4120              // (1<<12) + 24
+#define ACCEPT_ADDR 4128            // (1<<12) + 32
 
 // Function to write data to Data Buffer (64 bits) in Peripheral Interface. LSB = 1 denotes lower 32 bits, LSB = 0 denotes higher 32 bits
 void Input1_2(unsigned int data, int LSB) {
@@ -43,7 +43,7 @@ void Input3(int mode, int opcode, int address, int module_ID) {
 unsigned int Complete_Handshaking(unsigned int REQD_DATA_ACCEPTED) {
     int *p1 = (int *)(PMP_INTERFACE_BASE + PMP_READ_DATA_ACCEPTED_OFFSET);
     // Waiting till the operations are completed in the modules (under operation)
-    while( ((*p1) & REQD_DATA_ACCEPTED) != REQD_DATA_ACCEPTED );
+    while( ((*p1) & 0xF) != REQD_DATA_ACCEPTED );
 
     int *p = (int *)(PMP_INTERFACE_BASE + PMP_READ_PATTERN_ACCEPTED_OFFSET);
     unsigned int PATTERN_ACCEPTED_STATUS = (*p);

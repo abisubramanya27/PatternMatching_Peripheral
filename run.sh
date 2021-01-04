@@ -2,7 +2,7 @@
 #
 # Compile and run the test bench
 
-NCYCLES=100000
+NCYCLES=1000000
 OUTFILE=output.txt 
 
 [ -x "$(command -v iverilog)" ] || { echo "Install iverilog"; exit 1; }

@@ -86,7 +86,7 @@ module PMM(
 	always @(*) begin
 
 		// Implementing Extended NFA algo
-		TMP_STATE = ( ((STATE << 1) | INIT) & MOVE[INP_DATA[7:0]] ) | ( STATE & REPPOS[INP_DATA[7:0]] ); // The alpha transitions
+		TMP_STATE = ( ((STATE << 1) | INIT) & MOVE ) | ( STATE & REPPOS ); // The alpha transitions
 		HIGH  = TMP_STATE | Eps_END;
 		LOW   = HIGH - Eps_BEG;
 		NEW_STATE = (Eps_BLK & ((~ LOW) ^ HIGH)) | TMP_STATE;
@@ -113,7 +113,7 @@ module PMM(
 				ACCEPTED_STATUS = pattern_accepted;
 			end
 			else if(Opcode == 2'b11) STATE = 0;			// Reset Case : reset STATE to 0
-			READY_STATUS = 0;
+			READY_STATUS = 1;
 		end
 		else if(!DATA_VALID) begin
 			READY_STATUS = 0;
