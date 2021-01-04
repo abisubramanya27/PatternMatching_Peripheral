@@ -1,4 +1,5 @@
 `timescale 1ns/1ps
+`define TESTDIR "./test"
 
 module imem (
     input [31:0] iaddr,     // address of the instruction to be read

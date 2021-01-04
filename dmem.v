@@ -1,6 +1,7 @@
 `timescale 1ns/1ps
 `define DMEM_N_FILE(x,y) {x,y,".mem"}
 `define MEMTOP 65536            // 64KB locations
+`define TESTDIR "./test"
 
 // 0x0 - 0x3FFFF -> the memory map for DMEM
 
