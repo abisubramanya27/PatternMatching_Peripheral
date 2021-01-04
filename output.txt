@@ -1,17 +1,38 @@
+SINGLE TEXT - SINGLE COMPLEX PATTERN MATCHING
+
+Text : 
+a
+--- Matched Pattern : 
+ab?[cd]*
+@ 1st character
+
+--------------------------------------------------
+SINGLE TEXT - MULTIPLE COMPLEX PATTERNS MATCHING
+
 Text : 
 abcdefghijklmnopqrtuvwxyz
+--- Matched Pattern(s) : 
+ab?[cd]*
+@ 1st character
+
+
+--- Matched Pattern(s) : 
+ab?[cd]*
+@ 2nd character
+
+
 --- Matched Pattern(s) : 
 abc+
+ab?[cd]*
 @ 3rd character
 
-Text : 
-abcdefghijklmnopqrtuvwxyz
+
 --- Matched Pattern(s) : 
 [abc]{0,3}d[e,f]?
+ab?[cd]*
 @ 4th character
 
-Text : 
-abcdefghijklmnopqrtuvwxyz
+
 --- Matched Pattern(s) : 
 [abc]{0,3}d[e,f]?
 @ 5th character

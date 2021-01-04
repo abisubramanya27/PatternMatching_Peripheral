@@ -113,7 +113,7 @@ module PMM(
 				ACCEPTED_STATUS = pattern_accepted;
 			end
 			else if(Opcode == 2'b11) STATE = 0;			// Reset Case : reset STATE to 0
-			READY_STATUS = 1;
+			if(Opcode != 2'b00) READY_STATUS = 1;		// READY_STATUS should not turn HIGH if No operation is passed
 		end
 		else if(!DATA_VALID) begin
 			READY_STATUS = 0;
