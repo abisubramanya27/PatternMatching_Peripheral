@@ -30,7 +30,7 @@ module biu (
     input [31:0] drdata3
 );
 
-    // DMEM memory map is from 0-4194304 (i.e) 0x0 to 0x3FFFFF - in that range drdata to cpu will come from dmem
+    // DMEM memory map is from 0-4194304 (i.e) 0x0 to 0x3FFFF - in that range drdata to cpu will come from dmem
     // Memory map for Pattern matching peripheral is from 0x400000 to 0x400013
     // Output peripheral memory map is from 0x800000 to 0x800007
 
@@ -42,11 +42,11 @@ module biu (
     // Data to dmem
     assign daddr1 = daddr;          // address is handled inside the dmem by removing 2 LSB, so doing nothing here
     assign dwdata1 = dwdata;        // the data to be written is sent as such to both dmem and peripheral because anyway it will be written only if enable is high
-    assign dwe1 = (daddr[31:14] == {16'h0000,2'b00}) ? dwe : 0;              // enable is set only if address is intended for dmem
+    assign dwe1 = (daddr[31:18] == {12'h000,2'b00}) ? dwe : 0;              // enable is set only if address is intended for dmem
 
     // Data to Output peripheral
     assign daddr2 = daddr;          // address is handled inside the peripheral by taking only 3 LSB, so doing nothing here
     assign dwdata2 = dwdata;        // the data to be written is sent as such to both dmem and peripheral because anyway it will be written only if enable is high
-    assign dwe2 = (daddr[31:2] == {28'h0003456,2'b00}) ? dwe : 0;             // enable is set only if address is intended for output peripheral's display locations
+    assign dwe2 = (daddr[31:2] == {28'h0080000,2'b00}) ? dwe : 0;             // enable is set only if address is intended for output peripheral's display locations
 
 endmodule

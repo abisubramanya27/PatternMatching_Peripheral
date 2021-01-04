@@ -1,8 +1,8 @@
 `timescale 1ns/1ps
 `define DMEM_N_FILE(x,y) {x,y,".mem"}
-`define MEMTOP 1048575          // 1MB locations
+`define MEMTOP 65536            // 64KB locations
 
-// 0x0 - 0x3FFFFF -> the memory map for DMEM
+// 0x0 - 0x3FFFF -> the memory map for DMEM
 
 module dmem (
     input clk,                  // Clock signal - all memory write operations happen at clock posedge
@@ -12,7 +12,7 @@ module dmem (
     input reset,                // only if reset = 0 we write to dmem
     output [31:0] drdata        // Data read from specified memory location
 );
-    // 1MB locations, 4MB total, split in 4 banks
+    // 64KB locations, 256KB total, split in 4 banks
     reg [7:0] mem0[0:`MEMTOP];  
     reg [7:0] mem1[0:`MEMTOP];  
     reg [7:0] mem2[0:`MEMTOP];  

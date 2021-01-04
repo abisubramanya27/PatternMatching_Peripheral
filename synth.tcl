@@ -28,3 +28,5 @@ close_sim
 
 # namespace import ::tclapp::xilinx::designutils::report_failfast
 # open_run [current_run -implementation -quiet]
+
+# To make sure dmem memory is allotted use : set_param synth.elaboration.rodinMoreOptions {rt::set_parameter dissolveMemorySizeLimit 8388608}

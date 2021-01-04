@@ -15,8 +15,8 @@ _start:
    4:	2c818193          	addi	x3,x3,712 # 32c8 <__global_pointer$>
     .option pop
     la sp, __stack_top
-   8:	00400117          	auipc	x2,0x400
-   c:	ff810113          	addi	x2,x2,-8 # 400000 <__stack_top>
+   8:	00040117          	auipc	x2,0x40
+   c:	ff810113          	addi	x2,x2,-8 # 40000 <__stack_top>
     add s0, sp, zero
   10:	00010433          	add	x8,x2,x0
     jal zero, main
@@ -335,7 +335,7 @@ int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned 
      3e0:	0440006f          	jal	x0,424 <parseEXT+0x40c>
                     lb = lb*10 + (PATTERN[i]-'0');
      3e4:	fb842703          	lw	x14,-72(x8)
-     3e8:	00070793          	addi	x15,x14,0 # 80000000 <__stack_top+0x7fc00000>
+     3e8:	00070793          	addi	x15,x14,0 # 80000000 <__stack_top+0x7ffc0000>
      3ec:	00279793          	slli	x15,x15,0x2
      3f0:	00e787b3          	add	x15,x15,x14
      3f4:	00179793          	slli	x15,x15,0x1
@@ -1082,7 +1082,7 @@ int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned 
      cd0:	800007b7          	lui	x15,0x80000
      cd4:	00f76733          	or	x14,x14,x15
      cd8:	b6c42783          	lw	x15,-1172(x8)
-     cdc:	00e7a023          	sw	x14,0(x15) # 80000000 <__stack_top+0x7fc00000>
+     cdc:	00e7a023          	sw	x14,0(x15) # 80000000 <__stack_top+0x7ffc0000>
 
     return 1;
      ce0:	00100793          	addi	x15,x0,1
@@ -1110,7 +1110,7 @@ void Input1_2(unsigned int data, int LSB) {
      d10:	004007b7          	lui	x15,0x400
      d14:	00c0006f          	jal	x0,d20 <Input1_2+0x2c>
      d18:	004007b7          	lui	x15,0x400
-     d1c:	00478793          	addi	x15,x15,4 # 400004 <__stack_top+0x4>
+     d1c:	00478793          	addi	x15,x15,4 # 400004 <__stack_top+0x3c0004>
      d20:	fef42623          	sw	x15,-20(x8)
     *p  = data;
      d24:	fdc42703          	lw	x14,-36(x8)
@@ -1135,7 +1135,7 @@ void Input1_2LL(long long data) {
      d54:	004006b7          	lui	x13,0x400
      d58:	fed42623          	sw	x13,-20(x8)
      d5c:	004006b7          	lui	x13,0x400
-     d60:	00468693          	addi	x13,x13,4 # 400004 <__stack_top+0x4>
+     d60:	00468693          	addi	x13,x13,4 # 400004 <__stack_top+0x3c0004>
      d64:	fed42423          	sw	x13,-24(x8)
     unsigned int LS32B = data & 0xFFFFFFFF, MS32B = data>>32;
      d68:	fd842683          	lw	x13,-40(x8)
@@ -1174,7 +1174,7 @@ void Input3(int mode, int opcode, int address, int module_ID) {
      dc4:	fcd42823          	sw	x13,-48(x8)
     int *p = (int *)(PMP_INTERFACE_BASE + PMP_WRITE_CONTROL_OFFSET);
      dc8:	004007b7          	lui	x15,0x400
-     dcc:	00878793          	addi	x15,x15,8 # 400008 <__stack_top+0x8>
+     dcc:	00878793          	addi	x15,x15,8 # 400008 <__stack_top+0x3c0008>
      dd0:	fef42623          	sw	x15,-20(x8)
     *p = (mode<<31) | (opcode<<29) | (address<<15) | (module_ID & 0x7FFF);
      dd4:	fdc42783          	lw	x15,-36(x8)
@@ -1210,7 +1210,7 @@ unsigned int Complete_Handshaking(unsigned int REQD_DATA_ACCEPTED) {
      e2c:	fca42623          	sw	x10,-52(x8)
     int *p1 = (int *)(PMP_INTERFACE_BASE + PMP_READ_DATA_ACCEPTED_OFFSET);
      e30:	004007b7          	lui	x15,0x400
-     e34:	00c78793          	addi	x15,x15,12 # 40000c <__stack_top+0xc>
+     e34:	00c78793          	addi	x15,x15,12 # 40000c <__stack_top+0x3c000c>
      e38:	fef42423          	sw	x15,-24(x8)
     // Waiting till the operations are completed in the modules (under operation)
     while( ((*p1) & REQD_DATA_ACCEPTED) != REQD_DATA_ACCEPTED );
@@ -1225,7 +1225,7 @@ unsigned int Complete_Handshaking(unsigned int REQD_DATA_ACCEPTED) {
 
     int *p = (int *)(PMP_INTERFACE_BASE + PMP_READ_PATTERN_ACCEPTED_OFFSET);
      e5c:	004007b7          	lui	x15,0x400
-     e60:	01078793          	addi	x15,x15,16 # 400010 <__stack_top+0x10>
+     e60:	01078793          	addi	x15,x15,16 # 400010 <__stack_top+0x3c0010>
      e64:	fef42223          	sw	x15,-28(x8)
     unsigned int PATTERN_ACCEPTED_STATUS = (*p);
      e68:	fe442783          	lw	x15,-28(x8)
@@ -1234,7 +1234,7 @@ unsigned int Complete_Handshaking(unsigned int REQD_DATA_ACCEPTED) {
 
     int *p2 = (int *)(PMP_INTERFACE_BASE + PMP_WRITE_CONTROL_OFFSET);
      e74:	004007b7          	lui	x15,0x400
-     e78:	00878793          	addi	x15,x15,8 # 400008 <__stack_top+0x8>
+     e78:	00878793          	addi	x15,x15,8 # 400008 <__stack_top+0x3c0008>
      e7c:	fcf42e23          	sw	x15,-36(x8)
     // Sending a No operation to the necessary modules to conclude the handshaking 
     for(int i = 0; i < NO_MODULES; i++) {
@@ -1296,7 +1296,7 @@ int PreProcessAll_M0(char *patterns[NO_MODULES]) {
      f10:	ffffe7b7          	lui	x15,0xffffe
      f14:	ff040713          	addi	x14,x8,-16
      f18:	00f707b3          	add	x15,x14,x15
-     f1c:	f6a7a623          	sw	x10,-148(x15) # ffffdf6c <__stack_top+0xffbfdf6c>
+     f1c:	f6a7a623          	sw	x10,-148(x15) # ffffdf6c <__stack_top+0xfffbdf6c>
 
     unsigned int INIT[4], ACCEPT[4], EpsBEG[4], EpsEND[4] ,EpsBLK[4];
     unsigned int SELFLOOP[4][256], MOVE[4][256];
@@ -1313,7 +1313,7 @@ int PreProcessAll_M0(char *patterns[NO_MODULES]) {
      f34:	ffffe737          	lui	x14,0xffffe
      f38:	ff040693          	addi	x13,x8,-16
      f3c:	00e68733          	add	x14,x13,x14
-     f40:	f6c72703          	lw	x14,-148(x14) # ffffdf6c <__stack_top+0xffbfdf6c>
+     f40:	f6c72703          	lw	x14,-148(x14) # ffffdf6c <__stack_top+0xfffbdf6c>
      f44:	00f707b3          	add	x15,x14,x15
      f48:	0007a783          	lw	x15,0(x15)
      f4c:	0007c783          	lbu	x15,0(x15)
@@ -1324,7 +1324,7 @@ int PreProcessAll_M0(char *patterns[NO_MODULES]) {
      f5c:	ffffe737          	lui	x14,0xffffe
      f60:	ff040693          	addi	x13,x8,-16
      f64:	00e68733          	add	x14,x13,x14
-     f68:	f6c72703          	lw	x14,-148(x14) # ffffdf6c <__stack_top+0xffbfdf6c>
+     f68:	f6c72703          	lw	x14,-148(x14) # ffffdf6c <__stack_top+0xfffbdf6c>
      f6c:	00f707b3          	add	x15,x14,x15
      f70:	0007a503          	lw	x10,0(x15)
      f74:	fa840713          	addi	x14,x8,-88
@@ -1348,14 +1348,14 @@ int PreProcessAll_M0(char *patterns[NO_MODULES]) {
      fbc:	00279793          	slli	x15,x15,0x2
      fc0:	00f70e33          	add	x28,x14,x15
      fc4:	ffffe7b7          	lui	x15,0xffffe
-     fc8:	f7878793          	addi	x15,x15,-136 # ffffdf78 <__stack_top+0xffbfdf78>
+     fc8:	f7878793          	addi	x15,x15,-136 # ffffdf78 <__stack_top+0xfffbdf78>
      fcc:	ff040713          	addi	x14,x8,-16
      fd0:	00f70733          	add	x14,x14,x15
      fd4:	fe842783          	lw	x15,-24(x8)
      fd8:	00a79793          	slli	x15,x15,0xa
      fdc:	00f70833          	add	x16,x14,x15
      fe0:	fffff7b7          	lui	x15,0xfffff
-     fe4:	f7878793          	addi	x15,x15,-136 # ffffef78 <__stack_top+0xffbfef78>
+     fe4:	f7878793          	addi	x15,x15,-136 # ffffef78 <__stack_top+0xfffbef78>
      fe8:	ff040713          	addi	x14,x8,-16
      fec:	00f70733          	add	x14,x14,x15
      ff0:	fe842783          	lw	x15,-24(x8)
@@ -1363,7 +1363,7 @@ int PreProcessAll_M0(char *patterns[NO_MODULES]) {
      ff8:	00f707b3          	add	x15,x14,x15
      ffc:	00078893          	addi	x17,x15,0
     1000:	000e0793          	addi	x15,x28,0
-    1004:	00030713          	addi	x14,x6,0 # ffffe000 <__stack_top+0xffbfe000>
+    1004:	00030713          	addi	x14,x6,0 # ffffe000 <__stack_top+0xfffbe000>
     1008:	810ff0ef          	jal	x1,18 <parseEXT>
     100c:	faa42c23          	sw	x10,-72(x8)
             if(ret_code) {
@@ -1658,7 +1658,7 @@ int PreProcessAll_M0(char *patterns[NO_MODULES]) {
     1368:	00f687b3          	add	x15,x13,x15
     136c:	00279793          	slli	x15,x15,0x2
     1370:	00f707b3          	add	x15,x14,x15
-    1374:	f787a783          	lw	x15,-136(x15) # ffffef78 <__stack_top+0xffbfef78>
+    1374:	f787a783          	lw	x15,-136(x15) # ffffef78 <__stack_top+0xfffbef78>
     1378:	00100593          	addi	x11,x0,1
     137c:	00078513          	addi	x10,x15,0
     1380:	975ff0ef          	jal	x1,cf4 <Input1_2>
@@ -1724,7 +1724,7 @@ int PreProcessAll_M0(char *patterns[NO_MODULES]) {
     1428:	00f687b3          	add	x15,x13,x15
     142c:	00279793          	slli	x15,x15,0x2
     1430:	00f707b3          	add	x15,x14,x15
-    1434:	f787a783          	lw	x15,-136(x15) # ffffdf78 <__stack_top+0xffbfdf78>
+    1434:	f787a783          	lw	x15,-136(x15) # ffffdf78 <__stack_top+0xfffbdf78>
     1438:	00100593          	addi	x11,x0,1
     143c:	00078513          	addi	x10,x15,0
     1440:	8b5ff0ef          	jal	x1,cf4 <Input1_2>
@@ -1784,7 +1784,7 @@ int PreProcessAll_M1(char *pattern) {
     14c4:	fffff7b7          	lui	x15,0xfffff
     14c8:	ff040713          	addi	x14,x8,-16
     14cc:	00f707b3          	add	x15,x14,x15
-    14d0:	7ca7a623          	sw	x10,1996(x15) # fffff7cc <__stack_top+0xffbff7cc>
+    14d0:	7ca7a623          	sw	x10,1996(x15) # fffff7cc <__stack_top+0xfffbf7cc>
 
     unsigned int INIT, ACCEPT, EpsBEG, EpsEND ,EpsBLK;
     unsigned int SELFLOOP[256], MOVE[256];
@@ -1793,7 +1793,7 @@ int PreProcessAll_M1(char *pattern) {
     14d4:	fffff7b7          	lui	x15,0xfffff
     14d8:	ff040713          	addi	x14,x8,-16
     14dc:	00f707b3          	add	x15,x14,x15
-    14e0:	7cc7a783          	lw	x15,1996(x15) # fffff7cc <__stack_top+0xffbff7cc>
+    14e0:	7cc7a783          	lw	x15,1996(x15) # fffff7cc <__stack_top+0xfffbf7cc>
     14e4:	0007c783          	lbu	x15,0(x15)
     14e8:	00079663          	bne	x15,x0,14f4 <PreProcessAll_M1+0x44>
     14ec:	00000793          	addi	x15,x0,0
@@ -1801,7 +1801,7 @@ int PreProcessAll_M1(char *pattern) {
     int ret_code = parseEXT(pattern, &INIT, &ACCEPT, &EpsBEG, &EpsEND, &EpsBLK, MOVE, SELFLOOP);
     14f4:	bc440893          	addi	x17,x8,-1084
     14f8:	fffff7b7          	lui	x15,0xfffff
-    14fc:	7d478793          	addi	x15,x15,2004 # fffff7d4 <__stack_top+0xffbff7d4>
+    14fc:	7d478793          	addi	x15,x15,2004 # fffff7d4 <__stack_top+0xfffbf7d4>
     1500:	ff040713          	addi	x14,x8,-16
     1504:	00f70833          	add	x16,x14,x15
     1508:	fc440313          	addi	x6,x8,-60
@@ -2004,7 +2004,7 @@ int PreProcessAll_M1(char *pattern) {
     1730:	fe842783          	lw	x15,-24(x8)
     1734:	00279793          	slli	x15,x15,0x2
     1738:	00f707b3          	add	x15,x14,x15
-    173c:	7d47a783          	lw	x15,2004(x15) # fffff7d4 <__stack_top+0xffbff7d4>
+    173c:	7d47a783          	lw	x15,2004(x15) # fffff7d4 <__stack_top+0xfffbf7d4>
     1740:	00100593          	addi	x11,x0,1
     1744:	00078513          	addi	x10,x15,0
     1748:	dacff0ef          	jal	x1,cf4 <Input1_2>
@@ -2054,11 +2054,11 @@ int PreProcess(char *pattern, int module) {
     17b0:	fffff7b7          	lui	x15,0xfffff
     17b4:	ff040713          	addi	x14,x8,-16
     17b8:	00f707b3          	add	x15,x14,x15
-    17bc:	7ca7a623          	sw	x10,1996(x15) # fffff7cc <__stack_top+0xffbff7cc>
+    17bc:	7ca7a623          	sw	x10,1996(x15) # fffff7cc <__stack_top+0xfffbf7cc>
     17c0:	fffff7b7          	lui	x15,0xfffff
     17c4:	ff040713          	addi	x14,x8,-16
     17c8:	00f707b3          	add	x15,x14,x15
-    17cc:	7cb7a423          	sw	x11,1992(x15) # fffff7c8 <__stack_top+0xffbff7c8>
+    17cc:	7cb7a423          	sw	x11,1992(x15) # fffff7c8 <__stack_top+0xfffbf7c8>
 
     unsigned int INIT, ACCEPT, EpsBEG, EpsEND ,EpsBLK;
     unsigned int SELFLOOP[256], MOVE[256];
@@ -2067,7 +2067,7 @@ int PreProcess(char *pattern, int module) {
     17d0:	fffff7b7          	lui	x15,0xfffff
     17d4:	ff040713          	addi	x14,x8,-16
     17d8:	00f707b3          	add	x15,x14,x15
-    17dc:	7cc7a783          	lw	x15,1996(x15) # fffff7cc <__stack_top+0xffbff7cc>
+    17dc:	7cc7a783          	lw	x15,1996(x15) # fffff7cc <__stack_top+0xfffbf7cc>
     17e0:	0007c783          	lbu	x15,0(x15)
     17e4:	00079663          	bne	x15,x0,17f0 <PreProcess+0x54>
     17e8:	00000793          	addi	x15,x0,0
@@ -2075,7 +2075,7 @@ int PreProcess(char *pattern, int module) {
     int ret_code = parseEXT(pattern, &INIT, &ACCEPT, &EpsBEG, &EpsEND, &EpsBLK, MOVE, SELFLOOP);
     17f0:	bc440893          	addi	x17,x8,-1084
     17f4:	fffff7b7          	lui	x15,0xfffff
-    17f8:	7d478793          	addi	x15,x15,2004 # fffff7d4 <__stack_top+0xffbff7d4>
+    17f8:	7d478793          	addi	x15,x15,2004 # fffff7d4 <__stack_top+0xfffbf7d4>
     17fc:	ff040713          	addi	x14,x8,-16
     1800:	00f70833          	add	x16,x14,x15
     1804:	fc440313          	addi	x6,x8,-60
@@ -2100,7 +2100,7 @@ int PreProcess(char *pattern, int module) {
     1844:	fffff7b7          	lui	x15,0xfffff
     1848:	ff040713          	addi	x14,x8,-16
     184c:	00f707b3          	add	x15,x14,x15
-    1850:	7c87a783          	lw	x15,1992(x15) # fffff7c8 <__stack_top+0xffbff7c8>
+    1850:	7c87a783          	lw	x15,1992(x15) # fffff7c8 <__stack_top+0xfffbf7c8>
     1854:	00100713          	addi	x14,x0,1
     1858:	00f717b3          	sll	x15,x14,x15
     185c:	fef42023          	sw	x15,-32(x8)
@@ -2121,7 +2121,7 @@ int PreProcess(char *pattern, int module) {
     1880:	fffff7b7          	lui	x15,0xfffff
     1884:	ff040713          	addi	x14,x8,-16
     1888:	00f707b3          	add	x15,x14,x15
-    188c:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xffbff7c8>
+    188c:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xfffbf7c8>
     1890:	fd842603          	lw	x12,-40(x8)
     1894:	fdc42583          	lw	x11,-36(x8)
     1898:	00000513          	addi	x10,x0,0
@@ -2147,7 +2147,7 @@ int PreProcess(char *pattern, int module) {
     18cc:	fffff7b7          	lui	x15,0xfffff
     18d0:	ff040713          	addi	x14,x8,-16
     18d4:	00f707b3          	add	x15,x14,x15
-    18d8:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xffbff7c8>
+    18d8:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xfffbf7c8>
     18dc:	fd842603          	lw	x12,-40(x8)
     18e0:	fdc42583          	lw	x11,-36(x8)
     18e4:	00000513          	addi	x10,x0,0
@@ -2173,7 +2173,7 @@ int PreProcess(char *pattern, int module) {
     1918:	fffff7b7          	lui	x15,0xfffff
     191c:	ff040713          	addi	x14,x8,-16
     1920:	00f707b3          	add	x15,x14,x15
-    1924:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xffbff7c8>
+    1924:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xfffbf7c8>
     1928:	fd842603          	lw	x12,-40(x8)
     192c:	fdc42583          	lw	x11,-36(x8)
     1930:	00000513          	addi	x10,x0,0
@@ -2199,7 +2199,7 @@ int PreProcess(char *pattern, int module) {
     1964:	fffff7b7          	lui	x15,0xfffff
     1968:	ff040713          	addi	x14,x8,-16
     196c:	00f707b3          	add	x15,x14,x15
-    1970:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xffbff7c8>
+    1970:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xfffbf7c8>
     1974:	fd842603          	lw	x12,-40(x8)
     1978:	fdc42583          	lw	x11,-36(x8)
     197c:	00000513          	addi	x10,x0,0
@@ -2225,7 +2225,7 @@ int PreProcess(char *pattern, int module) {
     19b0:	fffff7b7          	lui	x15,0xfffff
     19b4:	ff040713          	addi	x14,x8,-16
     19b8:	00f707b3          	add	x15,x14,x15
-    19bc:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xffbff7c8>
+    19bc:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xfffbf7c8>
     19c0:	fd842603          	lw	x12,-40(x8)
     19c4:	fdc42583          	lw	x11,-36(x8)
     19c8:	00000513          	addi	x10,x0,0
@@ -2263,7 +2263,7 @@ int PreProcess(char *pattern, int module) {
     1a20:	fffff7b7          	lui	x15,0xfffff
     1a24:	ff040713          	addi	x14,x8,-16
     1a28:	00f707b3          	add	x15,x14,x15
-    1a2c:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xffbff7c8>
+    1a2c:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xfffbf7c8>
     1a30:	fd842603          	lw	x12,-40(x8)
     1a34:	fdc42583          	lw	x11,-36(x8)
     1a38:	00000513          	addi	x10,x0,0
@@ -2301,7 +2301,7 @@ int PreProcess(char *pattern, int module) {
     1a88:	fe842783          	lw	x15,-24(x8)
     1a8c:	00279793          	slli	x15,x15,0x2
     1a90:	00f707b3          	add	x15,x14,x15
-    1a94:	7d47a783          	lw	x15,2004(x15) # fffff7d4 <__stack_top+0xffbff7d4>
+    1a94:	7d47a783          	lw	x15,2004(x15) # fffff7d4 <__stack_top+0xfffbf7d4>
     1a98:	00100593          	addi	x11,x0,1
     1a9c:	00078513          	addi	x10,x15,0
     1aa0:	a54ff0ef          	jal	x1,cf4 <Input1_2>
@@ -2309,7 +2309,7 @@ int PreProcess(char *pattern, int module) {
     1aa4:	fffff7b7          	lui	x15,0xfffff
     1aa8:	ff040713          	addi	x14,x8,-16
     1aac:	00f707b3          	add	x15,x14,x15
-    1ab0:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xffbff7c8>
+    1ab0:	7c87a683          	lw	x13,1992(x15) # fffff7c8 <__stack_top+0xfffbf7c8>
     1ab4:	fd842603          	lw	x12,-40(x8)
     1ab8:	fdc42583          	lw	x11,-36(x8)
     1abc:	00000513          	addi	x10,x0,0
@@ -2662,7 +2662,7 @@ void _outbyte(int c)
         (*p) = c; // Write the value to the address
     1df0:	fec42783          	lw	x15,-20(x8)
     1df4:	fdc42703          	lw	x14,-36(x8)
-    1df8:	00e7a023          	sw	x14,0(x15) # 800000 <__stack_top+0x400000>
+    1df8:	00e7a023          	sw	x14,0(x15) # 800000 <__stack_top+0x7c0000>
 }
     1dfc:	00000013          	addi	x0,x0,0
     1e00:	02c12403          	lw	x8,44(x2)
@@ -2736,7 +2736,7 @@ int readstatus()
 		int *p;  // Pointer to integer
         p = (int *)(OUTPERIPH_BASE + OUTPERIPH_READSTATUS_OFFSET); // Read value in location pointed by pointer to get no of bytes written
     1eb4:	008007b7          	lui	x15,0x800
-    1eb8:	00478793          	addi	x15,x15,4 # 800004 <__stack_top+0x400004>
+    1eb8:	00478793          	addi	x15,x15,4 # 800004 <__stack_top+0x7c0004>
     1ebc:	fef42623          	sw	x15,-20(x8)
         return (*p);
     1ec0:	fec42783          	lw	x15,-20(x8)

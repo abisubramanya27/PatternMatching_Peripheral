@@ -9,6 +9,7 @@ riscv32-unknown-elf-gcc -g -ffreestanding -O0 -Wl,--gc-sections \
 
 riscv32-unknown-elf-objcopy -O binary out.elf out.bin
 hexdump -e '/4 "%08X\n"' out.bin
+# hexdump -e \"%07_ax\ \"\ 16/1\ \"\ %02x\"\ \"\\n\" out.bin
 
 # Command below is only for reference to help you debug if necessary
 riscv32-unknown-elf-objdump -d -S -Mnumeric,no-aliases out.elf > out.src
