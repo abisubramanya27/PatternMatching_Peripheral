@@ -12,7 +12,7 @@ _start:
     .option norelax
     la gp, __global_pointer$
    0:	00003197          	auipc	x3,0x3
-   4:	ed418193          	addi	x3,x3,-300 # 2ed4 <__global_pointer$>
+   4:	29818193          	addi	x3,x3,664 # 3298 <__global_pointer$>
     .option pop
     la sp, __stack_top
    8:	00040117          	auipc	x2,0x40
@@ -20,7 +20,7 @@ _start:
     add s0, sp, zero
   10:	00010433          	add	x8,x2,x0
     jal zero, main
-  14:	0400206f          	jal	x0,2054 <main>
+  14:	0480206f          	jal	x0,205c <main>
 
 Disassembly of section .text:
 
@@ -645,7 +645,7 @@ int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned 
      7d0:	08f76a63          	bltu	x14,x15,864 <parseEXT+0x84c>
      7d4:	00279713          	slli	x14,x15,0x2
      7d8:	000027b7          	lui	x15,0x2
-     7dc:	31c78793          	addi	x15,x15,796 # 231c <main+0x2c8>
+     7dc:	63478793          	addi	x15,x15,1588 # 2634 <main+0x5d8>
      7e0:	00f707b3          	add	x15,x14,x15
      7e4:	0007a783          	lw	x15,0(x15)
      7e8:	00078067          	jalr	x0,0(x15)
@@ -898,7 +898,7 @@ int parseEXT (char *PATTERN, unsigned int *INIT, unsigned int *ACCEPT, unsigned 
      acc:	08f76a63          	bltu	x14,x15,b60 <parseEXT+0xb48>
      ad0:	00279713          	slli	x14,x15,0x2
      ad4:	000027b7          	lui	x15,0x2
-     ad8:	43878793          	addi	x15,x15,1080 # 2438 <main+0x3e4>
+     ad8:	75078793          	addi	x15,x15,1872 # 2750 <main+0x6f4>
      adc:	00f707b3          	add	x15,x14,x15
      ae0:	0007a783          	lw	x15,0(x15)
      ae4:	00078067          	jalr	x0,0(x15)
@@ -1183,7 +1183,7 @@ void Input3(int mode, int opcode, int address, int module_ID) {
      de4:	00f76733          	or	x14,x14,x15
      de8:	fd042683          	lw	x13,-48(x8)
      dec:	000087b7          	lui	x15,0x8
-     df0:	fff78793          	addi	x15,x15,-1 # 7fff <__SDATA_BEGIN__+0x492b>
+     df0:	fff78793          	addi	x15,x15,-1 # 7fff <__SDATA_BEGIN__+0x4567>
      df4:	00f6f7b3          	and	x15,x13,x15
      df8:	00f76733          	or	x14,x14,x15
      dfc:	fec42783          	lw	x15,-20(x8)
@@ -1806,7 +1806,7 @@ int PreProcessAll_M1(char *pattern) {
     1508:	fffff7b7          	lui	x15,0xfffff
     150c:	ff040513          	addi	x10,x8,-16
     1510:	00f50533          	add	x10,x10,x15
-    1514:	00030793          	addi	x15,x6,0 # 2000 <myputs>
+    1514:	00030793          	addi	x15,x6,0 # 2000 <convert+0x94>
     1518:	7cc52503          	lw	x10,1996(x10)
     151c:	afdfe0ef          	jal	x1,18 <parseEXT>
     1520:	fea42223          	sw	x10,-28(x8)
@@ -2396,740 +2396,981 @@ int SimulateNFA_All_M0(char text_chars[NO_MODULES]) {
     1b88:	a8cff0ef          	jal	x1,e14 <Complete_Handshaking>
     1b8c:	fea42223          	sw	x10,-28(x8)
 
-    return PATTERN_ACCEPTED_STATUS;
-    1b90:	fe442783          	lw	x15,-28(x8)
+    return (PATTERN_ACCEPTED_STATUS & TARGET_MODULES);
+    1b90:	fe442703          	lw	x14,-28(x8)
+    1b94:	fec42783          	lw	x15,-20(x8)
+    1b98:	00f777b3          	and	x15,x14,x15
 
 }
-    1b94:	00078513          	addi	x10,x15,0
-    1b98:	02c12083          	lw	x1,44(x2)
-    1b9c:	02812403          	lw	x8,40(x2)
-    1ba0:	03010113          	addi	x2,x2,48
-    1ba4:	00008067          	jalr	x0,0(x1)
+    1b9c:	00078513          	addi	x10,x15,0
+    1ba0:	02c12083          	lw	x1,44(x2)
+    1ba4:	02812403          	lw	x8,40(x2)
+    1ba8:	03010113          	addi	x2,x2,48
+    1bac:	00008067          	jalr	x0,0(x1)
 
-00001ba8 <SimulateNFA_All_M1>:
+00001bb0 <SimulateNFA_All_M1>:
         text_char - text character to be sent to the target module. "\0" represents empty pattern (i.e) modules need not be used
     Returns :
         An integer which is a bitmask, where Ith place being 1 implies the text (entered till now) has matched the pattern in that module, 
                                                              0 implies either the module didn't process anything, or the text hasn't matched the pattern yet
 */
 int SimulateNFA_All_M1(char text_char) {
-    1ba8:	fd010113          	addi	x2,x2,-48
-    1bac:	02112623          	sw	x1,44(x2)
-    1bb0:	02812423          	sw	x8,40(x2)
-    1bb4:	03010413          	addi	x8,x2,48
-    1bb8:	00050793          	addi	x15,x10,0
-    1bbc:	fcf40fa3          	sb	x15,-33(x8)
+    1bb0:	fd010113          	addi	x2,x2,-48
+    1bb4:	02112623          	sw	x1,44(x2)
+    1bb8:	02812423          	sw	x8,40(x2)
+    1bbc:	03010413          	addi	x8,x2,48
+    1bc0:	00050793          	addi	x15,x10,0
+    1bc4:	fcf40fa3          	sb	x15,-33(x8)
 
     if(text_char == '\0') return 0;
-    1bc0:	fdf44783          	lbu	x15,-33(x8)
-    1bc4:	00079663          	bne	x15,x0,1bd0 <SimulateNFA_All_M1+0x28>
-    1bc8:	00000793          	addi	x15,x0,0
-    1bcc:	0400006f          	jal	x0,1c0c <SimulateNFA_All_M1+0x64>
+    1bc8:	fdf44783          	lbu	x15,-33(x8)
+    1bcc:	00079663          	bne	x15,x0,1bd8 <SimulateNFA_All_M1+0x28>
+    1bd0:	00000793          	addi	x15,x0,0
+    1bd4:	0400006f          	jal	x0,1c14 <SimulateNFA_All_M1+0x64>
 
     unsigned int TARGET_MODULES = (1<<NO_MODULES)-1;
-    1bd0:	00f00793          	addi	x15,x0,15
-    1bd4:	fef42623          	sw	x15,-20(x8)
+    1bd8:	00f00793          	addi	x15,x0,15
+    1bdc:	fef42623          	sw	x15,-20(x8)
 
     Input1_2((int)text_char, 1);
-    1bd8:	fdf44783          	lbu	x15,-33(x8)
-    1bdc:	00100593          	addi	x11,x0,1
-    1be0:	00078513          	addi	x10,x15,0
-    1be4:	904ff0ef          	jal	x1,ce8 <Input1_2>
+    1be0:	fdf44783          	lbu	x15,-33(x8)
+    1be4:	00100593          	addi	x11,x0,1
+    1be8:	00078513          	addi	x10,x15,0
+    1bec:	8fcff0ef          	jal	x1,ce8 <Input1_2>
     // opcode = 2 : Input for simulating NFA; address, target module : dont care
     Input3(1, 2, 0, 0);    // Mode = 1
-    1be8:	00000693          	addi	x13,x0,0
-    1bec:	00000613          	addi	x12,x0,0
-    1bf0:	00200593          	addi	x11,x0,2
-    1bf4:	00100513          	addi	x10,x0,1
-    1bf8:	9a8ff0ef          	jal	x1,da0 <Input3>
+    1bf0:	00000693          	addi	x13,x0,0
+    1bf4:	00000613          	addi	x12,x0,0
+    1bf8:	00200593          	addi	x11,x0,2
+    1bfc:	00100513          	addi	x10,x0,1
+    1c00:	9a0ff0ef          	jal	x1,da0 <Input3>
 
     unsigned int PATTERN_ACCEPTED_STATUS = Complete_Handshaking(TARGET_MODULES);
-    1bfc:	fec42503          	lw	x10,-20(x8)
-    1c00:	a14ff0ef          	jal	x1,e14 <Complete_Handshaking>
-    1c04:	fea42423          	sw	x10,-24(x8)
+    1c04:	fec42503          	lw	x10,-20(x8)
+    1c08:	a0cff0ef          	jal	x1,e14 <Complete_Handshaking>
+    1c0c:	fea42423          	sw	x10,-24(x8)
 
     return PATTERN_ACCEPTED_STATUS;
-    1c08:	fe842783          	lw	x15,-24(x8)
+    1c10:	fe842783          	lw	x15,-24(x8)
 
 }
-    1c0c:	00078513          	addi	x10,x15,0
-    1c10:	02c12083          	lw	x1,44(x2)
-    1c14:	02812403          	lw	x8,40(x2)
-    1c18:	03010113          	addi	x2,x2,48
-    1c1c:	00008067          	jalr	x0,0(x1)
+    1c14:	00078513          	addi	x10,x15,0
+    1c18:	02c12083          	lw	x1,44(x2)
+    1c1c:	02812403          	lw	x8,40(x2)
+    1c20:	03010113          	addi	x2,x2,48
+    1c24:	00008067          	jalr	x0,0(x1)
 
-00001c20 <SimulateNFA>:
+00001c28 <SimulateNFA>:
         module - integer representing the module number to be targetted
     Returns :
         An integer - 1 implies the text (entered till now) has matched the pattern in the target module, 
                      0 implies either the module didn't process anything, or the text hasn't matched the pattern yet
 */
 int SimulateNFA(char text_char, int module) {
-    1c20:	fd010113          	addi	x2,x2,-48
-    1c24:	02112623          	sw	x1,44(x2)
-    1c28:	02812423          	sw	x8,40(x2)
-    1c2c:	03010413          	addi	x8,x2,48
-    1c30:	00050793          	addi	x15,x10,0
-    1c34:	fcb42c23          	sw	x11,-40(x8)
-    1c38:	fcf40fa3          	sb	x15,-33(x8)
+    1c28:	fd010113          	addi	x2,x2,-48
+    1c2c:	02112623          	sw	x1,44(x2)
+    1c30:	02812423          	sw	x8,40(x2)
+    1c34:	03010413          	addi	x8,x2,48
+    1c38:	00050793          	addi	x15,x10,0
+    1c3c:	fcb42c23          	sw	x11,-40(x8)
+    1c40:	fcf40fa3          	sb	x15,-33(x8)
 
     if(text_char == '\0') return 0;
-    1c3c:	fdf44783          	lbu	x15,-33(x8)
-    1c40:	00079663          	bne	x15,x0,1c4c <SimulateNFA+0x2c>
-    1c44:	00000793          	addi	x15,x0,0
-    1c48:	0580006f          	jal	x0,1ca0 <SimulateNFA+0x80>
+    1c44:	fdf44783          	lbu	x15,-33(x8)
+    1c48:	00079663          	bne	x15,x0,1c54 <SimulateNFA+0x2c>
+    1c4c:	00000793          	addi	x15,x0,0
+    1c50:	0580006f          	jal	x0,1ca8 <SimulateNFA+0x80>
 
     unsigned int TARGET_MODULE = (1<<module);
-    1c4c:	fd842783          	lw	x15,-40(x8)
-    1c50:	00100713          	addi	x14,x0,1
-    1c54:	00f717b3          	sll	x15,x14,x15
-    1c58:	fef42623          	sw	x15,-20(x8)
+    1c54:	fd842783          	lw	x15,-40(x8)
+    1c58:	00100713          	addi	x14,x0,1
+    1c5c:	00f717b3          	sll	x15,x14,x15
+    1c60:	fef42623          	sw	x15,-20(x8)
 
     Input1_2((int)text_char, 1);
-    1c5c:	fdf44783          	lbu	x15,-33(x8)
-    1c60:	00100593          	addi	x11,x0,1
-    1c64:	00078513          	addi	x10,x15,0
-    1c68:	880ff0ef          	jal	x1,ce8 <Input1_2>
+    1c64:	fdf44783          	lbu	x15,-33(x8)
+    1c68:	00100593          	addi	x11,x0,1
+    1c6c:	00078513          	addi	x10,x15,0
+    1c70:	878ff0ef          	jal	x1,ce8 <Input1_2>
     // opcode = 2 : Input for simulating NFA; address : dont care
     Input3(0, 2, 0, module);    // Mode = 0
-    1c6c:	fd842683          	lw	x13,-40(x8)
-    1c70:	00000613          	addi	x12,x0,0
-    1c74:	00200593          	addi	x11,x0,2
-    1c78:	00000513          	addi	x10,x0,0
-    1c7c:	924ff0ef          	jal	x1,da0 <Input3>
+    1c74:	fd842683          	lw	x13,-40(x8)
+    1c78:	00000613          	addi	x12,x0,0
+    1c7c:	00200593          	addi	x11,x0,2
+    1c80:	00000513          	addi	x10,x0,0
+    1c84:	91cff0ef          	jal	x1,da0 <Input3>
 
     unsigned int PATTERN_ACCEPTED_STATUS = Complete_Handshaking(TARGET_MODULE);
-    1c80:	fec42503          	lw	x10,-20(x8)
-    1c84:	990ff0ef          	jal	x1,e14 <Complete_Handshaking>
-    1c88:	fea42423          	sw	x10,-24(x8)
+    1c88:	fec42503          	lw	x10,-20(x8)
+    1c8c:	988ff0ef          	jal	x1,e14 <Complete_Handshaking>
+    1c90:	fea42423          	sw	x10,-24(x8)
 
     return (PATTERN_ACCEPTED_STATUS & TARGET_MODULE) != 0;
-    1c8c:	fe842703          	lw	x14,-24(x8)
-    1c90:	fec42783          	lw	x15,-20(x8)
-    1c94:	00f777b3          	and	x15,x14,x15
-    1c98:	00f037b3          	sltu	x15,x0,x15
-    1c9c:	0ff7f793          	andi	x15,x15,255
+    1c94:	fe842703          	lw	x14,-24(x8)
+    1c98:	fec42783          	lw	x15,-20(x8)
+    1c9c:	00f777b3          	and	x15,x14,x15
+    1ca0:	00f037b3          	sltu	x15,x0,x15
+    1ca4:	0ff7f793          	andi	x15,x15,255
 
 }
-    1ca0:	00078513          	addi	x10,x15,0
-    1ca4:	02c12083          	lw	x1,44(x2)
-    1ca8:	02812403          	lw	x8,40(x2)
-    1cac:	03010113          	addi	x2,x2,48
-    1cb0:	00008067          	jalr	x0,0(x1)
+    1ca8:	00078513          	addi	x10,x15,0
+    1cac:	02c12083          	lw	x1,44(x2)
+    1cb0:	02812403          	lw	x8,40(x2)
+    1cb4:	03010113          	addi	x2,x2,48
+    1cb8:	00008067          	jalr	x0,0(x1)
 
-00001cb4 <ResetNFA_All_M0>:
+00001cbc <ResetNFA_All_M0>:
     Function to reset the state of NFA in required modules without doing it separately one after the other.
     (MODE 0)
     Arguments :
         bitmask - Ith position 1 represents Ith module has to be reset, 0 represents no change
 */
 void ResetNFA_All_M0(unsigned int bitmask) {
-    1cb4:	fd010113          	addi	x2,x2,-48
-    1cb8:	02112623          	sw	x1,44(x2)
-    1cbc:	02812423          	sw	x8,40(x2)
-    1cc0:	03010413          	addi	x8,x2,48
-    1cc4:	fca42e23          	sw	x10,-36(x8)
+    1cbc:	fd010113          	addi	x2,x2,-48
+    1cc0:	02112623          	sw	x1,44(x2)
+    1cc4:	02812423          	sw	x8,40(x2)
+    1cc8:	03010413          	addi	x8,x2,48
+    1ccc:	fca42e23          	sw	x10,-36(x8)
 
     for(int i = 0; i < NO_MODULES; i++) {
-    1cc8:	fe042623          	sw	x0,-20(x8)
-    1ccc:	0400006f          	jal	x0,1d0c <ResetNFA_All_M0+0x58>
+    1cd0:	fe042623          	sw	x0,-20(x8)
+    1cd4:	0400006f          	jal	x0,1d14 <ResetNFA_All_M0+0x58>
         if(bitmask & (1<<i)) {
-    1cd0:	fec42783          	lw	x15,-20(x8)
-    1cd4:	00100713          	addi	x14,x0,1
-    1cd8:	00f717b3          	sll	x15,x14,x15
-    1cdc:	00078713          	addi	x14,x15,0
-    1ce0:	fdc42783          	lw	x15,-36(x8)
-    1ce4:	00f777b3          	and	x15,x14,x15
-    1ce8:	00078c63          	beq	x15,x0,1d00 <ResetNFA_All_M0+0x4c>
+    1cd8:	fec42783          	lw	x15,-20(x8)
+    1cdc:	00100713          	addi	x14,x0,1
+    1ce0:	00f717b3          	sll	x15,x14,x15
+    1ce4:	00078713          	addi	x14,x15,0
+    1ce8:	fdc42783          	lw	x15,-36(x8)
+    1cec:	00f777b3          	and	x15,x14,x15
+    1cf0:	00078c63          	beq	x15,x0,1d08 <ResetNFA_All_M0+0x4c>
             // opcode = 3 : Reset state instruction; address : dont care
             Input3(0, 3, 0, i);     // Mode = 0
-    1cec:	fec42683          	lw	x13,-20(x8)
-    1cf0:	00000613          	addi	x12,x0,0
-    1cf4:	00300593          	addi	x11,x0,3
-    1cf8:	00000513          	addi	x10,x0,0
-    1cfc:	8a4ff0ef          	jal	x1,da0 <Input3>
+    1cf4:	fec42683          	lw	x13,-20(x8)
+    1cf8:	00000613          	addi	x12,x0,0
+    1cfc:	00300593          	addi	x11,x0,3
+    1d00:	00000513          	addi	x10,x0,0
+    1d04:	89cff0ef          	jal	x1,da0 <Input3>
     for(int i = 0; i < NO_MODULES; i++) {
-    1d00:	fec42783          	lw	x15,-20(x8)
-    1d04:	00178793          	addi	x15,x15,1
-    1d08:	fef42623          	sw	x15,-20(x8)
-    1d0c:	fec42703          	lw	x14,-20(x8)
-    1d10:	00300793          	addi	x15,x0,3
-    1d14:	fae7dee3          	bge	x15,x14,1cd0 <ResetNFA_All_M0+0x1c>
+    1d08:	fec42783          	lw	x15,-20(x8)
+    1d0c:	00178793          	addi	x15,x15,1
+    1d10:	fef42623          	sw	x15,-20(x8)
+    1d14:	fec42703          	lw	x14,-20(x8)
+    1d18:	00300793          	addi	x15,x0,3
+    1d1c:	fae7dee3          	bge	x15,x14,1cd8 <ResetNFA_All_M0+0x1c>
         }
     }
 
     Complete_Handshaking(bitmask);
-    1d18:	fdc42503          	lw	x10,-36(x8)
-    1d1c:	8f8ff0ef          	jal	x1,e14 <Complete_Handshaking>
+    1d20:	fdc42503          	lw	x10,-36(x8)
+    1d24:	8f0ff0ef          	jal	x1,e14 <Complete_Handshaking>
 
 }
-    1d20:	00000013          	addi	x0,x0,0
-    1d24:	02c12083          	lw	x1,44(x2)
-    1d28:	02812403          	lw	x8,40(x2)
-    1d2c:	03010113          	addi	x2,x2,48
-    1d30:	00008067          	jalr	x0,0(x1)
+    1d28:	00000013          	addi	x0,x0,0
+    1d2c:	02c12083          	lw	x1,44(x2)
+    1d30:	02812403          	lw	x8,40(x2)
+    1d34:	03010113          	addi	x2,x2,48
+    1d38:	00008067          	jalr	x0,0(x1)
 
-00001d34 <ResetNFA_All_M1>:
+00001d3c <ResetNFA_All_M1>:
     Function to reset the state of NFA in all modules parallely.
     (MODE 1)
     Arguments :
         module - MODULE_ID of target module where state has to be reset
 */
 void ResetNFA_All_M1() {
-    1d34:	ff010113          	addi	x2,x2,-16
-    1d38:	00112623          	sw	x1,12(x2)
-    1d3c:	00812423          	sw	x8,8(x2)
-    1d40:	01010413          	addi	x8,x2,16
+    1d3c:	ff010113          	addi	x2,x2,-16
+    1d40:	00112623          	sw	x1,12(x2)
+    1d44:	00812423          	sw	x8,8(x2)
+    1d48:	01010413          	addi	x8,x2,16
 
     // opcode = 3 : Reset state instruction; address : dont care
     Input3(1, 3, 0, 0);       // Mode = 1, target module : dont care
-    1d44:	00000693          	addi	x13,x0,0
-    1d48:	00000613          	addi	x12,x0,0
-    1d4c:	00300593          	addi	x11,x0,3
-    1d50:	00100513          	addi	x10,x0,1
-    1d54:	84cff0ef          	jal	x1,da0 <Input3>
+    1d4c:	00000693          	addi	x13,x0,0
+    1d50:	00000613          	addi	x12,x0,0
+    1d54:	00300593          	addi	x11,x0,3
+    1d58:	00100513          	addi	x10,x0,1
+    1d5c:	844ff0ef          	jal	x1,da0 <Input3>
 
     Complete_Handshaking((1<<NO_MODULES)-1);
-    1d58:	00f00513          	addi	x10,x0,15
-    1d5c:	8b8ff0ef          	jal	x1,e14 <Complete_Handshaking>
+    1d60:	00f00513          	addi	x10,x0,15
+    1d64:	8b0ff0ef          	jal	x1,e14 <Complete_Handshaking>
 
 }
-    1d60:	00000013          	addi	x0,x0,0
-    1d64:	00c12083          	lw	x1,12(x2)
-    1d68:	00812403          	lw	x8,8(x2)
-    1d6c:	01010113          	addi	x2,x2,16
-    1d70:	00008067          	jalr	x0,0(x1)
+    1d68:	00000013          	addi	x0,x0,0
+    1d6c:	00c12083          	lw	x1,12(x2)
+    1d70:	00812403          	lw	x8,8(x2)
+    1d74:	01010113          	addi	x2,x2,16
+    1d78:	00008067          	jalr	x0,0(x1)
 
-00001d74 <ResetNFA>:
+00001d7c <ResetNFA>:
 /*
     Function to reset the state of NFA in target module.
     Arguments :
         module - MODULE_ID of target module where state has to be reset
 */
 void ResetNFA(int module) {
-    1d74:	fe010113          	addi	x2,x2,-32
-    1d78:	00112e23          	sw	x1,28(x2)
-    1d7c:	00812c23          	sw	x8,24(x2)
-    1d80:	02010413          	addi	x8,x2,32
-    1d84:	fea42623          	sw	x10,-20(x8)
+    1d7c:	fe010113          	addi	x2,x2,-32
+    1d80:	00112e23          	sw	x1,28(x2)
+    1d84:	00812c23          	sw	x8,24(x2)
+    1d88:	02010413          	addi	x8,x2,32
+    1d8c:	fea42623          	sw	x10,-20(x8)
 
     // opcode = 3 : Reset state instruction; address : dont care
     Input3(0, 3, 0, module);    // Mode = 0
-    1d88:	fec42683          	lw	x13,-20(x8)
-    1d8c:	00000613          	addi	x12,x0,0
-    1d90:	00300593          	addi	x11,x0,3
-    1d94:	00000513          	addi	x10,x0,0
-    1d98:	808ff0ef          	jal	x1,da0 <Input3>
+    1d90:	fec42683          	lw	x13,-20(x8)
+    1d94:	00000613          	addi	x12,x0,0
+    1d98:	00300593          	addi	x11,x0,3
+    1d9c:	00000513          	addi	x10,x0,0
+    1da0:	800ff0ef          	jal	x1,da0 <Input3>
 
     Complete_Handshaking((1<<module));
-    1d9c:	fec42783          	lw	x15,-20(x8)
-    1da0:	00100713          	addi	x14,x0,1
-    1da4:	00f717b3          	sll	x15,x14,x15
-    1da8:	00078513          	addi	x10,x15,0
-    1dac:	868ff0ef          	jal	x1,e14 <Complete_Handshaking>
+    1da4:	fec42783          	lw	x15,-20(x8)
+    1da8:	00100713          	addi	x14,x0,1
+    1dac:	00f717b3          	sll	x15,x14,x15
+    1db0:	00078513          	addi	x10,x15,0
+    1db4:	860ff0ef          	jal	x1,e14 <Complete_Handshaking>
 
 }
-    1db0:	00000013          	addi	x0,x0,0
-    1db4:	01c12083          	lw	x1,28(x2)
-    1db8:	01812403          	lw	x8,24(x2)
-    1dbc:	02010113          	addi	x2,x2,32
-    1dc0:	00008067          	jalr	x0,0(x1)
+    1db8:	00000013          	addi	x0,x0,0
+    1dbc:	01c12083          	lw	x1,28(x2)
+    1dc0:	01812403          	lw	x8,24(x2)
+    1dc4:	02010113          	addi	x2,x2,32
+    1dc8:	00008067          	jalr	x0,0(x1)
 
-00001dc4 <_outbyte>:
+00001dcc <_outbyte>:
 // change later if needed
 #define OUTPERIPH_BASE 0x800000
 #define OUTPERIPH_WRITE_OFFSET 0x00
 #define OUTPERIPH_READSTATUS_OFFSET 0x04
 void _outbyte(int c)
 {
-    1dc4:	fd010113          	addi	x2,x2,-48
-    1dc8:	02812623          	sw	x8,44(x2)
-    1dcc:	03010413          	addi	x8,x2,48
-    1dd0:	fca42e23          	sw	x10,-36(x8)
+    1dcc:	fd010113          	addi	x2,x2,-48
+    1dd0:	02812623          	sw	x8,44(x2)
+    1dd4:	03010413          	addi	x8,x2,48
+    1dd8:	fca42e23          	sw	x10,-36(x8)
         // Fill in the code here
         // What you need is to write to the address of the peripheral (as defined in th BIU)
         // Example code here:
         int *p;  // Pointer to integer
         p = (int *)(OUTPERIPH_BASE + OUTPERIPH_WRITE_OFFSET); // Set pointer value directly
-    1dd4:	008007b7          	lui	x15,0x800
-    1dd8:	fef42623          	sw	x15,-20(x8)
+    1ddc:	008007b7          	lui	x15,0x800
+    1de0:	fef42623          	sw	x15,-20(x8)
         (*p) = c; // Write the value to the address
-    1ddc:	fec42783          	lw	x15,-20(x8)
-    1de0:	fdc42703          	lw	x14,-36(x8)
-    1de4:	00e7a023          	sw	x14,0(x15) # 800000 <__stack_top+0x7c0000>
+    1de4:	fec42783          	lw	x15,-20(x8)
+    1de8:	fdc42703          	lw	x14,-36(x8)
+    1dec:	00e7a023          	sw	x14,0(x15) # 800000 <__stack_top+0x7c0000>
 }
-    1de8:	00000013          	addi	x0,x0,0
-    1dec:	02c12403          	lw	x8,44(x2)
-    1df0:	03010113          	addi	x2,x2,48
-    1df4:	00008067          	jalr	x0,0(x1)
+    1df0:	00000013          	addi	x0,x0,0
+    1df4:	02c12403          	lw	x8,44(x2)
+    1df8:	03010113          	addi	x2,x2,48
+    1dfc:	00008067          	jalr	x0,0(x1)
 
-00001df8 <outbyte>:
+00001e00 <outbyte>:
 
 void outbyte(int c)
 {
-    1df8:	fe010113          	addi	x2,x2,-32
-    1dfc:	00112e23          	sw	x1,28(x2)
-    1e00:	00812c23          	sw	x8,24(x2)
-    1e04:	02010413          	addi	x8,x2,32
-    1e08:	fea42623          	sw	x10,-20(x8)
+    1e00:	fe010113          	addi	x2,x2,-32
+    1e04:	00112e23          	sw	x1,28(x2)
+    1e08:	00812c23          	sw	x8,24(x2)
+    1e0c:	02010413          	addi	x8,x2,32
+    1e10:	fea42623          	sw	x10,-20(x8)
         static char prev = 0;
         if (c < ' ' && c != '\r' && c != '\n' && c != '\t' && c != '\b')
-    1e0c:	fec42703          	lw	x14,-20(x8)
-    1e10:	01f00793          	addi	x15,x0,31
-    1e14:	02e7ca63          	blt	x15,x14,1e48 <outbyte+0x50>
-    1e18:	fec42703          	lw	x14,-20(x8)
-    1e1c:	00d00793          	addi	x15,x0,13
-    1e20:	02f70463          	beq	x14,x15,1e48 <outbyte+0x50>
-    1e24:	fec42703          	lw	x14,-20(x8)
-    1e28:	00a00793          	addi	x15,x0,10
-    1e2c:	00f70e63          	beq	x14,x15,1e48 <outbyte+0x50>
-    1e30:	fec42703          	lw	x14,-20(x8)
-    1e34:	00900793          	addi	x15,x0,9
-    1e38:	00f70863          	beq	x14,x15,1e48 <outbyte+0x50>
-    1e3c:	fec42703          	lw	x14,-20(x8)
-    1e40:	00800793          	addi	x15,x0,8
-    1e44:	02f71e63          	bne	x14,x15,1e80 <outbyte+0x88>
+    1e14:	fec42703          	lw	x14,-20(x8)
+    1e18:	01f00793          	addi	x15,x0,31
+    1e1c:	02e7ca63          	blt	x15,x14,1e50 <outbyte+0x50>
+    1e20:	fec42703          	lw	x14,-20(x8)
+    1e24:	00d00793          	addi	x15,x0,13
+    1e28:	02f70463          	beq	x14,x15,1e50 <outbyte+0x50>
+    1e2c:	fec42703          	lw	x14,-20(x8)
+    1e30:	00a00793          	addi	x15,x0,10
+    1e34:	00f70e63          	beq	x14,x15,1e50 <outbyte+0x50>
+    1e38:	fec42703          	lw	x14,-20(x8)
+    1e3c:	00900793          	addi	x15,x0,9
+    1e40:	00f70863          	beq	x14,x15,1e50 <outbyte+0x50>
+    1e44:	fec42703          	lw	x14,-20(x8)
+    1e48:	00800793          	addi	x15,x0,8
+    1e4c:	02f71e63          	bne	x14,x15,1e88 <outbyte+0x88>
                 return;
         if (c == '\n' && prev != '\r') _outbyte('\r');
-    1e48:	fec42703          	lw	x14,-20(x8)
-    1e4c:	00a00793          	addi	x15,x0,10
-    1e50:	00f71c63          	bne	x14,x15,1e68 <outbyte+0x70>
-    1e54:	8141c703          	lbu	x14,-2028(x3) # 26e8 <prev.2>
-    1e58:	00d00793          	addi	x15,x0,13
-    1e5c:	00f70663          	beq	x14,x15,1e68 <outbyte+0x70>
-    1e60:	00d00513          	addi	x10,x0,13
-    1e64:	f61ff0ef          	jal	x1,1dc4 <_outbyte>
+    1e50:	fec42703          	lw	x14,-20(x8)
+    1e54:	00a00793          	addi	x15,x0,10
+    1e58:	00f71c63          	bne	x14,x15,1e70 <outbyte+0x70>
+    1e5c:	8141c703          	lbu	x14,-2028(x3) # 2aac <prev.2>
+    1e60:	00d00793          	addi	x15,x0,13
+    1e64:	00f70663          	beq	x14,x15,1e70 <outbyte+0x70>
+    1e68:	00d00513          	addi	x10,x0,13
+    1e6c:	f61ff0ef          	jal	x1,1dcc <_outbyte>
         _outbyte(c);
-    1e68:	fec42503          	lw	x10,-20(x8)
-    1e6c:	f59ff0ef          	jal	x1,1dc4 <_outbyte>
+    1e70:	fec42503          	lw	x10,-20(x8)
+    1e74:	f59ff0ef          	jal	x1,1dcc <_outbyte>
         prev = c;
-    1e70:	fec42783          	lw	x15,-20(x8)
-    1e74:	0ff7f713          	andi	x14,x15,255
-    1e78:	80e18a23          	sb	x14,-2028(x3) # 26e8 <prev.2>
-    1e7c:	0080006f          	jal	x0,1e84 <outbyte+0x8c>
+    1e78:	fec42783          	lw	x15,-20(x8)
+    1e7c:	0ff7f713          	andi	x14,x15,255
+    1e80:	80e18a23          	sb	x14,-2028(x3) # 2aac <prev.2>
+    1e84:	0080006f          	jal	x0,1e8c <outbyte+0x8c>
                 return;
-    1e80:	00000013          	addi	x0,x0,0
+    1e88:	00000013          	addi	x0,x0,0
 }
-    1e84:	01c12083          	lw	x1,28(x2)
-    1e88:	01812403          	lw	x8,24(x2)
-    1e8c:	02010113          	addi	x2,x2,32
-    1e90:	00008067          	jalr	x0,0(x1)
+    1e8c:	01c12083          	lw	x1,28(x2)
+    1e90:	01812403          	lw	x8,24(x2)
+    1e94:	02010113          	addi	x2,x2,32
+    1e98:	00008067          	jalr	x0,0(x1)
 
-00001e94 <readstatus>:
+00001e9c <readstatus>:
 // The following function should read back the number of bytes that 
 // have gone through the peripheral since system startup.  Again, the
 // address of the status readout register is your choice, and can be
 // hardcoded here or declared as a #define
 int readstatus() 
 {
-    1e94:	fe010113          	addi	x2,x2,-32
-    1e98:	00812e23          	sw	x8,28(x2)
-    1e9c:	02010413          	addi	x8,x2,32
+    1e9c:	fe010113          	addi	x2,x2,-32
+    1ea0:	00812e23          	sw	x8,28(x2)
+    1ea4:	02010413          	addi	x8,x2,32
         // Fill in code here
         // Note how the _outbyte function was written, and adapt it to read back the status register
 		int *p;  // Pointer to integer
         p = (int *)(OUTPERIPH_BASE + OUTPERIPH_READSTATUS_OFFSET); // Read value in location pointed by pointer to get no of bytes written
-    1ea0:	008007b7          	lui	x15,0x800
-    1ea4:	00478793          	addi	x15,x15,4 # 800004 <__stack_top+0x7c0004>
-    1ea8:	fef42623          	sw	x15,-20(x8)
+    1ea8:	008007b7          	lui	x15,0x800
+    1eac:	00478793          	addi	x15,x15,4 # 800004 <__stack_top+0x7c0004>
+    1eb0:	fef42623          	sw	x15,-20(x8)
         return (*p);
-    1eac:	fec42783          	lw	x15,-20(x8)
-    1eb0:	0007a783          	lw	x15,0(x15)
+    1eb4:	fec42783          	lw	x15,-20(x8)
+    1eb8:	0007a783          	lw	x15,0(x15)
 }
-    1eb4:	00078513          	addi	x10,x15,0
-    1eb8:	01c12403          	lw	x8,28(x2)
-    1ebc:	02010113          	addi	x2,x2,32
-    1ec0:	00008067          	jalr	x0,0(x1)
+    1ebc:	00078513          	addi	x10,x15,0
+    1ec0:	01c12403          	lw	x8,28(x2)
+    1ec4:	02010113          	addi	x2,x2,32
+    1ec8:	00008067          	jalr	x0,0(x1)
 
-00001ec4 <mydiv>:
+00001ecc <mydiv>:
 // These funcs have not been checked - they may fail for large
 // or negative values.
 // We could also have had a single function computing both, but would
 // need pointers or assembly to return two values.
 static int mydiv(int u, int b)
 {
-    1ec4:	fe010113          	addi	x2,x2,-32
-    1ec8:	00812e23          	sw	x8,28(x2)
-    1ecc:	00912c23          	sw	x9,24(x2)
-    1ed0:	01212a23          	sw	x18,20(x2)
-    1ed4:	02010413          	addi	x8,x2,32
-    1ed8:	fea42623          	sw	x10,-20(x8)
-    1edc:	feb42423          	sw	x11,-24(x8)
+    1ecc:	fe010113          	addi	x2,x2,-32
+    1ed0:	00812e23          	sw	x8,28(x2)
+    1ed4:	00912c23          	sw	x9,24(x2)
+    1ed8:	01212a23          	sw	x18,20(x2)
+    1edc:	02010413          	addi	x8,x2,32
+    1ee0:	fea42623          	sw	x10,-20(x8)
+    1ee4:	feb42423          	sw	x11,-24(x8)
 	register unsigned int q = 0;
-    1ee0:	00000913          	addi	x18,x0,0
+    1ee8:	00000913          	addi	x18,x0,0
 	register unsigned int m = u;
-    1ee4:	fec42483          	lw	x9,-20(x8)
+    1eec:	fec42483          	lw	x9,-20(x8)
 	while (m >= b) {
-    1ee8:	0100006f          	jal	x0,1ef8 <mydiv+0x34>
+    1ef0:	0100006f          	jal	x0,1f00 <mydiv+0x34>
 		m -= b;
-    1eec:	fe842783          	lw	x15,-24(x8)
-    1ef0:	40f484b3          	sub	x9,x9,x15
+    1ef4:	fe842783          	lw	x15,-24(x8)
+    1ef8:	40f484b3          	sub	x9,x9,x15
 		q++;
-    1ef4:	00190913          	addi	x18,x18,1
+    1efc:	00190913          	addi	x18,x18,1
 	while (m >= b) {
-    1ef8:	fe842783          	lw	x15,-24(x8)
-    1efc:	fef4f8e3          	bgeu	x9,x15,1eec <mydiv+0x28>
+    1f00:	fe842783          	lw	x15,-24(x8)
+    1f04:	fef4f8e3          	bgeu	x9,x15,1ef4 <mydiv+0x28>
 	}
 	return q;
-    1f00:	00090793          	addi	x15,x18,0
+    1f08:	00090793          	addi	x15,x18,0
 }
-    1f04:	00078513          	addi	x10,x15,0
-    1f08:	01c12403          	lw	x8,28(x2)
-    1f0c:	01812483          	lw	x9,24(x2)
-    1f10:	01412903          	lw	x18,20(x2)
-    1f14:	02010113          	addi	x2,x2,32
-    1f18:	00008067          	jalr	x0,0(x1)
+    1f0c:	00078513          	addi	x10,x15,0
+    1f10:	01c12403          	lw	x8,28(x2)
+    1f14:	01812483          	lw	x9,24(x2)
+    1f18:	01412903          	lw	x18,20(x2)
+    1f1c:	02010113          	addi	x2,x2,32
+    1f20:	00008067          	jalr	x0,0(x1)
 
-00001f1c <mymod>:
+00001f24 <mymod>:
 
 static int mymod(int u, int b)
 {
-    1f1c:	fe010113          	addi	x2,x2,-32
-    1f20:	00812e23          	sw	x8,28(x2)
-    1f24:	00912c23          	sw	x9,24(x2)
-    1f28:	02010413          	addi	x8,x2,32
-    1f2c:	fea42623          	sw	x10,-20(x8)
-    1f30:	feb42423          	sw	x11,-24(x8)
+    1f24:	fe010113          	addi	x2,x2,-32
+    1f28:	00812e23          	sw	x8,28(x2)
+    1f2c:	00912c23          	sw	x9,24(x2)
+    1f30:	02010413          	addi	x8,x2,32
+    1f34:	fea42623          	sw	x10,-20(x8)
+    1f38:	feb42423          	sw	x11,-24(x8)
 	register unsigned int m = u;
-    1f34:	fec42483          	lw	x9,-20(x8)
+    1f3c:	fec42483          	lw	x9,-20(x8)
 	while (m >= b) m -= b;
-    1f38:	00c0006f          	jal	x0,1f44 <mymod+0x28>
-    1f3c:	fe842783          	lw	x15,-24(x8)
-    1f40:	40f484b3          	sub	x9,x9,x15
+    1f40:	00c0006f          	jal	x0,1f4c <mymod+0x28>
     1f44:	fe842783          	lw	x15,-24(x8)
-    1f48:	fef4fae3          	bgeu	x9,x15,1f3c <mymod+0x20>
+    1f48:	40f484b3          	sub	x9,x9,x15
+    1f4c:	fe842783          	lw	x15,-24(x8)
+    1f50:	fef4fae3          	bgeu	x9,x15,1f44 <mymod+0x20>
 	return m;
-    1f4c:	00048793          	addi	x15,x9,0
+    1f54:	00048793          	addi	x15,x9,0
 }
-    1f50:	00078513          	addi	x10,x15,0
-    1f54:	01c12403          	lw	x8,28(x2)
-    1f58:	01812483          	lw	x9,24(x2)
-    1f5c:	02010113          	addi	x2,x2,32
-    1f60:	00008067          	jalr	x0,0(x1)
+    1f58:	00078513          	addi	x10,x15,0
+    1f5c:	01c12403          	lw	x8,28(x2)
+    1f60:	01812483          	lw	x9,24(x2)
+    1f64:	02010113          	addi	x2,x2,32
+    1f68:	00008067          	jalr	x0,0(x1)
 
-00001f64 <convert>:
+00001f6c <convert>:
 
 char *convert(unsigned int num, int base) 
 { 
-    1f64:	fd010113          	addi	x2,x2,-48
-    1f68:	02112623          	sw	x1,44(x2)
-    1f6c:	02812423          	sw	x8,40(x2)
-    1f70:	03010413          	addi	x8,x2,48
-    1f74:	fca42e23          	sw	x10,-36(x8)
-    1f78:	fcb42c23          	sw	x11,-40(x8)
+    1f6c:	fd010113          	addi	x2,x2,-48
+    1f70:	02112623          	sw	x1,44(x2)
+    1f74:	02812423          	sw	x8,40(x2)
+    1f78:	03010413          	addi	x8,x2,48
+    1f7c:	fca42e23          	sw	x10,-36(x8)
+    1f80:	fcb42c23          	sw	x11,-40(x8)
 	static char Representation[]= "0123456789ABCDEF";
 	static char buffer[50]; 
 	char *ptr; 
 	
 	ptr = &buffer[49]; 
-    1f7c:	84918793          	addi	x15,x3,-1975 # 271d <buffer.1+0x31>
-    1f80:	fef42623          	sw	x15,-20(x8)
+    1f84:	84918793          	addi	x15,x3,-1975 # 2ae1 <buffer.1+0x31>
+    1f88:	fef42623          	sw	x15,-20(x8)
 	*ptr = '\0'; 
-    1f84:	fec42783          	lw	x15,-20(x8)
-    1f88:	00078023          	sb	x0,0(x15)
+    1f8c:	fec42783          	lw	x15,-20(x8)
+    1f90:	00078023          	sb	x0,0(x15)
 	
 	do 
 	{ 
                 int x = mymod(num, base);
-    1f8c:	fdc42783          	lw	x15,-36(x8)
-    1f90:	fd842583          	lw	x11,-40(x8)
-    1f94:	00078513          	addi	x10,x15,0
-    1f98:	f85ff0ef          	jal	x1,1f1c <mymod>
-    1f9c:	fea42423          	sw	x10,-24(x8)
+    1f94:	fdc42783          	lw	x15,-36(x8)
+    1f98:	fd842583          	lw	x11,-40(x8)
+    1f9c:	00078513          	addi	x10,x15,0
+    1fa0:	f85ff0ef          	jal	x1,1f24 <mymod>
+    1fa4:	fea42423          	sw	x10,-24(x8)
 		*--ptr = Representation[x]; 
-    1fa0:	fec42783          	lw	x15,-20(x8)
-    1fa4:	fff78793          	addi	x15,x15,-1
-    1fa8:	fef42623          	sw	x15,-20(x8)
-    1fac:	000027b7          	lui	x15,0x2
-    1fb0:	6d478713          	addi	x14,x15,1748 # 26d4 <Representation.0>
-    1fb4:	fe842783          	lw	x15,-24(x8)
-    1fb8:	00f707b3          	add	x15,x14,x15
-    1fbc:	0007c703          	lbu	x14,0(x15)
-    1fc0:	fec42783          	lw	x15,-20(x8)
-    1fc4:	00e78023          	sb	x14,0(x15)
+    1fa8:	fec42783          	lw	x15,-20(x8)
+    1fac:	fff78793          	addi	x15,x15,-1
+    1fb0:	fef42623          	sw	x15,-20(x8)
+    1fb4:	000037b7          	lui	x15,0x3
+    1fb8:	a9878713          	addi	x14,x15,-1384 # 2a98 <Representation.0>
+    1fbc:	fe842783          	lw	x15,-24(x8)
+    1fc0:	00f707b3          	add	x15,x14,x15
+    1fc4:	0007c703          	lbu	x14,0(x15)
+    1fc8:	fec42783          	lw	x15,-20(x8)
+    1fcc:	00e78023          	sb	x14,0(x15)
 		num = mydiv(num, base); 
-    1fc8:	fdc42783          	lw	x15,-36(x8)
-    1fcc:	fd842583          	lw	x11,-40(x8)
-    1fd0:	00078513          	addi	x10,x15,0
-    1fd4:	ef1ff0ef          	jal	x1,1ec4 <mydiv>
-    1fd8:	00050793          	addi	x15,x10,0
-    1fdc:	fcf42e23          	sw	x15,-36(x8)
+    1fd0:	fdc42783          	lw	x15,-36(x8)
+    1fd4:	fd842583          	lw	x11,-40(x8)
+    1fd8:	00078513          	addi	x10,x15,0
+    1fdc:	ef1ff0ef          	jal	x1,1ecc <mydiv>
+    1fe0:	00050793          	addi	x15,x10,0
+    1fe4:	fcf42e23          	sw	x15,-36(x8)
 	}while(num != 0); 
-    1fe0:	fdc42783          	lw	x15,-36(x8)
-    1fe4:	fa0794e3          	bne	x15,x0,1f8c <convert+0x28>
+    1fe8:	fdc42783          	lw	x15,-36(x8)
+    1fec:	fa0794e3          	bne	x15,x0,1f94 <convert+0x28>
 	
 	return(ptr); 
-    1fe8:	fec42783          	lw	x15,-20(x8)
+    1ff0:	fec42783          	lw	x15,-20(x8)
 }
-    1fec:	00078513          	addi	x10,x15,0
-    1ff0:	02c12083          	lw	x1,44(x2)
-    1ff4:	02812403          	lw	x8,40(x2)
-    1ff8:	03010113          	addi	x2,x2,48
-    1ffc:	00008067          	jalr	x0,0(x1)
+    1ff4:	00078513          	addi	x10,x15,0
+    1ff8:	02c12083          	lw	x1,44(x2)
+    1ffc:	02812403          	lw	x8,40(x2)
+    2000:	03010113          	addi	x2,x2,48
+    2004:	00008067          	jalr	x0,0(x1)
 
-00002000 <myputs>:
+00002008 <myputs>:
 
 // void myputs(const char *a, int len)
 void myputs(const char *a)
 {
-    2000:	fe010113          	addi	x2,x2,-32
-    2004:	00112e23          	sw	x1,28(x2)
-    2008:	00812c23          	sw	x8,24(x2)
-    200c:	00912a23          	sw	x9,20(x2)
-    2010:	02010413          	addi	x8,x2,32
-    2014:	fea42623          	sw	x10,-20(x8)
+    2008:	fe010113          	addi	x2,x2,-32
+    200c:	00112e23          	sw	x1,28(x2)
+    2010:	00812c23          	sw	x8,24(x2)
+    2014:	00912a23          	sw	x9,20(x2)
+    2018:	02010413          	addi	x8,x2,32
+    201c:	fea42623          	sw	x10,-20(x8)
         register char* p;
 	for(p=(char *)a; (*p)!=0; p++) {
-    2018:	fec42483          	lw	x9,-20(x8)
-    201c:	0140006f          	jal	x0,2030 <myputs+0x30>
+    2020:	fec42483          	lw	x9,-20(x8)
+    2024:	0140006f          	jal	x0,2038 <myputs+0x30>
 		outbyte(*p);
-    2020:	0004c783          	lbu	x15,0(x9)
-    2024:	00078513          	addi	x10,x15,0
-    2028:	dd1ff0ef          	jal	x1,1df8 <outbyte>
+    2028:	0004c783          	lbu	x15,0(x9)
+    202c:	00078513          	addi	x10,x15,0
+    2030:	dd1ff0ef          	jal	x1,1e00 <outbyte>
 	for(p=(char *)a; (*p)!=0; p++) {
-    202c:	00148493          	addi	x9,x9,1
-    2030:	0004c783          	lbu	x15,0(x9)
-    2034:	fe0796e3          	bne	x15,x0,2020 <myputs+0x20>
+    2034:	00148493          	addi	x9,x9,1
+    2038:	0004c783          	lbu	x15,0(x9)
+    203c:	fe0796e3          	bne	x15,x0,2028 <myputs+0x20>
 	}
 }
-    2038:	00000013          	addi	x0,x0,0
-    203c:	00000013          	addi	x0,x0,0
-    2040:	01c12083          	lw	x1,28(x2)
-    2044:	01812403          	lw	x8,24(x2)
-    2048:	01412483          	lw	x9,20(x2)
-    204c:	02010113          	addi	x2,x2,32
-    2050:	00008067          	jalr	x0,0(x1)
+    2040:	00000013          	addi	x0,x0,0
+    2044:	00000013          	addi	x0,x0,0
+    2048:	01c12083          	lw	x1,28(x2)
+    204c:	01812403          	lw	x8,24(x2)
+    2050:	01412483          	lw	x9,20(x2)
+    2054:	02010113          	addi	x2,x2,32
+    2058:	00008067          	jalr	x0,0(x1)
 
-00002054 <main>:
+0000205c <main>:
 #include "./Pattern_Matching/PM_Utility.c"
 #include "./STDOUT/outbyte.c"
 
 int main() {
-    2054:	fc010113          	addi	x2,x2,-64
-    2058:	02112e23          	sw	x1,60(x2)
-    205c:	02812c23          	sw	x8,56(x2)
-    2060:	04010413          	addi	x8,x2,64
+    205c:	f9010113          	addi	x2,x2,-112
+    2060:	06112623          	sw	x1,108(x2)
+    2064:	06812423          	sw	x8,104(x2)
+    2068:	07010413          	addi	x8,x2,112
 
     char* patterns[4] = {"abc+","[abc]{0,3}d[e,f]?","\0","[a-zA-Z][0-9]hello"};
-    2064:	000027b7          	lui	x15,0x2
-    2068:	69878793          	addi	x15,x15,1688 # 2698 <main+0x644>
-    206c:	0007a603          	lw	x12,0(x15)
-    2070:	0047a683          	lw	x13,4(x15)
-    2074:	0087a703          	lw	x14,8(x15)
-    2078:	00c7a783          	lw	x15,12(x15)
-    207c:	fcc42623          	sw	x12,-52(x8)
-    2080:	fcd42823          	sw	x13,-48(x8)
-    2084:	fce42a23          	sw	x14,-44(x8)
-    2088:	fcf42c23          	sw	x15,-40(x8)
+    206c:	000037b7          	lui	x15,0x3
+    2070:	a4c78793          	addi	x15,x15,-1460 # 2a4c <main+0x9f0>
+    2074:	0007a603          	lw	x12,0(x15)
+    2078:	0047a683          	lw	x13,4(x15)
+    207c:	0087a703          	lw	x14,8(x15)
+    2080:	00c7a783          	lw	x15,12(x15)
+    2084:	fcc42023          	sw	x12,-64(x8)
+    2088:	fcd42223          	sw	x13,-60(x8)
+    208c:	fce42423          	sw	x14,-56(x8)
+    2090:	fcf42623          	sw	x15,-52(x8)
     char* pattern2 = "ab?[cd]*";
-    208c:	000027b7          	lui	x15,0x2
-    2090:	55478793          	addi	x15,x15,1364 # 2554 <main+0x500>
-    2094:	fef42223          	sw	x15,-28(x8)
+    2094:	000037b7          	lui	x15,0x3
+    2098:	86c78793          	addi	x15,x15,-1940 # 286c <main+0x810>
+    209c:	fcf42c23          	sw	x15,-40(x8)
 
     PreProcessAll_M0(patterns);
-    2098:	fcc40793          	addi	x15,x8,-52
-    209c:	00078513          	addi	x10,x15,0
-    20a0:	e45fe0ef          	jal	x1,ee4 <PreProcessAll_M0>
+    20a0:	fc040793          	addi	x15,x8,-64
+    20a4:	00078513          	addi	x10,x15,0
+    20a8:	e3dfe0ef          	jal	x1,ee4 <PreProcessAll_M0>
     PreProcess(pattern2, 2);
-    20a4:	00200593          	addi	x11,x0,2
-    20a8:	fe442503          	lw	x10,-28(x8)
-    20ac:	edcff0ef          	jal	x1,1788 <PreProcess>
+    20ac:	00200593          	addi	x11,x0,2
+    20b0:	fd842503          	lw	x10,-40(x8)
+    20b4:	ed4ff0ef          	jal	x1,1788 <PreProcess>
 
     // Pattern Matching in a single module
     myputs("SINGLE TEXT - SINGLE COMPLEX PATTERN MATCHING\n\n");
-    20b0:	000027b7          	lui	x15,0x2
-    20b4:	56078513          	addi	x10,x15,1376 # 2560 <main+0x50c>
-    20b8:	f49ff0ef          	jal	x1,2000 <myputs>
+    20b8:	000037b7          	lui	x15,0x3
+    20bc:	87878513          	addi	x10,x15,-1928 # 2878 <main+0x81c>
+    20c0:	f49ff0ef          	jal	x1,2008 <myputs>
     int pattern_status = SimulateNFA('a', 2);
-    20bc:	00200593          	addi	x11,x0,2
-    20c0:	06100513          	addi	x10,x0,97
-    20c4:	b5dff0ef          	jal	x1,1c20 <SimulateNFA>
-    20c8:	fea42023          	sw	x10,-32(x8)
+    20c4:	00200593          	addi	x11,x0,2
+    20c8:	06100513          	addi	x10,x0,97
+    20cc:	b5dff0ef          	jal	x1,1c28 <SimulateNFA>
+    20d0:	fca42a23          	sw	x10,-44(x8)
     if(pattern_status) {
-    20cc:	fe042783          	lw	x15,-32(x8)
-    20d0:	06078063          	beq	x15,x0,2130 <main+0xdc>
+    20d4:	fd442783          	lw	x15,-44(x8)
+    20d8:	06078063          	beq	x15,x0,2138 <main+0xdc>
         myputs("Text : \n");
-    20d4:	000027b7          	lui	x15,0x2
-    20d8:	59078513          	addi	x10,x15,1424 # 2590 <main+0x53c>
-    20dc:	f25ff0ef          	jal	x1,2000 <myputs>
+    20dc:	000037b7          	lui	x15,0x3
+    20e0:	8a878513          	addi	x10,x15,-1880 # 28a8 <main+0x84c>
+    20e4:	f25ff0ef          	jal	x1,2008 <myputs>
         myputs("a");
-    20e0:	000027b7          	lui	x15,0x2
-    20e4:	59c78513          	addi	x10,x15,1436 # 259c <main+0x548>
-    20e8:	f19ff0ef          	jal	x1,2000 <myputs>
+    20e8:	000037b7          	lui	x15,0x3
+    20ec:	8b478513          	addi	x10,x15,-1868 # 28b4 <main+0x858>
+    20f0:	f19ff0ef          	jal	x1,2008 <myputs>
         myputs("\n--- Matched Pattern : \n");
-    20ec:	000027b7          	lui	x15,0x2
-    20f0:	5a078513          	addi	x10,x15,1440 # 25a0 <main+0x54c>
-    20f4:	f0dff0ef          	jal	x1,2000 <myputs>
+    20f4:	000037b7          	lui	x15,0x3
+    20f8:	8b878513          	addi	x10,x15,-1864 # 28b8 <main+0x85c>
+    20fc:	f0dff0ef          	jal	x1,2008 <myputs>
         myputs(pattern2);
-    20f8:	fe442503          	lw	x10,-28(x8)
-    20fc:	f05ff0ef          	jal	x1,2000 <myputs>
+    2100:	fd842503          	lw	x10,-40(x8)
+    2104:	f05ff0ef          	jal	x1,2008 <myputs>
         myputs("\n@ ");
-    2100:	000027b7          	lui	x15,0x2
-    2104:	5bc78513          	addi	x10,x15,1468 # 25bc <main+0x568>
-    2108:	ef9ff0ef          	jal	x1,2000 <myputs>
+    2108:	000037b7          	lui	x15,0x3
+    210c:	8d478513          	addi	x10,x15,-1836 # 28d4 <main+0x878>
+    2110:	ef9ff0ef          	jal	x1,2008 <myputs>
         myputs(convert(1, 10));
-    210c:	00a00593          	addi	x11,x0,10
-    2110:	00100513          	addi	x10,x0,1
-    2114:	e51ff0ef          	jal	x1,1f64 <convert>
-    2118:	00050793          	addi	x15,x10,0
-    211c:	00078513          	addi	x10,x15,0
-    2120:	ee1ff0ef          	jal	x1,2000 <myputs>
+    2114:	00a00593          	addi	x11,x0,10
+    2118:	00100513          	addi	x10,x0,1
+    211c:	e51ff0ef          	jal	x1,1f6c <convert>
+    2120:	00050793          	addi	x15,x10,0
+    2124:	00078513          	addi	x10,x15,0
+    2128:	ee1ff0ef          	jal	x1,2008 <myputs>
         myputs("st character\n\n");
-    2124:	000027b7          	lui	x15,0x2
-    2128:	5c078513          	addi	x10,x15,1472 # 25c0 <main+0x56c>
-    212c:	ed5ff0ef          	jal	x1,2000 <myputs>
+    212c:	000037b7          	lui	x15,0x3
+    2130:	8d878513          	addi	x10,x15,-1832 # 28d8 <main+0x87c>
+    2134:	ed5ff0ef          	jal	x1,2008 <myputs>
     }
 
+    ResetNFA(2);
+    2138:	00200513          	addi	x10,x0,2
+    213c:	c41ff0ef          	jal	x1,1d7c <ResetNFA>
+    myputs("Resetting NFA in Module with pattern : ");
+    2140:	000037b7          	lui	x15,0x3
+    2144:	8e878513          	addi	x10,x15,-1816 # 28e8 <main+0x88c>
+    2148:	ec1ff0ef          	jal	x1,2008 <myputs>
+    myputs(pattern2);
+    214c:	fd842503          	lw	x10,-40(x8)
+    2150:	eb9ff0ef          	jal	x1,2008 <myputs>
+    myputs("\n\n");  
+    2154:	000037b7          	lui	x15,0x3
+    2158:	91078513          	addi	x10,x15,-1776 # 2910 <main+0x8b4>
+    215c:	eadff0ef          	jal	x1,2008 <myputs>
+
     myputs("--------------------------------------------------\n");
-    2130:	000027b7          	lui	x15,0x2
-    2134:	5d078513          	addi	x10,x15,1488 # 25d0 <main+0x57c>
-    2138:	ec9ff0ef          	jal	x1,2000 <myputs>
+    2160:	000037b7          	lui	x15,0x3
+    2164:	91478513          	addi	x10,x15,-1772 # 2914 <main+0x8b8>
+    2168:	ea1ff0ef          	jal	x1,2008 <myputs>
+    myputs("MULTIPLE INDEPENDENT PARALLEL TEXT-PATTERN MATCHING\n\n");    
+    216c:	000037b7          	lui	x15,0x3
+    2170:	94878513          	addi	x10,x15,-1720 # 2948 <main+0x8ec>
+    2174:	e95ff0ef          	jal	x1,2008 <myputs>
+
+    // Parallel independent text matching
+    char* text[4] = {"abdcabcc","dafabdef","acdbd","c0a9hello0"};
+    2178:	000037b7          	lui	x15,0x3
+    217c:	a5c78793          	addi	x15,x15,-1444 # 2a5c <main+0xa00>
+    2180:	0007a603          	lw	x12,0(x15)
+    2184:	0047a683          	lw	x13,4(x15)
+    2188:	0087a703          	lw	x14,8(x15)
+    218c:	00c7a783          	lw	x15,12(x15)
+    2190:	fac42823          	sw	x12,-80(x8)
+    2194:	fad42a23          	sw	x13,-76(x8)
+    2198:	fae42c23          	sw	x14,-72(x8)
+    219c:	faf42e23          	sw	x15,-68(x8)
+    int index[4] = {0,0,0,0};
+    21a0:	fa042023          	sw	x0,-96(x8)
+    21a4:	fa042223          	sw	x0,-92(x8)
+    21a8:	fa042423          	sw	x0,-88(x8)
+    21ac:	fa042623          	sw	x0,-84(x8)
+    while(1) {
+        int OK = (1<<4)-1;
+    21b0:	00f00793          	addi	x15,x0,15
+    21b4:	fef42623          	sw	x15,-20(x8)
+        char text_chars[4] = {'\0','\0','\0','\0'};
+    21b8:	f8042e23          	sw	x0,-100(x8)
+        for(int i = 0; i < 4; i++) {
+    21bc:	fe042423          	sw	x0,-24(x8)
+    21c0:	0cc0006f          	jal	x0,228c <main+0x230>
+            if(text[i][index[i]] == '\0') OK ^= (1<<i);
+    21c4:	fe842783          	lw	x15,-24(x8)
+    21c8:	00279793          	slli	x15,x15,0x2
+    21cc:	ff040713          	addi	x14,x8,-16
+    21d0:	00f707b3          	add	x15,x14,x15
+    21d4:	fc07a703          	lw	x14,-64(x15)
+    21d8:	fe842783          	lw	x15,-24(x8)
+    21dc:	00279793          	slli	x15,x15,0x2
+    21e0:	ff040693          	addi	x13,x8,-16
+    21e4:	00f687b3          	add	x15,x13,x15
+    21e8:	fb07a783          	lw	x15,-80(x15)
+    21ec:	00f707b3          	add	x15,x14,x15
+    21f0:	0007c783          	lbu	x15,0(x15)
+    21f4:	02079063          	bne	x15,x0,2214 <main+0x1b8>
+    21f8:	fe842783          	lw	x15,-24(x8)
+    21fc:	00100713          	addi	x14,x0,1
+    2200:	00f717b3          	sll	x15,x14,x15
+    2204:	fec42703          	lw	x14,-20(x8)
+    2208:	00f747b3          	xor	x15,x14,x15
+    220c:	fef42623          	sw	x15,-20(x8)
+    2210:	0700006f          	jal	x0,2280 <main+0x224>
+            else {
+               text_chars[i] = text[i][index[i]];
+    2214:	fe842783          	lw	x15,-24(x8)
+    2218:	00279793          	slli	x15,x15,0x2
+    221c:	ff040713          	addi	x14,x8,-16
+    2220:	00f707b3          	add	x15,x14,x15
+    2224:	fc07a703          	lw	x14,-64(x15)
+    2228:	fe842783          	lw	x15,-24(x8)
+    222c:	00279793          	slli	x15,x15,0x2
+    2230:	ff040693          	addi	x13,x8,-16
+    2234:	00f687b3          	add	x15,x13,x15
+    2238:	fb07a783          	lw	x15,-80(x15)
+    223c:	00f707b3          	add	x15,x14,x15
+    2240:	0007c703          	lbu	x14,0(x15)
+    2244:	fe842783          	lw	x15,-24(x8)
+    2248:	ff040693          	addi	x13,x8,-16
+    224c:	00f687b3          	add	x15,x13,x15
+    2250:	fae78623          	sb	x14,-84(x15)
+               index[i]++; 
+    2254:	fe842783          	lw	x15,-24(x8)
+    2258:	00279793          	slli	x15,x15,0x2
+    225c:	ff040713          	addi	x14,x8,-16
+    2260:	00f707b3          	add	x15,x14,x15
+    2264:	fb07a783          	lw	x15,-80(x15)
+    2268:	00178713          	addi	x14,x15,1
+    226c:	fe842783          	lw	x15,-24(x8)
+    2270:	00279793          	slli	x15,x15,0x2
+    2274:	ff040693          	addi	x13,x8,-16
+    2278:	00f687b3          	add	x15,x13,x15
+    227c:	fae7a823          	sw	x14,-80(x15)
+        for(int i = 0; i < 4; i++) {
+    2280:	fe842783          	lw	x15,-24(x8)
+    2284:	00178793          	addi	x15,x15,1
+    2288:	fef42423          	sw	x15,-24(x8)
+    228c:	fe842703          	lw	x14,-24(x8)
+    2290:	00300793          	addi	x15,x0,3
+    2294:	f2e7d8e3          	bge	x15,x14,21c4 <main+0x168>
+            }
+        }
+        if(!OK) break;
+    2298:	fec42783          	lw	x15,-20(x8)
+    229c:	04079a63          	bne	x15,x0,22f0 <main+0x294>
+                myputs(" character\n\n");
+            }
+        }
+    }
+
+    ResetNFA_All_M1();
+    22a0:	a9dff0ef          	jal	x1,1d3c <ResetNFA_All_M1>
+    myputs("Resetting NFA in all modules parallely\n\n");
+    22a4:	000037b7          	lui	x15,0x3
+    22a8:	98078513          	addi	x10,x15,-1664 # 2980 <main+0x924>
+    22ac:	d5dff0ef          	jal	x1,2008 <myputs>
+
+    myputs("--------------------------------------------------\n");
+    22b0:	000037b7          	lui	x15,0x3
+    22b4:	91478513          	addi	x10,x15,-1772 # 2914 <main+0x8b8>
+    22b8:	d51ff0ef          	jal	x1,2008 <myputs>
     
+
     // Single text - parallel pattern matching
     // We use the same patterns in the 4 modules as setup earlier, but now try to simulate all NFAs with single text
     char *new_text = "abcdefghijklmnopqrtuvwxyz";
-    213c:	000027b7          	lui	x15,0x2
-    2140:	60478793          	addi	x15,x15,1540 # 2604 <main+0x5b0>
-    2144:	fcf42e23          	sw	x15,-36(x8)
-    myputs("SINGLE TEXT - MULTIPLE COMPLEX PATTERNS MATCHING\n\n");
-    2148:	000027b7          	lui	x15,0x2
-    214c:	62078513          	addi	x10,x15,1568 # 2620 <main+0x5cc>
-    2150:	eb1ff0ef          	jal	x1,2000 <myputs>
+    22bc:	000037b7          	lui	x15,0x3
+    22c0:	9ac78793          	addi	x15,x15,-1620 # 29ac <main+0x950>
+    22c4:	fcf42823          	sw	x15,-48(x8)
+    myputs("SINGLE TEXT - MULTIPLE COMPLEX PATTERNS MATCHING IN PARALLEL\n\n");
+    22c8:	000037b7          	lui	x15,0x3
+    22cc:	9c878513          	addi	x10,x15,-1592 # 29c8 <main+0x96c>
+    22d0:	d39ff0ef          	jal	x1,2008 <myputs>
     myputs("Text : \n");
-    2154:	000027b7          	lui	x15,0x2
-    2158:	59078513          	addi	x10,x15,1424 # 2590 <main+0x53c>
-    215c:	ea5ff0ef          	jal	x1,2000 <myputs>
+    22d4:	000037b7          	lui	x15,0x3
+    22d8:	8a878513          	addi	x10,x15,-1880 # 28a8 <main+0x84c>
+    22dc:	d2dff0ef          	jal	x1,2008 <myputs>
     myputs(new_text);
-    2160:	fdc42503          	lw	x10,-36(x8)
-    2164:	e9dff0ef          	jal	x1,2000 <myputs>
+    22e0:	fd042503          	lw	x10,-48(x8)
+    22e4:	d25ff0ef          	jal	x1,2008 <myputs>
     for(int i = 0; new_text[i]; i++) {
-    2168:	fe042623          	sw	x0,-20(x8)
-    216c:	1640006f          	jal	x0,22d0 <main+0x27c>
+    22e8:	fe042023          	sw	x0,-32(x8)
+    22ec:	2d00006f          	jal	x0,25bc <main+0x560>
+        pattern_status = SimulateNFA_All_M0(text_chars);
+    22f0:	f9c40793          	addi	x15,x8,-100
+    22f4:	00078513          	addi	x10,x15,0
+    22f8:	ff4ff0ef          	jal	x1,1aec <SimulateNFA_All_M0>
+    22fc:	fca42a23          	sw	x10,-44(x8)
+        for(int i = 0; i < 4; i++) {
+    2300:	fe042223          	sw	x0,-28(x8)
+    2304:	1480006f          	jal	x0,244c <main+0x3f0>
+            if(pattern_status & (1<<i))  {
+    2308:	fe442783          	lw	x15,-28(x8)
+    230c:	fd442703          	lw	x14,-44(x8)
+    2310:	40f757b3          	sra	x15,x14,x15
+    2314:	0017f793          	andi	x15,x15,1
+    2318:	12078463          	beq	x15,x0,2440 <main+0x3e4>
+                myputs("Text : \n");
+    231c:	000037b7          	lui	x15,0x3
+    2320:	8a878513          	addi	x10,x15,-1880 # 28a8 <main+0x84c>
+    2324:	ce5ff0ef          	jal	x1,2008 <myputs>
+                myputs(text[i]);
+    2328:	fe442783          	lw	x15,-28(x8)
+    232c:	00279793          	slli	x15,x15,0x2
+    2330:	ff040713          	addi	x14,x8,-16
+    2334:	00f707b3          	add	x15,x14,x15
+    2338:	fc07a783          	lw	x15,-64(x15)
+    233c:	00078513          	addi	x10,x15,0
+    2340:	cc9ff0ef          	jal	x1,2008 <myputs>
+                myputs("\n--- Matched Pattern : \n");
+    2344:	000037b7          	lui	x15,0x3
+    2348:	8b878513          	addi	x10,x15,-1864 # 28b8 <main+0x85c>
+    234c:	cbdff0ef          	jal	x1,2008 <myputs>
+                if(i == 2) myputs(pattern2);
+    2350:	fe442703          	lw	x14,-28(x8)
+    2354:	00200793          	addi	x15,x0,2
+    2358:	00f71863          	bne	x14,x15,2368 <main+0x30c>
+    235c:	fd842503          	lw	x10,-40(x8)
+    2360:	ca9ff0ef          	jal	x1,2008 <myputs>
+    2364:	0200006f          	jal	x0,2384 <main+0x328>
+                else myputs(patterns[i]);
+    2368:	fe442783          	lw	x15,-28(x8)
+    236c:	00279793          	slli	x15,x15,0x2
+    2370:	ff040713          	addi	x14,x8,-16
+    2374:	00f707b3          	add	x15,x14,x15
+    2378:	fd07a783          	lw	x15,-48(x15)
+    237c:	00078513          	addi	x10,x15,0
+    2380:	c89ff0ef          	jal	x1,2008 <myputs>
+                myputs("\n@ ");
+    2384:	000037b7          	lui	x15,0x3
+    2388:	8d478513          	addi	x10,x15,-1836 # 28d4 <main+0x878>
+    238c:	c7dff0ef          	jal	x1,2008 <myputs>
+                myputs(convert(index[i], 10));
+    2390:	fe442783          	lw	x15,-28(x8)
+    2394:	00279793          	slli	x15,x15,0x2
+    2398:	ff040713          	addi	x14,x8,-16
+    239c:	00f707b3          	add	x15,x14,x15
+    23a0:	fb07a783          	lw	x15,-80(x15)
+    23a4:	00a00593          	addi	x11,x0,10
+    23a8:	00078513          	addi	x10,x15,0
+    23ac:	bc1ff0ef          	jal	x1,1f6c <convert>
+    23b0:	00050793          	addi	x15,x10,0
+    23b4:	00078513          	addi	x10,x15,0
+    23b8:	c51ff0ef          	jal	x1,2008 <myputs>
+                switch(index[i]) {
+    23bc:	fe442783          	lw	x15,-28(x8)
+    23c0:	00279793          	slli	x15,x15,0x2
+    23c4:	ff040713          	addi	x14,x8,-16
+    23c8:	00f707b3          	add	x15,x14,x15
+    23cc:	fb07a783          	lw	x15,-80(x15)
+    23d0:	00300713          	addi	x14,x0,3
+    23d4:	04e78063          	beq	x15,x14,2414 <main+0x3b8>
+    23d8:	00300713          	addi	x14,x0,3
+    23dc:	04f74463          	blt	x14,x15,2424 <main+0x3c8>
+    23e0:	00100713          	addi	x14,x0,1
+    23e4:	00e78863          	beq	x15,x14,23f4 <main+0x398>
+    23e8:	00200713          	addi	x14,x0,2
+    23ec:	00e78c63          	beq	x15,x14,2404 <main+0x3a8>
+    23f0:	0340006f          	jal	x0,2424 <main+0x3c8>
+                        myputs("st");
+    23f4:	000037b7          	lui	x15,0x3
+    23f8:	a0878513          	addi	x10,x15,-1528 # 2a08 <main+0x9ac>
+    23fc:	c0dff0ef          	jal	x1,2008 <myputs>
+                    break;
+    2400:	0340006f          	jal	x0,2434 <main+0x3d8>
+                        myputs("nd");
+    2404:	000037b7          	lui	x15,0x3
+    2408:	a0c78513          	addi	x10,x15,-1524 # 2a0c <main+0x9b0>
+    240c:	bfdff0ef          	jal	x1,2008 <myputs>
+                    break;
+    2410:	0240006f          	jal	x0,2434 <main+0x3d8>
+                        myputs("rd");
+    2414:	000037b7          	lui	x15,0x3
+    2418:	a1078513          	addi	x10,x15,-1520 # 2a10 <main+0x9b4>
+    241c:	bedff0ef          	jal	x1,2008 <myputs>
+                    break;
+    2420:	0140006f          	jal	x0,2434 <main+0x3d8>
+                        myputs("th");
+    2424:	000037b7          	lui	x15,0x3
+    2428:	a1478513          	addi	x10,x15,-1516 # 2a14 <main+0x9b8>
+    242c:	bddff0ef          	jal	x1,2008 <myputs>
+                    break;
+    2430:	00000013          	addi	x0,x0,0
+                myputs(" character\n\n");
+    2434:	000037b7          	lui	x15,0x3
+    2438:	a1878513          	addi	x10,x15,-1512 # 2a18 <main+0x9bc>
+    243c:	bcdff0ef          	jal	x1,2008 <myputs>
+        for(int i = 0; i < 4; i++) {
+    2440:	fe442783          	lw	x15,-28(x8)
+    2444:	00178793          	addi	x15,x15,1
+    2448:	fef42223          	sw	x15,-28(x8)
+    244c:	fe442703          	lw	x14,-28(x8)
+    2450:	00300793          	addi	x15,x0,3
+    2454:	eae7dae3          	bge	x15,x14,2308 <main+0x2ac>
+    while(1) {
+    2458:	d59ff06f          	jal	x0,21b0 <main+0x154>
         pattern_status = SimulateNFA_All_M1(new_text[i]);
-    2170:	fec42783          	lw	x15,-20(x8)
-    2174:	fdc42703          	lw	x14,-36(x8)
-    2178:	00f707b3          	add	x15,x14,x15
-    217c:	0007c783          	lbu	x15,0(x15)
-    2180:	00078513          	addi	x10,x15,0
-    2184:	a25ff0ef          	jal	x1,1ba8 <SimulateNFA_All_M1>
-    2188:	fea42023          	sw	x10,-32(x8)
+    245c:	fe042783          	lw	x15,-32(x8)
+    2460:	fd042703          	lw	x14,-48(x8)
+    2464:	00f707b3          	add	x15,x14,x15
+    2468:	0007c783          	lbu	x15,0(x15)
+    246c:	00078513          	addi	x10,x15,0
+    2470:	f40ff0ef          	jal	x1,1bb0 <SimulateNFA_All_M1>
+    2474:	fca42a23          	sw	x10,-44(x8)
         if(pattern_status)  {
-    218c:	fe042783          	lw	x15,-32(x8)
-    2190:	12078a63          	beq	x15,x0,22c4 <main+0x270>
+    2478:	fd442783          	lw	x15,-44(x8)
+    247c:	12078a63          	beq	x15,x0,25b0 <main+0x554>
             myputs("\n--- Matched Pattern(s) : \n");
-    2194:	000027b7          	lui	x15,0x2
-    2198:	65478513          	addi	x10,x15,1620 # 2654 <main+0x600>
-    219c:	e65ff0ef          	jal	x1,2000 <myputs>
+    2480:	000037b7          	lui	x15,0x3
+    2484:	a2878513          	addi	x10,x15,-1496 # 2a28 <main+0x9cc>
+    2488:	b81ff0ef          	jal	x1,2008 <myputs>
             for(int j = 0; j < 4; j++) {
-    21a0:	fe042423          	sw	x0,-24(x8)
-    21a4:	0700006f          	jal	x0,2214 <main+0x1c0>
+    248c:	fc042e23          	sw	x0,-36(x8)
+    2490:	0700006f          	jal	x0,2500 <main+0x4a4>
                 if(pattern_status & (1<<j)) {
-    21a8:	fe842783          	lw	x15,-24(x8)
-    21ac:	fe042703          	lw	x14,-32(x8)
-    21b0:	40f757b3          	sra	x15,x14,x15
-    21b4:	0017f793          	andi	x15,x15,1
-    21b8:	04078863          	beq	x15,x0,2208 <main+0x1b4>
+    2494:	fdc42783          	lw	x15,-36(x8)
+    2498:	fd442703          	lw	x14,-44(x8)
+    249c:	40f757b3          	sra	x15,x14,x15
+    24a0:	0017f793          	andi	x15,x15,1
+    24a4:	04078863          	beq	x15,x0,24f4 <main+0x498>
                     if(j == 2) {myputs(pattern2); myputs("\n");}
-    21bc:	fe842703          	lw	x14,-24(x8)
-    21c0:	00200793          	addi	x15,x0,2
-    21c4:	00f71e63          	bne	x14,x15,21e0 <main+0x18c>
-    21c8:	fe442503          	lw	x10,-28(x8)
-    21cc:	e35ff0ef          	jal	x1,2000 <myputs>
-    21d0:	000027b7          	lui	x15,0x2
-    21d4:	67078513          	addi	x10,x15,1648 # 2670 <main+0x61c>
-    21d8:	e29ff0ef          	jal	x1,2000 <myputs>
-    21dc:	02c0006f          	jal	x0,2208 <main+0x1b4>
+    24a8:	fdc42703          	lw	x14,-36(x8)
+    24ac:	00200793          	addi	x15,x0,2
+    24b0:	00f71e63          	bne	x14,x15,24cc <main+0x470>
+    24b4:	fd842503          	lw	x10,-40(x8)
+    24b8:	b51ff0ef          	jal	x1,2008 <myputs>
+    24bc:	000037b7          	lui	x15,0x3
+    24c0:	a4478513          	addi	x10,x15,-1468 # 2a44 <main+0x9e8>
+    24c4:	b45ff0ef          	jal	x1,2008 <myputs>
+    24c8:	02c0006f          	jal	x0,24f4 <main+0x498>
                     else {myputs(patterns[j]); myputs("\n");}
-    21e0:	fe842783          	lw	x15,-24(x8)
-    21e4:	00279793          	slli	x15,x15,0x2
-    21e8:	ff040713          	addi	x14,x8,-16
-    21ec:	00f707b3          	add	x15,x14,x15
-    21f0:	fdc7a783          	lw	x15,-36(x15)
-    21f4:	00078513          	addi	x10,x15,0
-    21f8:	e09ff0ef          	jal	x1,2000 <myputs>
-    21fc:	000027b7          	lui	x15,0x2
-    2200:	67078513          	addi	x10,x15,1648 # 2670 <main+0x61c>
-    2204:	dfdff0ef          	jal	x1,2000 <myputs>
+    24cc:	fdc42783          	lw	x15,-36(x8)
+    24d0:	00279793          	slli	x15,x15,0x2
+    24d4:	ff040713          	addi	x14,x8,-16
+    24d8:	00f707b3          	add	x15,x14,x15
+    24dc:	fd07a783          	lw	x15,-48(x15)
+    24e0:	00078513          	addi	x10,x15,0
+    24e4:	b25ff0ef          	jal	x1,2008 <myputs>
+    24e8:	000037b7          	lui	x15,0x3
+    24ec:	a4478513          	addi	x10,x15,-1468 # 2a44 <main+0x9e8>
+    24f0:	b19ff0ef          	jal	x1,2008 <myputs>
             for(int j = 0; j < 4; j++) {
-    2208:	fe842783          	lw	x15,-24(x8)
-    220c:	00178793          	addi	x15,x15,1
-    2210:	fef42423          	sw	x15,-24(x8)
-    2214:	fe842703          	lw	x14,-24(x8)
-    2218:	00300793          	addi	x15,x0,3
-    221c:	f8e7d6e3          	bge	x15,x14,21a8 <main+0x154>
+    24f4:	fdc42783          	lw	x15,-36(x8)
+    24f8:	00178793          	addi	x15,x15,1
+    24fc:	fcf42e23          	sw	x15,-36(x8)
+    2500:	fdc42703          	lw	x14,-36(x8)
+    2504:	00300793          	addi	x15,x0,3
+    2508:	f8e7d6e3          	bge	x15,x14,2494 <main+0x438>
                 }
             }
             myputs("@ ");
-    2220:	000027b7          	lui	x15,0x2
-    2224:	67478513          	addi	x10,x15,1652 # 2674 <main+0x620>
-    2228:	dd9ff0ef          	jal	x1,2000 <myputs>
+    250c:	000037b7          	lui	x15,0x3
+    2510:	a4878513          	addi	x10,x15,-1464 # 2a48 <main+0x9ec>
+    2514:	af5ff0ef          	jal	x1,2008 <myputs>
             myputs(convert(i+1, 10));
-    222c:	fec42783          	lw	x15,-20(x8)
-    2230:	00178793          	addi	x15,x15,1
-    2234:	00a00593          	addi	x11,x0,10
-    2238:	00078513          	addi	x10,x15,0
-    223c:	d29ff0ef          	jal	x1,1f64 <convert>
-    2240:	00050793          	addi	x15,x10,0
-    2244:	00078513          	addi	x10,x15,0
-    2248:	db9ff0ef          	jal	x1,2000 <myputs>
+    2518:	fe042783          	lw	x15,-32(x8)
+    251c:	00178793          	addi	x15,x15,1
+    2520:	00a00593          	addi	x11,x0,10
+    2524:	00078513          	addi	x10,x15,0
+    2528:	a45ff0ef          	jal	x1,1f6c <convert>
+    252c:	00050793          	addi	x15,x10,0
+    2530:	00078513          	addi	x10,x15,0
+    2534:	ad5ff0ef          	jal	x1,2008 <myputs>
             switch(i+1) {
-    224c:	fec42783          	lw	x15,-20(x8)
-    2250:	00178793          	addi	x15,x15,1
-    2254:	00300713          	addi	x14,x0,3
-    2258:	04e78063          	beq	x15,x14,2298 <main+0x244>
-    225c:	00300713          	addi	x14,x0,3
-    2260:	04f74463          	blt	x14,x15,22a8 <main+0x254>
-    2264:	00100713          	addi	x14,x0,1
-    2268:	00e78863          	beq	x15,x14,2278 <main+0x224>
-    226c:	00200713          	addi	x14,x0,2
-    2270:	00e78c63          	beq	x15,x14,2288 <main+0x234>
-    2274:	0340006f          	jal	x0,22a8 <main+0x254>
+    2538:	fe042783          	lw	x15,-32(x8)
+    253c:	00178793          	addi	x15,x15,1
+    2540:	00300713          	addi	x14,x0,3
+    2544:	04e78063          	beq	x15,x14,2584 <main+0x528>
+    2548:	00300713          	addi	x14,x0,3
+    254c:	04f74463          	blt	x14,x15,2594 <main+0x538>
+    2550:	00100713          	addi	x14,x0,1
+    2554:	00e78863          	beq	x15,x14,2564 <main+0x508>
+    2558:	00200713          	addi	x14,x0,2
+    255c:	00e78c63          	beq	x15,x14,2574 <main+0x518>
+    2560:	0340006f          	jal	x0,2594 <main+0x538>
                 case 1 : 
                     myputs("st");
-    2278:	000027b7          	lui	x15,0x2
-    227c:	67878513          	addi	x10,x15,1656 # 2678 <main+0x624>
-    2280:	d81ff0ef          	jal	x1,2000 <myputs>
+    2564:	000037b7          	lui	x15,0x3
+    2568:	a0878513          	addi	x10,x15,-1528 # 2a08 <main+0x9ac>
+    256c:	a9dff0ef          	jal	x1,2008 <myputs>
                 break;
-    2284:	0340006f          	jal	x0,22b8 <main+0x264>
+    2570:	0340006f          	jal	x0,25a4 <main+0x548>
                 case 2 :
                     myputs("nd");
-    2288:	000027b7          	lui	x15,0x2
-    228c:	67c78513          	addi	x10,x15,1660 # 267c <main+0x628>
-    2290:	d71ff0ef          	jal	x1,2000 <myputs>
+    2574:	000037b7          	lui	x15,0x3
+    2578:	a0c78513          	addi	x10,x15,-1524 # 2a0c <main+0x9b0>
+    257c:	a8dff0ef          	jal	x1,2008 <myputs>
                 break;
-    2294:	0240006f          	jal	x0,22b8 <main+0x264>
+    2580:	0240006f          	jal	x0,25a4 <main+0x548>
                 case 3 :
                     myputs("rd");
-    2298:	000027b7          	lui	x15,0x2
-    229c:	68078513          	addi	x10,x15,1664 # 2680 <main+0x62c>
-    22a0:	d61ff0ef          	jal	x1,2000 <myputs>
+    2584:	000037b7          	lui	x15,0x3
+    2588:	a1078513          	addi	x10,x15,-1520 # 2a10 <main+0x9b4>
+    258c:	a7dff0ef          	jal	x1,2008 <myputs>
                 break;
-    22a4:	0140006f          	jal	x0,22b8 <main+0x264>
+    2590:	0140006f          	jal	x0,25a4 <main+0x548>
                 default :
                     myputs("th");
-    22a8:	000027b7          	lui	x15,0x2
-    22ac:	68478513          	addi	x10,x15,1668 # 2684 <main+0x630>
-    22b0:	d51ff0ef          	jal	x1,2000 <myputs>
+    2594:	000037b7          	lui	x15,0x3
+    2598:	a1478513          	addi	x10,x15,-1516 # 2a14 <main+0x9b8>
+    259c:	a6dff0ef          	jal	x1,2008 <myputs>
                 break;
-    22b4:	00000013          	addi	x0,x0,0
+    25a0:	00000013          	addi	x0,x0,0
             }
             myputs(" character\n\n");
-    22b8:	000027b7          	lui	x15,0x2
-    22bc:	68878513          	addi	x10,x15,1672 # 2688 <main+0x634>
-    22c0:	d41ff0ef          	jal	x1,2000 <myputs>
+    25a4:	000037b7          	lui	x15,0x3
+    25a8:	a1878513          	addi	x10,x15,-1512 # 2a18 <main+0x9bc>
+    25ac:	a5dff0ef          	jal	x1,2008 <myputs>
     for(int i = 0; new_text[i]; i++) {
-    22c4:	fec42783          	lw	x15,-20(x8)
-    22c8:	00178793          	addi	x15,x15,1
-    22cc:	fef42623          	sw	x15,-20(x8)
-    22d0:	fec42783          	lw	x15,-20(x8)
-    22d4:	fdc42703          	lw	x14,-36(x8)
-    22d8:	00f707b3          	add	x15,x14,x15
-    22dc:	0007c783          	lbu	x15,0(x15)
-    22e0:	e80798e3          	bne	x15,x0,2170 <main+0x11c>
+    25b0:	fe042783          	lw	x15,-32(x8)
+    25b4:	00178793          	addi	x15,x15,1
+    25b8:	fef42023          	sw	x15,-32(x8)
+    25bc:	fe042783          	lw	x15,-32(x8)
+    25c0:	fd042703          	lw	x14,-48(x8)
+    25c4:	00f707b3          	add	x15,x14,x15
+    25c8:	0007c783          	lbu	x15,0(x15)
+    25cc:	e80798e3          	bne	x15,x0,245c <main+0x400>
         }
     }
 
 
     // Infinite loop to avoid repitition of program
     for(;;);
-    22e4:	0000006f          	jal	x0,22e4 <main+0x290>
+    25d0:	0000006f          	jal	x0,25d0 <main+0x574>

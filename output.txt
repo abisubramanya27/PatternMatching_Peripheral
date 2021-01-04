@@ -6,8 +6,63 @@ a
 ab?[cd]*
 @ 1st character
 
+Resetting NFA in Module with pattern : ab?[cd]*
+
 --------------------------------------------------
-SINGLE TEXT - MULTIPLE COMPLEX PATTERNS MATCHING
+MULTIPLE INDEPENDENT PARALLEL TEXT-PATTERN MATCHING
+
+Text : 
+acdbd
+--- Matched Pattern : 
+ab?[cd]*
+@ 1st character
+
+Text : 
+acdbd
+--- Matched Pattern : 
+ab?[cd]*
+@ 2nd character
+
+Text : 
+acdbd
+--- Matched Pattern : 
+ab?[cd]*
+@ 3rd character
+
+Text : 
+dafabdef
+--- Matched Pattern : 
+[abc]{0,3}d[e,f]?
+@ 6th character
+
+Text : 
+abdcabcc
+--- Matched Pattern : 
+abc+
+@ 7th character
+
+Text : 
+dafabdef
+--- Matched Pattern : 
+[abc]{0,3}d[e,f]?
+@ 7th character
+
+Text : 
+abdcabcc
+--- Matched Pattern : 
+abc+
+@ 8th character
+
+Text : 
+c0a9hello0
+--- Matched Pattern : 
+[a-zA-Z][0-9]hello
+@ 9th character
+
+Resetting NFA in all modules parallely
+
+--------------------------------------------------
+SINGLE TEXT - MULTIPLE COMPLEX PATTERNS MATCHING IN PARALLEL
 
 Text : 
 abcdefghijklmnopqrtuvwxyz

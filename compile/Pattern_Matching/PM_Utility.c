@@ -375,7 +375,7 @@ int SimulateNFA_All_M0(char text_chars[NO_MODULES]) {
 
     unsigned int PATTERN_ACCEPTED_STATUS = Complete_Handshaking(TARGET_MODULES);
 
-    return PATTERN_ACCEPTED_STATUS;
+    return (PATTERN_ACCEPTED_STATUS & TARGET_MODULES);
 
 }
 
